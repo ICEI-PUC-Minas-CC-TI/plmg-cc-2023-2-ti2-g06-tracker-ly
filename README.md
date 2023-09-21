@@ -1,4 +1,4 @@
-# Trackerly
+# Tracker.ly
 
 [Escreva um ou dois  parágrafo resumindo o objetivo do seu projeto.]
 
@@ -6,7 +6,7 @@
 
 * [Catarina França de Moura Castro]
 * [Fernanda Mariano Rodrigues]
-* [NGabriela Lacerda Muniz]
+* [Gabriela Lacerda Muniz]
 * [Rafael Oliveirap Lima Peixoto]
 
 ## Professores responsáveis
