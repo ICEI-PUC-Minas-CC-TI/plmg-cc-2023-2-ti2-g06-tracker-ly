@@ -7,7 +7,7 @@
 * [Catarina França de Moura Castro]
 * [Fernanda Mariano Rodrigues]
 * [Gabriela Lacerda Muniz]
-* [Rafael Oliveirap Lima Peixoto]
+* [Rafael Oliveira Lima Peixoto]
 
 ## Professores responsáveis
 
