@@ -12,11 +12,7 @@ import {
   CardHeader,
   CardBody,
   CardFooter,
-  Stack,
   Heading,
-  Divider,
-  ButtonGroup,
-  Image,
   SimpleGrid,
 } from "@chakra-ui/react";
 
@@ -96,50 +92,55 @@ function Perfil() {
     <>
       <Nav />
 
-      <Container className="perfil-info">
-        <Avatar size={"2xl"} />
-        <Text fontSize={"xl"}>Nome do Usuário</Text>
-        <Text fontSize={"md"}>@username</Text>
-        <Text fontSize={"sm"}>
-          Descrição do usuário: Lorem ipsum, dolor sit amet consectetur
-          adipisicing elit. Illo cum porro excepturi recusandae vel omnis
-          distinctio optio tempore nemo iusto?
-        </Text>
-        <Button variant={"btn1"}>Editar Perfil</Button>
-      </Container>
-
-      <Container>
-        <Box>
-          <Text fontSize={"xl"}>Minha Rotina</Text>
-          {Rotinas.map((rotina) => (
-            <RotinasRend
-              key={rotina.id}
-              nome={rotina.nome}
-              duration={rotina.duration}
-              date={rotina.date}
-              time={rotina.time}
-            />
-          ))}
+      <SimpleGrid columns={[1, null, 2]} alignItems={"center"}>
+        <Box className="perfil-info-container" margin={"30px"} w={"50%"} >
+          <Avatar size={"2xl"} />
+          <Text fontSize={"xl"}>Nome do Usuário</Text>
+          <Text fontSize={"md"}>@username</Text>
+          <Text fontSize={"sm"}>
+            Descrição do usuário: Lorem ipsum, dolor sit amet consectetur
+            adipisicing elit. Illo cum porro excepturi recusandae vel omnis
+            distinctio optio tempore nemo iusto?
+          </Text>
+          <Button variant={"btn1"} marginY={"15px"}>Editar Perfil</Button>
         </Box>
-        <Button variant={"btn1"}>Editar Rotina</Button>
-      </Container>
 
-      <Container className="perfil-posts-container">
-        <SimpleGrid
-          spacing={4}
-          templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
-        >
-          {Posts.map((post) => (
-            <PostsRend
-              key={post.id}
-              habito={post.habito}
-              duration={post.duration}
-              date={post.date}
-              time={post.time}
-            />
-          ))}
-        </SimpleGrid>
-      </Container>
+        <Box className="perfil-rotinas-container" margin={"30px"}> 
+          <Box>
+            <Text fontSize={"xl"}>Minha Rotina</Text>
+            {Rotinas.map((rotina) => (
+              <RotinasRend
+                key={rotina.id}
+                nome={rotina.nome}
+                duration={rotina.duration}
+                date={rotina.date}
+                time={rotina.time}
+              />
+            ))}
+          </Box>
+          <Button variant={"btn1"} marginY={"15px"}>Editar Rotina</Button>
+        </Box>
+
+        <Box className="perfil-posts-container" margin={"30px"}>
+          <Text fontSize={"xl"}>Minhas Postagens</Text>
+          <SimpleGrid
+            spacing={4}
+            templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
+            bgColor={"#EBF5F8"}
+            p={"20px"}
+          >
+            {Posts.map((post) => (
+              <PostsRend
+                key={post.id}
+                habito={post.habito}
+                duration={post.duration}
+                date={post.date}
+                time={post.time}
+              />
+            ))}
+          </SimpleGrid>
+        </Box>
+      </SimpleGrid>
 
       <Footer />
     </>

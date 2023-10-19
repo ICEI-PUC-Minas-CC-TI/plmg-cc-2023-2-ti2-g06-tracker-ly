@@ -24,8 +24,8 @@ import { BsPersonFill } from "react-icons/bs";
 
 // links da nav
 const Links = [
-  { text: "Feed", path: "/" },
-  { text: "Minha Rotina", path: "/rotina" },
+  // { text: "Sobre Nós", path: "/" },
+  { text: "Feed", path: "/feed" },
 ];
 
 // botões de navegação

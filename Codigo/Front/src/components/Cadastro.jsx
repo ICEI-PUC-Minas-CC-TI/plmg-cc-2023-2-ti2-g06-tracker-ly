@@ -1,5 +1,6 @@
 // routes
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { useState } from "react";
 // chakra
 import {
   Modal,
@@ -18,10 +19,12 @@ function Cadastro() {
 
   return (
     <>
-      <Button onClick={onOpen} variant={"btn1"}>Criar conta</Button>
+      <Button onClick={onOpen} variant={"btn1"}>
+        Criar conta
+      </Button>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
+      <Modal isOpen={isOpen} onClose={onClose} backdropFilter={"blur(10px)"} isCentered>
+        <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(10px)" />
         <ModalContent>
           <ModalHeader>Criar conta</ModalHeader>
           <ModalCloseButton />
@@ -37,8 +40,8 @@ function Cadastro() {
             <Button variant={"btn1"} mr={3}>
               Pronto!
             </Button>
-            <Button variant="ghost" mr={2} onClick={onClose} >
-                Já tenho uma conta
+            <Button variant="ghost" mr={2} onClick={onClose}>
+              Já tenho uma conta
             </Button>
           </ModalFooter>
         </ModalContent>

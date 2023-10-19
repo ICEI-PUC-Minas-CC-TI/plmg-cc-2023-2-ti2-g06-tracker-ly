@@ -17,10 +17,12 @@ function Login() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
-      <Button onClick={onOpen} variant={"btn1"}>Faça seu Login</Button>
+      <Button onClick={onOpen} variant={"btn1"}>
+        Faça seu Login
+      </Button>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
+      <Modal isOpen={isOpen} onClose={onClose} backdropFilter={"blur(10px)"} isCentered>
+        <ModalOverlay backdropFilter="blur(10px)" />
         <ModalContent>
           <ModalHeader>Faça seu Login!</ModalHeader>
           <ModalCloseButton />
@@ -33,15 +35,11 @@ function Login() {
           </ModalBody>
 
           <ModalFooter>
-            <Button variant={"btn1"} mr={3} >
-                <Link to={"/perfil"}>
-                    Pronto!
-                </Link>
+            <Button variant={"btn1"} mr={3}>
+              <Link to={"/perfil"}>Pronto!</Link>
             </Button>
-            <Button variant="ghost" mr={2} onClick={onClose} >
-                <Link> 
-                Não tenho uma conta
-                </Link>
+            <Button variant="ghost" mr={2} onClick={onClose}>
+              <Link>Não tenho uma conta</Link>
             </Button>
           </ModalFooter>
         </ModalContent>
