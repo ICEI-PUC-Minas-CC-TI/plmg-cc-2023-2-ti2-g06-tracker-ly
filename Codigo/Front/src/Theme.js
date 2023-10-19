@@ -7,25 +7,12 @@ const getTheme = () => ({
   // componentes não-chakra
   styles: {
     global: {
-      ".home-container-global": {
-        margin: "10px",
-        maxWidth: "100vw",
-        // minHeight: "100vh",
-      },
-
       ".navbar": {},
 
-      ".logo-nav": {
-        viewBox: "0 0 20 20",
-      },
+      ".logo-nav": {},
 
       ".footer": {
-        pos: "absolute",
-        left: 0,
-        bottom: 0,
-        right: 0,
-        width: "100vw",
-        maxH: "20px", // !!! esta causando problemas de responsividade
+        marginBottom: 0,
       },
     },
   },
@@ -40,6 +27,13 @@ const getTheme = () => ({
           color: "#faf2f4",
           _hover: {
             backgroundColor: "#ff5e7b",
+          },
+        },
+        btn2: {
+          backgroundColor: "#8FD4A1",
+          color: "#faf2f4",
+          _hover: {
+            backgroundColor: "#66B87B",
           },
         },
       },

@@ -13,7 +13,7 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <Box width="100vw">
+    <Box>
       <BrowserRouter>
         <Routes>
           <Route

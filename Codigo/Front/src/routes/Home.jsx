@@ -32,7 +32,6 @@ function Home() {
       </Center>
 
       <Container
-        className="home-container-global"
         maxW="container.lg"
         centerContent
       >
