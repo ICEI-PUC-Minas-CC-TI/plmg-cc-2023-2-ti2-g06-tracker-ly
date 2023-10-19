@@ -29,22 +29,22 @@ const Links = [
 ];
 
 // botões de navegação
-  const NavLink = (props) => {
-    const { to, children } = props;
-    return (
-      <Link
-        to={to}
-        style={{
-          textDecoration: "none",
-          padding: "8px",
-          borderRadius: "4px",
-          marginRight: "8px",
-        }}
-      >
-        {children}
-      </Link>
-    );
-  };
+const NavLink = (props) => {
+  const { to, children } = props;
+  return (
+    <Link
+      to={to}
+      style={{
+        textDecoration: "none",
+        padding: "8px",
+        borderRadius: "4px",
+        marginRight: "8px",
+      }}
+    >
+      {children}
+    </Link>
+  );
+};
 
 // navbar
 export default function WithAction() {
@@ -52,11 +52,7 @@ export default function WithAction() {
 
   return (
     <>
-      <Box
-        className="navbar"
-        bg={"#EBF5F8"}
-        px={4}
-      >
+      <Box className="navbar" bg={"#EBF5F8"} px={4}>
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <IconButton
             size={"md"}
@@ -69,7 +65,7 @@ export default function WithAction() {
           <HStack spacing={8} alignItems={"center"}>
             <Box>
               <Link to={"/"}>
-                <div className="logo-nav-container" >
+                <div className="logo-nav-container">
                   <img
                     className="logo-nav"
                     width="70rem"
@@ -110,14 +106,12 @@ export default function WithAction() {
                 cursor={"pointer"}
                 minW={0}
               >
-                <Avatar
-                  size={"sm"}
-                  />
+                <Avatar size={"sm"} />
               </MenuButton>
               <MenuList>
-                <MenuItem>
-                  <Link to={"/perfil"}>Meu Perfil</Link>
-                </MenuItem>
+                <Link to={"/perfil"}>
+                  <MenuItem to={"/perfil"}>Meu Perfil</MenuItem>
+                </Link>
                 <MenuItem>Configurações</MenuItem>
                 <MenuDivider />
                 <MenuItem>Sair</MenuItem>

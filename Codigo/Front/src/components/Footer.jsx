@@ -28,10 +28,7 @@ const ListHeader = ({ children }) => {
 export default function Footer() {
   return (
     <footer className="footer">
-      <Box
-        bg={"#EBF5F8"}
-        color={"#292929"}
-      >
+      <Box bg={"#EBF5F8"} color={"#292929"} marginTop={"25px"}>
         <Container as={Stack} maxW={"6xl"} py={8}>
           <SimpleGrid columns={{ base: 1, sm: 2, md: 4 }} spacing={8}>
             <Stack align={"flex-start"}>
@@ -43,13 +40,6 @@ export default function Footer() {
                 <Box as="a" href={"#"}>
                   Features
                 </Box>
-                {/* <Tag
-                size={'sm'}
-                bg={useColorModeValue('green.300', 'green.800')}
-                ml={2}
-                color={'white'}>
-                New
-              </Tag> */}
               </Stack>
             </Stack>
             <Stack align={"flex-start"}>
