@@ -92,7 +92,7 @@ function Perfil() {
     <>
       <Nav />
 
-      <SimpleGrid columns={[1, null, 2]} alignItems={"center"}>
+      <SimpleGrid columns={[1, null, 2]}>
         <Box className="perfil-info-container" margin={"30px"} w={"50%"} >
           <Avatar size={"2xl"} />
           <Text fontSize={"xl"}>Nome do Usuário</Text>
@@ -120,8 +120,9 @@ function Perfil() {
           </Box>
           <Button variant={"btn1"} marginY={"15px"}>Editar Rotina</Button>
         </Box>
+      </SimpleGrid>
 
-        <Box className="perfil-posts-container" margin={"30px"}>
+        <Container className="perfil-posts-container" margin={"30px"}>
           <Text fontSize={"xl"}>Minhas Postagens</Text>
           <SimpleGrid
             spacing={4}
@@ -139,8 +140,7 @@ function Perfil() {
               />
             ))}
           </SimpleGrid>
-        </Box>
-      </SimpleGrid>
+        </Container>
 
       <Footer />
     </>
