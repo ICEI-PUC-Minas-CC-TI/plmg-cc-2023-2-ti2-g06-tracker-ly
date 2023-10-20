@@ -4,16 +4,16 @@
 
 ## Alunos integrantes da equipe
 
-* [Catarina França de Moura Castro]
-* [Fernanda Mariano Rodrigues]
-* [Gabriela Lacerda Muniz]
-* [Rafael Oliveira Lima Peixoto]
+* Catarina França de Moura Castro
+* Fernanda Mariano Rodrigues
+* Gabriela Lacerda Muniz
+* Rafael Oliveira Lima Peixoto
 
 ## Professores responsáveis
 
-* [Nome completo do professor 1]
-* [Nome completo do professor 2]
+* Max do Val Machado
+* Nome completo do professor 2
 
 ## Instruções de utilização
 
-[Assim que a primeira versão do sistema estiver disponível, deverá complementar com as instruções de utilização. Descreva como instalar eventuais dependências e como executar a aplicação.]
+Assim que a primeira versão do sistema estiver disponível, deverá complementar com as instruções de utilização. Descreva como instalar eventuais dependências e como executar a aplicação.
