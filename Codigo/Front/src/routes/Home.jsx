@@ -1,3 +1,5 @@
+// hooks
+import { useState } from "react";
 // components
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
@@ -21,6 +23,20 @@ function Home() {
   // LOGO
   const Logo = () => {
     return <img width="300rem" src="../src/assets/logo-sem-margem.svg" />;
+  };
+
+  // abertura dos modais
+  const [isLoginModalOpen, setLoginModalOpen] = useState(false);
+  const [isCadastroModalOpen, setCadastroModalOpen] = useState(false);
+
+  const openCadastroModal = () => {
+    setCadastroModalOpen(true);
+    setLoginModalOpen(false);
+  };
+
+  const openLoginModal = () => {
+    setCadastroModalOpen(false);
+    setLoginModalOpen(true);
   };
 
   return (
@@ -64,9 +80,9 @@ function Home() {
             <SimpleGrid justifyContent={"center"} m={"0"} pos={"absolute"}>
               <Text className="home-p-invite">Junte-se a nós:</Text>
               <Box className="home-btn-containter">
-                <Cadastro />
+                <Cadastro isOpen={isCadastroModalOpen} openLoginModal={openCadastroModal} />
                 <Text className="home-p-invite">OU</Text>
-                <Login />
+                <Login isOpen={isLoginModalOpen} openCadastroModal={openLoginModal} />
               </Box>
             </SimpleGrid>
           </GridItem>

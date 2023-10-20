@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from './routes/Home';
 import Perfil from './routes/Perfil';
 import Rotina from './routes/Rotina';
+import Feed from './routes/Feed';
 // style
 import { Box } from '@chakra-ui/react';
 import './App.css'
@@ -21,8 +22,8 @@ function App() {
             element={<Home />}
           />
           <Route
-            path="/rotina"
-            element={<Rotina />}
+            path="/feed"
+            element={<Feed />}
           />
           <Route
             path="/perfil"

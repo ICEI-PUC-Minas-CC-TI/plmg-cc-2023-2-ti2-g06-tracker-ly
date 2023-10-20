@@ -7,7 +7,11 @@ const getTheme = () => ({
   // componentes não-chakra
   styles: {
     global: {
-      ".navbar": {},
+      ".form-input": {
+        _focus: {
+          borderColor: '#B6DFD8'
+        }
+      },
 
       ".logo-nav": {},
 
