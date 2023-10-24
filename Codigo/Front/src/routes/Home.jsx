@@ -5,9 +5,6 @@ import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import Login from "../components/Login";
 import Cadastro from "../components/Cadastro";
-import Cadastro2 from "../components/Cadastro2";
-import CadastroTeste from "../components/CadastroTeste";
-
 // chakra
 import {
   Button,
@@ -84,7 +81,6 @@ function Home() {
               <Text className="home-p-invite">Junte-se a nós:</Text>
               <Box className="home-btn-containter">
                 <Cadastro isOpen={isCadastroModalOpen} openLoginModal={openCadastroModal} />
-                <Cadastro2 />
                 <Text className="home-p-invite">OU</Text>
                 <Login isOpen={isLoginModalOpen} openCadastroModal={openLoginModal} />
               </Box>
@@ -92,8 +88,6 @@ function Home() {
           </GridItem>
         </Grid>
       </Container>
-
-      <CadastroTeste />
 
       <Footer />
     </>

@@ -9,7 +9,6 @@ import Feed from './routes/Feed';
 // style
 import { Box } from '@chakra-ui/react';
 import './App.css'
-import Questionario from './routes/Questionario';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -29,10 +28,6 @@ function App() {
           <Route
             path="/perfil"
             element={<Perfil />}
-          />
-          <Route
-            path="/questionario"
-            element={<Questionario />}
           />
         </Routes>
       </BrowserRouter>

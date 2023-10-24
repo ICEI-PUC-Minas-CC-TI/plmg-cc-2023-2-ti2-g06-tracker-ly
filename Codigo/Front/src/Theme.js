@@ -13,6 +13,10 @@ const getTheme = () => ({
     },
   },
 
+  colors: {
+    blue: "#B6DFD8"
+  },
+
   // componentes chakra
   components: {
     Button: {
