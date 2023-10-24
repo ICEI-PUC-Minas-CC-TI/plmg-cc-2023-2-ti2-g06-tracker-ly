@@ -7,14 +7,6 @@ const getTheme = () => ({
   // componentes não-chakra
   styles: {
     global: {
-      ".form-input": {
-        _focus: {
-          borderColor: '#B6DFD8'
-        }
-      },
-
-      ".logo-nav": {},
-
       ".footer": {
         marginBottom: 0,
       },
@@ -46,6 +38,12 @@ const getTheme = () => ({
         variant: "default",
       },
     },
+
+    Input: {
+      _focus: {
+        borderColor: '#B6DFD8'
+      }
+    }
   },
 });
 

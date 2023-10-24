@@ -27,6 +27,8 @@ import {
   InputRightElement,
   Flex,
   Heading,
+  Progress,
+  ButtonGroup,
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
@@ -58,24 +60,44 @@ function Cadastro() {
                   <Box>
                     <FormControl id="firstName" isRequired>
                       <FormLabel>Nome</FormLabel>
-                      <Input className="form-input" focusBorderColor='#B6DFD8' type="text" placeholder="Digite aqui..."/>
+                      <Input
+                        className="form-input"
+                        focusBorderColor="#B6DFD8"
+                        type="text"
+                        placeholder="Digite aqui..."
+                      />
                     </FormControl>
                   </Box>
                   <Box>
                     <FormControl id="username" isRequired>
                       <FormLabel>Username</FormLabel>
-                      <Input className="form-input" focusBorderColor='#B6DFD8' type="text" placeholder="Digite aqui..." />
+                      <Input
+                        className="form-input"
+                        focusBorderColor="#B6DFD8"
+                        type="text"
+                        placeholder="Digite aqui..."
+                      />
                     </FormControl>
                   </Box>
                 </HStack>
                 <FormControl id="email" isRequired>
                   <FormLabel>Email</FormLabel>
-                  <Input className="form-input" focusBorderColor='#B6DFD8' type="email" placeholder="Digite aqui..." />
+                  <Input
+                    className="form-input"
+                    focusBorderColor="#B6DFD8"
+                    type="email"
+                    placeholder="Digite aqui..."
+                  />
                 </FormControl>
                 <FormControl id="password" marginTop={"15px"} isRequired>
                   <FormLabel>Senha</FormLabel>
                   <InputGroup>
-                    <Input className="form-input" focusBorderColor='#B6DFD8' type={showPassword ? "text" : "password"} placeholder="Digite aqui..." />
+                    <Input
+                      className="form-input"
+                      focusBorderColor="#B6DFD8"
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Digite aqui..."
+                    />
                     <InputRightElement h={"full"}>
                       <Button
                         variant={"ghost"}
@@ -87,9 +109,15 @@ function Cadastro() {
                       </Button>
                     </InputRightElement>
                   </InputGroup>
+                  
                   <FormLabel margin={"5px"}>Confirmar senha</FormLabel>
                   <InputGroup>
-                    <Input className="form-input" focusBorderColor='#B6DFD8' type={showPassword ? "text" : "password"} placeholder="Digite aqui..." />
+                    <Input
+                      className="form-input"
+                      focusBorderColor="#B6DFD8"
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Digite aqui..."
+                    />
                     <InputRightElement h={"full"}>
                       <Button
                         variant={"ghost"}
