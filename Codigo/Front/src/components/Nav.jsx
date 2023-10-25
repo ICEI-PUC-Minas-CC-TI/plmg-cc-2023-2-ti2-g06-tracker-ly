@@ -1,4 +1,6 @@
 "use client";
+// components
+import Postar from "./Postar";
 // routes
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 // chakra
@@ -16,11 +18,9 @@ import {
   MenuItem,
   MenuDivider,
   useDisclosure,
-  useColorModeValue,
   Stack,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon, AddIcon } from "@chakra-ui/icons";
-import { BsPersonFill } from "react-icons/bs";
 
 // links da nav
 const Links = [
@@ -89,15 +89,8 @@ export default function WithAction() {
           </HStack>
 
           <Flex alignItems={"center"}>
-            <Button
-              variant={"btn1"}
-              colorScheme={"teal"}
-              size={"sm"}
-              mr={4}
-              leftIcon={<AddIcon />}
-            >
-              Compartilhe seu progresso!
-            </Button>
+            <Postar />
+
             <Menu>
               <MenuButton
                 as={Button}

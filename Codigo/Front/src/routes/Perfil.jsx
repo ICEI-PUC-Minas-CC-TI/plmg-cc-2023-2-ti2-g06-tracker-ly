@@ -14,6 +14,8 @@ import {
   CardFooter,
   Heading,
   SimpleGrid,
+  Grid,
+  GridItem,
 } from "@chakra-ui/react";
 
 function Perfil() {
@@ -92,20 +94,27 @@ function Perfil() {
     <>
       <Nav />
 
-      <SimpleGrid columns={[1, null, 2]}>
-        <Box className="perfil-info-container" margin={"30px"} w={"50%"} >
+      <Grid
+        templateRows="repeat(2, 1fr)"
+        templateColumns="repeat(4, 1fr)"
+        gap={4}
+        margin={"60px"}
+      >
+        <GridItem className="perfil-info-container" rowSpan={2}>
           <Avatar size={"2xl"} />
-          <Text fontSize={"xl"}>Nome do Usuário</Text>
-          <Text fontSize={"md"}>@username</Text>
-          <Text fontSize={"sm"}>
+          <Text fontSize={"3xl"}>Nome do Usuário</Text>
+          <Text fontSize={"xl"}>@username</Text>
+          <Text fontSize={"md"}>
             Descrição do usuário: Lorem ipsum, dolor sit amet consectetur
             adipisicing elit. Illo cum porro excepturi recusandae vel omnis
             distinctio optio tempore nemo iusto?
           </Text>
-          <Button variant={"btn1"} marginY={"15px"}>Editar Perfil</Button>
-        </Box>
+          <Button variant={"btn1"} marginY={"15px"}>
+            Editar Perfil
+          </Button>
+        </GridItem>
 
-        <Box className="perfil-rotinas-container" margin={"30px"}> 
+        <GridItem className="perfil-rotinas-container" colSpan={3}>
           <Box>
             <Text fontSize={"xl"}>Minha Rotina</Text>
             {Rotinas.map((rotina) => (
@@ -118,11 +127,12 @@ function Perfil() {
               />
             ))}
           </Box>
-          <Button variant={"btn1"} marginY={"15px"}>Editar Rotina</Button>
-        </Box>
-      </SimpleGrid>
+          <Button variant={"btn1"} marginY={"15px"}>
+            Editar Rotina
+          </Button>
+        </GridItem>
 
-        <Container className="perfil-posts-container" margin={"30px"}>
+        <GridItem className="perfil-posts-container" colSpan={3}>
           <Text fontSize={"xl"}>Minhas Postagens</Text>
           <SimpleGrid
             spacing={4}
@@ -140,7 +150,8 @@ function Perfil() {
               />
             ))}
           </SimpleGrid>
-        </Container>
+        </GridItem>
+      </Grid>
 
       <Footer />
     </>

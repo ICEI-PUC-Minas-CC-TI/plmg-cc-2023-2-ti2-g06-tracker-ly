@@ -39,7 +39,7 @@ function Login() {
         backdropFilter={"blur(10px)"}
         isCentered
       >
-        <ModalOverlay backdropFilter="blur(10px)" />
+        <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(10px)" />
         <ModalContent>
           <ModalHeader justifySelf={"center"} fontSize={"xl"}>Faça seu Login!</ModalHeader>
           <ModalCloseButton />
