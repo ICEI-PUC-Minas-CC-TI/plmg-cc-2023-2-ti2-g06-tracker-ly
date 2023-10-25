@@ -1,5 +1,10 @@
-// routes
+// hooks
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import * as Yup from "yup";
+import { useLogin } from "../hooks/auth";
+// services
+import { login } from "../services/userService";
 // formik
 import { Formik, Form, Field } from "formik";
 // chakra
@@ -21,11 +26,20 @@ import {
   useColorModeValue,
   Checkbox,
   Text,
+  useToast
 } from "@chakra-ui/react";
-
 
 function Login() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { handleLogin, setUserData } = useLogin();
+  const navigate = useNavigate();
+
+  const SignupSchema = Yup.object().shape({
+    email: Yup.string().email("Email inválido!").required("Campo obrigatório!"),
+    password: Yup.string()
+      .min(2, "Senha muito curta!")
+      .required("Campo obrigatório!"),
+  });
 
   return (
     <>
@@ -41,32 +55,75 @@ function Login() {
       >
         <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(10px)" />
         <ModalContent>
-          <ModalHeader justifySelf={"center"} fontSize={"xl"}>Faça seu Login!</ModalHeader>
+          <ModalHeader justifySelf={"center"} fontSize={"xl"}>
+            Faça seu Login!
+          </ModalHeader>
           <ModalCloseButton />
 
           <ModalBody>
             <Box>
-              <Stack spacing={4}>
-                <FormControl id="email">
-                  <FormLabel>Email</FormLabel>
-                  <Input className="form-input" focusBorderColor='#B6DFD8' type="email" placeholder="Digite aqui..."/>
-                </FormControl>
-                <FormControl id="password">
-                  <FormLabel>Senha</FormLabel>
-                  <Input className="form-input" focusBorderColor='#B6DFD8' type="password" placeholder="Digite aqui..."/>
-                </FormControl>
-                <Stack spacing={10}>
-                  <Stack
-                    direction={{ base: "column", sm: "row" }}
-                    align={"start"}
-                    justify={"space-between"}
-                  >
-                    {/* <Checkbox>Remember me</Checkbox> */}
-                    {/* <Text color={"blue.400"}>Forgot password?</Text> */}
+              <Formik
+                initialValues={{ email: "", password: "" }}
+                //validationSchema={SignupSchema}
+                onSubmit={async (values) => {
+                  const response = await login(values.email, values.password);
+                  console.log(response);
+                  if(response){
+                    handleLogin(response);
+                    navigate("/perfil");
+                  } else {
+                    toast({
+                      title: 'Algo deu errado.',
+                      description: "",
+                      status: 'error',
+                      duration: 9000,
+                      isClosable: false,
+                    })
+                  }
+                }}
+              >
+                <Form>
+                  <Stack spacing={4}>
+                      <FormControl id="email">
+                        <FormLabel>Email</FormLabel>
+                        <Field
+                          as={Input}
+                          name="email"
+                          className="form-input"
+                          focusBorderColor="#B6DFD8"
+                          type="email"
+                          placeholder="Digite aqui..."
+                        />
+                      </FormControl>
+
+                      <FormControl id="password">
+                        <FormLabel>Senha</FormLabel>
+                        <Field
+                          as={Input}
+                          name="password"
+                          className="form-input"
+                          focusBorderColor="#B6DFD8"
+                          type="password"
+                          placeholder="Digite aqui..."
+                        />
+                      </FormControl>
+
+                    <Stack spacing={10}>
+                      <Stack
+                        direction={{ base: "column", sm: "row" }}
+                        align={"start"}
+                        justify={"space-between"}
+                      >
+                        {/* <Checkbox>Remember me</Checkbox> */}
+                        {/* <Text color={"blue.400"}>Forgot password?</Text> */}
+                      </Stack>
+                      <Button variant={"btn1"} type="submit">
+                        Entrar!
+                      </Button>
+                    </Stack>
                   </Stack>
-                  <Button variant={"btn1"} type="submit" >Entrar!</Button>
-                </Stack>
-              </Stack>
+                </Form>
+              </Formik>
             </Box>
           </ModalBody>
 

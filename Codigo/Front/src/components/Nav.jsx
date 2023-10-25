@@ -1,6 +1,7 @@
-"use client";
 // components
 import Postar from "./Postar";
+// hooks
+import { useLogin } from "../hooks/auth";
 // routes
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 // chakra
@@ -22,11 +23,6 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon, AddIcon } from "@chakra-ui/icons";
 
-// links da nav
-const Links = [
-  // { text: "Sobre Nós", path: "/" },
-  { text: "Feed", path: "/feed" },
-];
 
 // botões de navegação
 const NavLink = (props) => {
@@ -49,6 +45,7 @@ const NavLink = (props) => {
 // navbar
 export default function WithAction() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const {  handleLogout } = useLogin();
 
   return (
     <>
@@ -75,7 +72,7 @@ export default function WithAction() {
                 </div>
               </Link>
             </Box>
-            <HStack
+            {/* <HStack
               as={"nav"}
               spacing={4}
               display={{ base: "none", md: "flex" }}
@@ -85,7 +82,7 @@ export default function WithAction() {
                   {link.text}
                 </NavLink>
               ))}
-            </HStack>
+            </HStack> */}
           </HStack>
 
           <Flex alignItems={"center"}>
@@ -107,7 +104,7 @@ export default function WithAction() {
                 </Link>
                 <MenuItem>Configurações</MenuItem>
                 <MenuDivider />
-                <MenuItem>Sair</MenuItem>
+                <MenuItem onClick={handleLogout} >Sair</MenuItem>
               </MenuList>
             </Menu>
           </Flex>

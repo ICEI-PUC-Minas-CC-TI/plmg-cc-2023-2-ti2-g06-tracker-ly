@@ -19,7 +19,7 @@ import {
   SimpleGrid,
 } from "@chakra-ui/react";
 
-function Home() {
+function Presentation() {
   // LOGO
   const Logo = () => {
     return <img width="300rem" src="../src/assets/logo-sem-margem.svg" />;
@@ -41,7 +41,6 @@ function Home() {
 
   return (
     <>
-      <Nav />
 
       <Center marginTop={"40px"}>
         <Logo />
@@ -94,4 +93,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Presentation;
