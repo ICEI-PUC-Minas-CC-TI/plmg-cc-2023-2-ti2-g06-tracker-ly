@@ -1,8 +1,17 @@
 "use client";
 // hooks
 import { useState } from "react";
+import * as Yup from "yup";
+import { useLogin } from "../hooks/auth";
+import { Field, Form, Formik } from "formik";
+
 // routes
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  useNavigate,
+} from "react-router-dom";
 // chakra
 import {
   Modal,
@@ -27,100 +36,138 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import {
-  ViewIcon,
-  ViewOffIcon,
-  ChevronRightIcon,
-  ChevronLeftIcon,
-} from "@chakra-ui/icons";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useToast } from "@chakra-ui/react";
 
 // criar conta
 const Form1 = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+
+  const SignupSchema = Yup.object().shape({
+    userName: Yup.string().required("Insira o seu username."),
+    email: Yup.string()
+      .email("Email inválido!")
+      .required("Insira o seu email."),
+    password: Yup.string()
+      .min(2, "Senha muito curta!")
+      .required("Insira a sua senha"),
+  });
 
   return (
     <>
-      <Flex>
-        <FormControl mr="5%" isRequired>
-          <FormLabel htmlFor="first-name">Nome</FormLabel>
-          <Input
-            id="first-name"
-            placeholder="Digite aqui..."
-            focusBorderColor="#B6DFD8"
-          />
-        </FormControl>
+      <Formik
+        initialValues={{ email: "", password: "" }}
+        //validationSchema={SignupSchema}
+        onSubmit={async (values) => {
+          const response = await login(values.email, values.password);
+          if (response) {
+            handleLogin(response);
+            navigate("/perfil");
+          } else {
+            toast({
+              title: "Algo deu errado.",
+              description: "",
+              status: "error",
+              duration: 9000,
+              isClosable: false,
+            });
+          }
+        }}
+      >
+        <Form>
+          <Flex>
+            <FormControl mr="5%" isRequired>
+              <FormLabel htmlFor="name">Nome</FormLabel>
+              <Field
+                as={Input}
+                id="name"
+                placeholder="Digite aqui..."
+                focusBorderColor="#B6DFD8"
+              />
+            </FormControl>
 
-        <FormControl isRequired>
-          <FormLabel htmlFor="last-name">Username</FormLabel>
-          <Input
-            id="last-name"
-            placeholder="Digite aqui..."
-            focusBorderColor="#B6DFD8"
-          />
-        </FormControl>
-      </Flex>
+            <FormControl isRequired>
+              <FormLabel htmlFor="username">Username</FormLabel>
+              <Field
+                as={Input}
+                id="username"
+                placeholder="Digite aqui..."
+                focusBorderColor="#B6DFD8"
+              />
+            </FormControl>
+          </Flex>
 
-      <FormControl mt="2%" isRequired>
-        <FormLabel htmlFor="email">Email</FormLabel>
-        <Input
-          id="email"
-          type="email"
-          placeholder={"Digite aqui..."}
-          focusBorderColor="#B6DFD8"
-        />
-      </FormControl>
+          <FormControl mt="2%" isRequired>
+            <FormLabel htmlFor="email">Email</FormLabel>
+            <Field
+              as={Input}
+              id="email"
+              type="email"
+              placeholder={"Digite aqui..."}
+              focusBorderColor="#B6DFD8"
+            />
+          </FormControl>
 
-      <FormControl mt="2%" isRequired>
-        <FormLabel htmlFor="email">Data de Nascimento</FormLabel>
-        <Input
-          id="date"
-          type="date"
-          focusBorderColor="#B6DFD8"
-        />
-      </FormControl>
+          <FormControl mt="2%" isRequired>
+            <FormLabel htmlFor="email">Data de Nascimento</FormLabel>
+            <Field
+              as={Input}
+              id="date"
+              type="date"
+              focusBorderColor="#B6DFD8"
+            />
+          </FormControl>
 
-      <FormControl mt={"20px"} isRequired>
-        <FormLabel htmlFor="password" mt="2%">
-          Senha
-        </FormLabel>
-        <InputGroup size="md">
-          <Input
-            pr="4.5rem"
-            type={showPassword ? "text" : "password"}
-            placeholder="Digite aqui..."
-            focusBorderColor="#B6DFD8"
-          />
-          <InputRightElement width="4.5rem">
-            <Button
-              variant={"ghost"}
-              onClick={() => setShowPassword((showPassword) => !showPassword)}
-            >
-              {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-            </Button>
-          </InputRightElement>
-        </InputGroup>
+          <FormControl mt={"20px"} isRequired>
+            <FormLabel htmlFor="password" mt="2%">
+              Senha
+            </FormLabel>
+            <InputGroup size="md">
+              <Field
+                as={Input}
+                pr="4.5rem"
+                type={showPassword ? "text" : "password"}
+                placeholder="Digite aqui..."
+                focusBorderColor="#B6DFD8"
+              />
+              <InputRightElement width="4.5rem">
+                <Button
+                  variant={"ghost"}
+                  onClick={() =>
+                    setShowPassword((showPassword) => !showPassword)
+                  }
+                >
+                  {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                </Button>
+              </InputRightElement>
+            </InputGroup>
 
-        <FormLabel htmlFor="password" mt="2%">
-          Confirmar senha
-        </FormLabel>
-        <InputGroup size="md">
-          <Input
-            pr="4.5rem"
-            type={showPassword ? "text" : "password"}
-            placeholder="Digite aqui..."
-            focusBorderColor="#B6DFD8"
-          />
-          <InputRightElement width="4.5rem">
-            <Button
-              variant={"ghost"}
-              onClick={() => setShowPassword((showPassword) => !showPassword)}
-            >
-              {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-            </Button>
-          </InputRightElement>
-        </InputGroup>
-      </FormControl>
+            <FormLabel htmlFor="password" mt="2%">
+              Confirmar senha
+            </FormLabel>
+            <InputGroup size="md">
+              <Field
+                as={Input}
+                pr="4.5rem"
+                type={showPassword ? "text" : "password"}
+                placeholder="Digite aqui..."
+                focusBorderColor="#B6DFD8"
+              />
+              <InputRightElement width="4.5rem">
+                <Button
+                  variant={"ghost"}
+                  onClick={() =>
+                    setShowPassword((showPassword) => !showPassword)
+                  }
+                >
+                  {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+          </FormControl>
+        </Form>
+      </Formik>
     </>
   );
 };

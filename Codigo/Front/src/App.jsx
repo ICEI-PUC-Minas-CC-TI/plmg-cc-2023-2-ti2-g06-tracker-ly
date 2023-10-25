@@ -23,6 +23,10 @@ function App() {
             element={ !loginAuth ? <Presentation /> : <Navigate to="/feed" />}
           />
           <Route
+            path="/login"
+            element={ !loginAuth ? <Presentation /> : <Navigate to="/feed" />}
+          />
+          <Route
             path="/feed"
             element={ loginAuth ? <Feed /> : <Navigate to="/" /> }
           />

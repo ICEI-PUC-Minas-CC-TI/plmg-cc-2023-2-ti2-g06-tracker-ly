@@ -1,6 +1,5 @@
 // hooks
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { useLogin } from "../hooks/auth";
 // services
@@ -26,10 +25,12 @@ import {
   useColorModeValue,
   Checkbox,
   Text,
-  useToast
+  useToast,
 } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 
 function Login() {
+  const [changeState, setChangeState] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { handleLogin, setUserData } = useLogin();
   const navigate = useNavigate();
@@ -41,15 +42,29 @@ function Login() {
       .required("Campo obrigatório!"),
   });
 
+  // abertura dos modais
+  useEffect(() => {
+    const atual = window.location.href;
+    console.log();
+
+    if(atual.split("/")[3] === "login"){
+      onOpen();
+    }
+  }, [changeState]);
+
   return (
     <>
-      <Button onClick={onOpen} variant={"btn1"}>
-        Faça seu Login
-      </Button>
+        <Button onClick={() =>{
+          navigate('/login');
+          setChangeState(!changeState);
+        }} variant={"btn1"}>Faça seu Login</Button>
 
       <Modal
         isOpen={isOpen}
-        onClose={onClose}
+        onClose={() => {
+          onClose();
+          navigate("/");
+        }}
         backdropFilter={"blur(10px)"}
         isCentered
       >
@@ -67,46 +82,45 @@ function Login() {
                 //validationSchema={SignupSchema}
                 onSubmit={async (values) => {
                   const response = await login(values.email, values.password);
-                  console.log(response);
-                  if(response){
+                  if (response) {
                     handleLogin(response);
                     navigate("/perfil");
                   } else {
                     toast({
-                      title: 'Algo deu errado.',
+                      title: "Algo deu errado.",
                       description: "",
-                      status: 'error',
+                      status: "error",
                       duration: 9000,
                       isClosable: false,
-                    })
+                    });
                   }
                 }}
               >
                 <Form>
                   <Stack spacing={4}>
-                      <FormControl id="email">
-                        <FormLabel>Email</FormLabel>
-                        <Field
-                          as={Input}
-                          name="email"
-                          className="form-input"
-                          focusBorderColor="#B6DFD8"
-                          type="email"
-                          placeholder="Digite aqui..."
-                        />
-                      </FormControl>
+                    <FormControl id="email">
+                      <FormLabel>Email</FormLabel>
+                      <Field
+                        as={Input}
+                        name="email"
+                        className="form-input"
+                        focusBorderColor="#B6DFD8"
+                        type="email"
+                        placeholder="Digite aqui..."
+                      />
+                    </FormControl>
 
-                      <FormControl id="password">
-                        <FormLabel>Senha</FormLabel>
-                        <Field
-                          as={Input}
-                          name="password"
-                          className="form-input"
-                          focusBorderColor="#B6DFD8"
-                          type="password"
-                          placeholder="Digite aqui..."
-                        />
-                      </FormControl>
+                    <FormControl id="password">
+                      <FormLabel>Senha</FormLabel>
+                      <Field
+                        as={Input}
+                        name="password"
+                        className="form-input"
+                        focusBorderColor="#B6DFD8"
+                        type="password"
+                        placeholder="Digite aqui..."
+                      />
+                    </FormControl>
 
                     <Stack spacing={10}>
                       <Stack

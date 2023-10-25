@@ -6,9 +6,6 @@ export const LoginProvider = ({ children }) => {
   const [loginAuth, setLoginAuth] = useState(false);
   const [userData, setUserData] = useState();
 
-  console.log(loginAuth);
-  console.log(userData);
-
   // receber info do user
   const readUserData = () => {
     try {

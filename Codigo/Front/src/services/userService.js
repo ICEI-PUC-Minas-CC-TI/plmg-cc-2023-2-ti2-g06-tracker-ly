@@ -40,9 +40,9 @@ export const cadastro = async (data) => {
 };
 
 export const getUser = async (userId) => {
-  return await (
-    await axios.get(``)
-  ).data;
+//   return await (
+//     await axios.get(``)
+//   ).data;
 };
 
 export const seguirUser = async (followerUserId, followedUserId) => {
