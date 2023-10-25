@@ -71,6 +71,15 @@ const Form1 = () => {
         />
       </FormControl>
 
+      <FormControl mt="2%" isRequired>
+        <FormLabel htmlFor="email">Data de Nascimento</FormLabel>
+        <Input
+          id="date"
+          type="date"
+          focusBorderColor="#B6DFD8"
+        />
+      </FormControl>
+
       <FormControl mt={"20px"} isRequired>
         <FormLabel htmlFor="password" mt="2%">
           Senha
