@@ -4,11 +4,13 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.sql.Date;
 import java.util.*;
+import com.google.gson.Gson;
 
 import objetos.Usuario;
+import service.usuario;
 
 public class UsuarioDAO extends DAO {
-    UsuarioDAO() {
+    public UsuarioDAO() {
         super();
     }
 
@@ -42,7 +44,6 @@ public class UsuarioDAO extends DAO {
     public LinkedList<Usuario> getUsuario(int id, String nome, int nivel, String email, Date nasc) throws SQLException {
         LinkedList<Usuario> usuario = new LinkedList<Usuario>();
         String sql = "SELECT * FROM usuario where 1=1";
-        
 
         if (id > 0) {
             String addquery = "and id =" + id;
@@ -88,9 +89,11 @@ public class UsuarioDAO extends DAO {
 
     }
 
-    public boolean autenticar(String email, String senha) throws NoSuchAlgorithmException, SQLException { // autenticacao do usuario no login com senha md5
+    public Gson autenticar(String email, String senha) throws NoSuchAlgorithmException, SQLException { // autenticacao do usuario no login com senha md5
          // Crie uma instância do MessageDigest com o algoritmo MD5
             MessageDigest md = MessageDigest.getInstance("MD5");
+
+            Gson gson = new Gson();
 
             // Converte a senha em bytes
             byte[] senhaBytes = senha.getBytes();
@@ -109,16 +112,18 @@ public class UsuarioDAO extends DAO {
 
             // Retorne a representação da senha em MD5 como uma string
             String senhaConvertida = hashString.toString();
-
+            System.out.println(senhaConvertida);
             String sql = "SELECT * FROM usuario WHERE email=" + email + "AND senha=" + senhaConvertida;
             PreparedStatement ps = conexao.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
-            if (rs.toString() == "") {
-                return false;
+            if(rs.next()) {
+                Usuario usuario = new Usuario(rs.getInt("id"),rs.getString("nome"), rs.getInt("nivel"),rs.getString("email"), rs.getDate("nasc"), rs.getString("senha"));
+                gson.toJson(usuario);
+                return gson;
             }
-            return true;
-            
+
+            return null;
     }
 }
 

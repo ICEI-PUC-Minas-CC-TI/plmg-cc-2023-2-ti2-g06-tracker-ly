@@ -4,6 +4,8 @@ import java.util.Locale;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
+import java.util.*;
+
 import java.text.DateFormat;
 
 public class Usuario {
@@ -14,10 +16,9 @@ public class Usuario {
     Date nasc;
     String senha;
 
-    Usuario() {
+    public Usuario() {
 
     }
-
 
     public Usuario(int id, String nome, int nivel, String email, Date nasc, String senha) {
         this.id = id;
@@ -26,6 +27,18 @@ public class Usuario {
         this.email = email;
         this.senha = senha;
         this.nasc = nasc;
+    }
+
+    public Usuario(int id, String nome, int nivel, String email, String senha, java.util.Date nasc) {
+        this.id = id;
+        this.nome = nome;
+        this.nivel = nivel;
+        this.email = email;
+        this.senha = senha;
+        this.nasc = nasc;
+
+
+
     }
 
     public String getNasc() { // aqui ele transforma a data e retorna uma string com ela
