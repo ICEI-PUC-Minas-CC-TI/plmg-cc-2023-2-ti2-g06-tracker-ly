@@ -5,16 +5,17 @@ import java.util.*;
 import objetos.Habito;
 
 public class HabitoDAO extends DAO {
-    HabitoDAO() {
+    public HabitoDAO() {
         super();
     }
 
     public void inserirHabito(Habito cc) throws Exception {
-        String sql = "INSERT into habito(id,desc, foto) values (?,?, ?)";
+        String sql = "INSERT into habito(nome, descr, freq, hora) values (?, ?, ?, ?)";
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
-        preparedStatement.setInt(1, cc.getId());
-        preparedStatement.setString(2, cc.getDesc());
-        preparedStatement.setBytes(3, cc.getFoto());
+        preparedStatement.setString(1, cc.getNome());
+        preparedStatement.setString(2, cc.getdescr());
+        preparedStatement.setInt(3, cc.getFreq());
+        preparedStatement.setString(4, cc.getHora());
         preparedStatement.executeUpdate();
 
     }
@@ -27,23 +28,22 @@ public class HabitoDAO extends DAO {
 
         while(result.next()) {
            habitos.add(
-            new Habito(result.getInt("id"), result.getString("desc"), result.getBytes("foto"))
+            new Habito(result.getInt("id"), result.getString("nome"), result.getString("descr"), result.getInt("freq"), result.getString("hora"))
            );
         }
         return habitos;
     }
 
-    public LinkedList<Habito> getHabito(int id, String desc) throws SQLException {
+    public LinkedList<Habito> getHabito(int id, String descr) throws SQLException {
         LinkedList<Habito> habitos = new LinkedList<Habito>();
         String sql = "SELECT * FROM habito where 1=1";
-        
 
         if (id > 0) {
             String addquery = "and id =" + id;
             sql += addquery;
         }
-        if (!desc.equals("")) { 
-            String addquery = "and desc =" + desc;
+        if (!descr.equals("")) {
+            String addquery = "and descr =" + descr;
             sql += addquery;
         }
 
@@ -52,7 +52,7 @@ public class HabitoDAO extends DAO {
 
         while(result.next()) {
            habitos.add(
-            new Habito(result.getInt("id"), result.getString("desc"), result.getBytes("foto"))
+            new Habito(result.getInt("id"), result.getString("nome"), result.getString("descr"), result.getInt("freq"), result.getString("hora"))
            );
         }
         return habitos;
