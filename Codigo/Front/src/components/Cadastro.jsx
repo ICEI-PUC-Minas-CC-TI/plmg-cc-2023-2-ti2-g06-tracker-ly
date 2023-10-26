@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import * as Yup from "yup";
 import { useLogin } from "../hooks/auth";
-import { Field, Form, Formik } from "formik";
+import { Field, Form, Formik, useFormik } from "formik";
 // services
 import { cadastro } from "../services/userService";
 // routes
@@ -43,6 +43,7 @@ import { useToast } from "@chakra-ui/react";
 const Form1 = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const toast = useToast();
 
   // restrições de cadastro
   const SignupSchema = Yup.object().shape({
@@ -53,23 +54,30 @@ const Form1 = () => {
     password: Yup.string()
       .min(2, "Senha muito curta!")
       .required("Insira a sua senha"),
-    date: Yup.string()
-    .required("Insira a sua data de nascimento."),
+    date: Yup.string().required("Insira a sua data de nascimento."),
+    passwordConfirmation: Yup.string().oneOf(
+      [Yup.ref("password"), null],
+      "As senhas devem ser iguais."
+    ),
   });
 
   return (
     <>
       <Formik
-        initialValues={{ email: "", password: "", userName: "", date: "" }}
+        // onSubmit={formik.handleSubmit}
+        initialValues={{ email: "", password: "", date: "" }}
         //validationSchema={SignupSchema}
         onSubmit={async (values) => {
+          console.log(values);
           const response = await cadastro(values);
-          if (response) {
-            handleLogin(response);
-            navigate("/perfil");
-          } else {
+          try {
+            if (response) {
+              handleLogin(response);
+              navigate("/perfil");
+            }
+          } catch (e) {
             toast({
-              title: "Algo deu errado.",
+              title: "Algo deu errado, tente novamente.",
               description: "",
               status: "error",
               duration: 9000,
@@ -91,7 +99,7 @@ const Form1 = () => {
               />
             </FormControl>
 
-            <FormControl isRequired>
+            {/* <FormControl isRequired>
               <FormLabel htmlFor="username">Username</FormLabel>
               <Field
                 as={Input}
@@ -100,7 +108,7 @@ const Form1 = () => {
                 placeholder="Digite aqui..."
                 focusBorderColor="#B6DFD8"
               />
-            </FormControl>
+            </FormControl> */}
           </Flex>
 
           <FormControl mt="2%" isRequired>
@@ -134,30 +142,7 @@ const Form1 = () => {
               <Field
                 as={Input}
                 name="password"
-                pr="4.5rem"
-                type={showPassword ? "text" : "password"}
-                placeholder="Digite aqui..."
-                focusBorderColor="#B6DFD8"
-              />
-              <InputRightElement width="4.5rem">
-                <Button
-                  variant={"ghost"}
-                  onClick={() =>
-                    setShowPassword((showPassword) => !showPassword)
-                  }
-                >
-                  {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                </Button>
-              </InputRightElement>
-            </InputGroup>
-
-            <FormLabel htmlFor="password" mt="2%">
-              Confirmar senha
-            </FormLabel>
-            <InputGroup size="md">
-              <Field
-                as={Input}
-                name="password"
+                id="senha"
                 pr="4.5rem"
                 type={showPassword ? "text" : "password"}
                 placeholder="Digite aqui..."
@@ -175,6 +160,50 @@ const Form1 = () => {
               </InputRightElement>
             </InputGroup>
           </FormControl>
+
+          {/* <FormControl mt={"20px"} isRequired>
+            <FormLabel htmlFor="password" mt="2%">
+              Confirmar senha
+            </FormLabel>
+            <InputGroup size="md">
+              <Field
+                as={Input}
+                name="confirmPassword"
+                id="confirmar-senha"
+                pr="4.5rem"
+                type={showPassword ? "text" : "password"}
+                placeholder="Digite aqui..."
+                focusBorderColor="#B6DFD8"
+              />
+              <InputRightElement width="4.5rem">
+                <Button
+                  variant={"ghost"}
+                  onClick={() =>
+                    setShowPassword((showPassword) => !showPassword)
+                  }
+                >
+                  {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+          </FormControl> */}
+
+          <Button
+            variant="btn1"
+            type="submit"
+            mt={"20px"}
+            onClick={() => {
+              toast({
+                title: "Perfeito!",
+                description: "Conta criada com sucesso.",
+                status: "success",
+                duration: 3000,
+                isClosable: true,
+              });
+            }}
+          >
+            Criar
+          </Button>
         </Form>
       </Formik>
     </>
@@ -237,6 +266,31 @@ const Form2 = () => {
   );
 };
 
+// const FormTest = () => {
+//   const formik = useFormik({
+//     initialValues: {
+//       email: '',
+//     },
+//     onSubmit: (values) => {
+//       alert(JSON.stringify(values, null, 2))
+//     },
+//   })
+//   return (
+//     <form onSubmit={formik.handleSubmit}>
+//       <label htmlFor='email'>Email Address</label>
+//       <input
+//         id='email'
+//         name='email'
+//         type='email'
+//         onChange={formik.handleChange}
+//         value={formik.values.email}
+//       />
+
+//       <button type='submit'>Submit</button>
+//     </form>
+//   )
+// }
+
 function Cadastro() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
@@ -244,20 +298,21 @@ function Cadastro() {
   const navigate = useNavigate();
 
   // abertura dos modais
-  useEffect(() => {
-    const atual = window.location.href;
+  // useEffect(() => {
+  //   const atual = window.location.href;
 
-    if (atual.split("/")[3] === "cadastro") {
-      console.log("entrou");
-      onOpen();
-    }
-  }, [window.location.href]);
+  //   if (atual.split("/")[3] === "cadastro") {
+  //     onOpen();
+  //   }
+  // }, [window.location.href]);
 
   return (
     <>
       <Button
+        type="button"
         onClick={() => {
-          navigate("/cadastro");
+          onOpen();
+          // navigate("/cadastro");
         }}
         variant={"btn1"}
       >
@@ -281,13 +336,14 @@ function Cadastro() {
           <ModalCloseButton />
 
           <ModalBody>
-            <Box p={3} as="form">
+            <Box p={3}>
               {step === 1 ? <Form1 /> : <Form2 />}
               {step === 2 ? (
                 <Button
                   variant="btn1"
-                  type="submit"
+                  // type="submit"
                   mt={"20px"}
+                  type="button"
                   onClick={() => {
                     toast({
                       title: "Perfeito!",
@@ -307,6 +363,7 @@ function Cadastro() {
           <ModalFooter>
             <ButtonGroup>
               <Button
+                type="button"
                 onClick={() => {
                   setStep(step - 1);
                 }}
@@ -316,6 +373,7 @@ function Cadastro() {
                 Anterior
               </Button>
               <Button
+                type="button"
                 isDisabled={step === 2}
                 onClick={() => {
                   setStep(step + 1);
@@ -326,7 +384,16 @@ function Cadastro() {
               </Button>
             </ButtonGroup>
 
-            <Button variant="ghost" mr={2} size={"sm"} onClick={ () => {onClose(); navigate("/login")}}>
+            <Button
+              type="button"
+              variant="ghost"
+              mr={2}
+              size={"sm"}
+              onClick={() => {
+                onClose();
+                navigate("/login");
+              }}
+            >
               <Link>Já tem uma conta? Faça Login</Link>
             </Button>
           </ModalFooter>
