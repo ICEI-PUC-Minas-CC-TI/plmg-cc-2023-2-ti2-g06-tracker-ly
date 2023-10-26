@@ -35,7 +35,6 @@ public class SeguindoDAO extends DAO {
     public LinkedList<Seguindo> getSeguindo(int segue_id, int seguido_id) throws SQLException {
         LinkedList<Seguindo> seguindo = new LinkedList<Seguindo>();
         String sql = "SELECT * FROM seguindo where 1=1";
-        
 
         if (segue_id > 0) {
             String addquery = "and segue_id =" + segue_id;
