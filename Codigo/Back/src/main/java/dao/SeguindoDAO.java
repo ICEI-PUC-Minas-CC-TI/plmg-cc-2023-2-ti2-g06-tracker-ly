@@ -45,7 +45,6 @@ public class SeguindoDAO extends DAO {
             String addquery = "and seguido_id =" + seguido_id;
             sql += addquery;
         }
-        
 
         PreparedStatement ps = conexao.prepareStatement(sql);
         ResultSet result = ps.executeQuery();
