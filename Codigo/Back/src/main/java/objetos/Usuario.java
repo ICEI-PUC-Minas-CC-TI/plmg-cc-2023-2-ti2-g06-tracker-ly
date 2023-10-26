@@ -18,7 +18,12 @@ public class Usuario {
     String senha;
 
     public Usuario() {
-
+        this.id = -1;
+        this.nome = "";
+        this.nivel = -1;
+        this.email = "";
+        this.nasc = null;
+        setSenha("");
     }
 
     public Usuario(int id, String nome, int nivel, String email, Date nasc, String senha) {
