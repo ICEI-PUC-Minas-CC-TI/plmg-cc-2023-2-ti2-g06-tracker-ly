@@ -64,26 +64,25 @@ const Form1 = () => {
   return (
     <>
       <Formik
-        // onSubmit={formik.handleSubmit}
-        initialValues={{ email: "", password: "", date: "" }}
+        initialValues={{ username: "", email: "", password: "", date: "", name: "" }}
         //validationSchema={SignupSchema}
         onSubmit={async (values) => {
           console.log(values);
           const response = await cadastro(values);
-          try {
-            if (response) {
-              handleLogin(response);
-              navigate("/perfil");
-            }
-          } catch (e) {
-            toast({
-              title: "Algo deu errado, tente novamente.",
-              description: "",
-              status: "error",
-              duration: 9000,
-              isClosable: false,
-            });
+          console.log(response);
+          
+          if (response) {
+            console.log(response);
+            handleLogin(response);
+            navigate("/perfil");
           }
+          toast({
+            title: "Algo deu errado, tente novamente.",
+            description: "",
+            status: "error",
+            duration: 9000,
+            isClosable: false,
+          });
         }}
       >
         <Form>
@@ -99,7 +98,7 @@ const Form1 = () => {
               />
             </FormControl>
 
-            {/* <FormControl isRequired>
+            <FormControl isRequired>
               <FormLabel htmlFor="username">Username</FormLabel>
               <Field
                 as={Input}
@@ -108,7 +107,7 @@ const Form1 = () => {
                 placeholder="Digite aqui..."
                 focusBorderColor="#B6DFD8"
               />
-            </FormControl> */}
+            </FormControl>
           </Flex>
 
           <FormControl mt="2%" isRequired>
@@ -142,7 +141,7 @@ const Form1 = () => {
               <Field
                 as={Input}
                 name="password"
-                id="senha"
+                id="password"
                 pr="4.5rem"
                 type={showPassword ? "text" : "password"}
                 placeholder="Digite aqui..."
@@ -192,8 +191,8 @@ const Form1 = () => {
             variant="btn1"
             type="submit"
             mt={"20px"}
-            onClick={() => {
-              toast({
+            onClick={ async () => {
+              await toast({
                 title: "Perfeito!",
                 description: "Conta criada com sucesso.",
                 status: "success",
@@ -266,31 +265,6 @@ const Form2 = () => {
   );
 };
 
-// const FormTest = () => {
-//   const formik = useFormik({
-//     initialValues: {
-//       email: '',
-//     },
-//     onSubmit: (values) => {
-//       alert(JSON.stringify(values, null, 2))
-//     },
-//   })
-//   return (
-//     <form onSubmit={formik.handleSubmit}>
-//       <label htmlFor='email'>Email Address</label>
-//       <input
-//         id='email'
-//         name='email'
-//         type='email'
-//         onChange={formik.handleChange}
-//         value={formik.values.email}
-//       />
-
-//       <button type='submit'>Submit</button>
-//     </form>
-//   )
-// }
-
 function Cadastro() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
@@ -298,13 +272,13 @@ function Cadastro() {
   const navigate = useNavigate();
 
   // abertura dos modais
-  // useEffect(() => {
-  //   const atual = window.location.href;
+  useEffect(() => {
+    const atual = window.location.href;
 
-  //   if (atual.split("/")[3] === "cadastro") {
-  //     onOpen();
-  //   }
-  // }, [window.location.href]);
+    if (atual.split("/")[3] === "cadastro") {
+      onOpen();
+    }
+  }, [window.location.href]);
 
   return (
     <>
@@ -312,7 +286,7 @@ function Cadastro() {
         type="button"
         onClick={() => {
           onOpen();
-          // navigate("/cadastro");
+          //navigate("/cadastro");
         }}
         variant={"btn1"}
       >
