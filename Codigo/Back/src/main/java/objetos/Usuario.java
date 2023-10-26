@@ -4,6 +4,9 @@ import java.util.Locale;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
+import java.util.*;
+import java.text.SimpleDateFormat;
+
 import java.text.DateFormat;
 
 public class Usuario {
@@ -14,10 +17,9 @@ public class Usuario {
     Date nasc;
     String senha;
 
-    Usuario() {
+    public Usuario() {
 
     }
-
 
     public Usuario(int id, String nome, int nivel, String email, Date nasc, String senha) {
         this.id = id;
@@ -28,14 +30,33 @@ public class Usuario {
         this.nasc = nasc;
     }
 
-    public String getNasc() { // aqui ele transforma a data e retorna uma string com ela
-        Locale locale = new Locale("pt-br", "BR");
-        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.DEFAULT, locale);
-        String date = dateFormat.format(nasc);
-        return date;
+    public Usuario(int id, String nome, int nivel, String email, String senha, String nasc) {
+        this.id = id;
+        this.nome = nome;
+        this.nivel = nivel;
+        this.email = email;
+        this.senha = senha;
+        // try{
+        // SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        // java.util.Date parsedDate = dateFormat.parse(this.nasc.toString());
+        // java.sql.Date dataNasc = new java.sql.Date(parsedDate.getTime());
+        // this.nasc = dataNasc;
+        // }catch(Exception e){
+        //     e.printStackTrace();
+        //     this.nasc = null;
+        // }
+        this.nasc = Date.valueOf(nasc);
+
+
     }
 
-    public void setNasc(Date nasc) { // aqui ele seta a data do sistema operacional 
+    public Date getNasc() { // aqui ele transforma a data e retorna uma Date com ela
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String data = sdf.format(this.nasc);
+        return Date.valueOf(data);
+    }
+
+    public void setNasc(Date nasc) { // aqui ele seta a data do sistema operacional
         this.nasc = nasc;
     }
 
