@@ -24,7 +24,7 @@ public class UsuarioService {
 
     private static UsuarioDAO usuarioDAO = new UsuarioDAO();
 
-    public Gson login(Request request, Response response){
+    public String login(Request request, Response response){
         response.type("application/json");
         String user = request.queryParams("user");
         String senha = request.queryParams("senha");
@@ -32,12 +32,13 @@ public class UsuarioService {
 
         Gson gson = new Gson();
         try{
-            gson = usuarioDAO.autenticar(user, senha);
-            return gson;
+            Usuario u = usuarioDAO.autenticar(user, senha);
+            System.out.println("aaaaaa " + u.getNome());
+            return gson.toJson(u);
         } catch (Exception e){
-            System.out.println(e);
-            return gson;
+          System.out.println(e);
         }
+        return gson.toJson(null);
     }
 
     public boolean cadastro(Request request, Response response){
@@ -46,6 +47,7 @@ public class UsuarioService {
         String nome = request.queryParams("nome");
         String email = request.queryParams("email");
         String senha = request.queryParams("senha");
+        String nasc = request.queryParams("nasc");
 
         //String nasc = request.queryParams("nasc");
 
@@ -54,7 +56,7 @@ public class UsuarioService {
         // int nivel = Integer.parseInt(request.queryParams("nivel"));
 
         try{
-            usuarioDAO.inserirUsuario(new Usuario(-1, nome, 1, email, senha, "2000-01-01"));
+            usuarioDAO.inserirUsuario(new Usuario(-1, nome, 1, email, senha, nasc));
             return true;
         }
         catch (Exception e){
