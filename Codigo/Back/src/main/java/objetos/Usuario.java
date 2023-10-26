@@ -60,7 +60,6 @@ public class Usuario {
         this.nasc = nasc;
     }
 
-
     public int getId() {
         return this.id;
     }
@@ -119,7 +118,8 @@ public class Usuario {
 
             // Retorne a representação da senha em MD5 como uma string
             this.senha = hashString.toString();
-        } catch (NoSuchAlgorithmException e) {
+        }
+        catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
     }

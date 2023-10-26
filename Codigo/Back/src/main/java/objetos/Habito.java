@@ -1,18 +1,29 @@
 package objetos;
+import java.util.Locale;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.sql.Date;
+import java.util.*;
+import java.text.SimpleDateFormat;
 
+import java.text.DateFormat;
 public class Habito {
     int id;
-    String desc;
-    byte[] foto; // tem que transformar a imagem em array de byte
+    String descr;
+    String nome;
+    int freq;
+    String hora;
 
-    Habito() {
+    public Habito() {
 
     }
 
-    public Habito(int id, String desc, byte[] foto) {
+    public Habito(int id, String nome, String descr, int freq, String hora) {
         this.id = id;
-        this.desc = desc;
-        this.foto = foto;
+        this.descr = descr;
+        this.nome = nome;
+        this.freq = freq;
+        this.hora = hora;
     }
 
     public int getId() {
@@ -23,21 +34,36 @@ public class Habito {
         this.id = id;
     }
 
-    public String getDesc() {
-        return this.desc;
+    public String getNome() {
+        return this.nome;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public byte[] getFoto() {
-        return this.foto;
+    public String getdescr() {
+        return this.descr;
     }
 
-    public void setFoto(byte[] foto) {
-        this.foto = foto;
+    public void setdescr(String descr) {
+        this.descr = descr;
     }
-    
+
+    public int getFreq() {
+        return this.freq;
+    }
+
+    public void setFreq(int freq) {
+        this.freq = freq;
+    }
+
+    public String getHora() {
+        return this.hora;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
+    }
 
 }
