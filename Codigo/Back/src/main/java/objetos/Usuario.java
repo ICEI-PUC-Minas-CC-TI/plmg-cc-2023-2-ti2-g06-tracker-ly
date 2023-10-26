@@ -26,7 +26,7 @@ public class Usuario {
         this.nome = nome;
         this.nivel = nivel;
         this.email = email;
-        this.senha = senha;
+        setSenha(senha);
         this.nasc = nasc;
     }
 
@@ -35,7 +35,7 @@ public class Usuario {
         this.nome = nome;
         this.nivel = nivel;
         this.email = email;
-        this.senha = senha;
+        setSenha(senha);
         // try{
         // SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         // java.util.Date parsedDate = dateFormat.parse(this.nasc.toString());
@@ -97,35 +97,38 @@ public class Usuario {
         return this.senha;
     }
 
-    public void setSenha(String senha) {
-        try {
-            // Crie uma instância do MessageDigest com o algoritmo MD5
-            MessageDigest md = MessageDigest.getInstance("MD5");
-
-            // Converte a senha em bytes
-            byte[] senhaBytes = senha.getBytes();
-
-            // Atualiza o MessageDigest com os bytes da senha
-            md.update(senhaBytes);
-
-            // Gere o hash MD5
-            byte[] digest = md.digest();
-
-            // Converte o hash MD5 em uma representação de string hexadecimal
-            StringBuilder hashString = new StringBuilder();
-            for (byte b : digest) {
-                hashString.append(String.format("%02x", b));
-            }
-
-            // Retorne a representação da senha em MD5 como uma string
-            this.senha = hashString.toString();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
+    public void setSenha(String pass) {
+        this.senha = toMD5(pass);
     }
 
+    public static String toMD5(String password) {
+        try {
+            // Crie uma instância de MessageDigest com o algoritmo MD5
+            MessageDigest md = MessageDigest.getInstance("MD5");
 
+            // Converte a senha em um array de bytes
+            byte[] passwordBytes = password.getBytes();
 
+            // Atualize o MessageDigest com os bytes da senha
+            md.update(passwordBytes);
+
+            // Calcule o hash MD5
+            byte[] hashBytes = md.digest();
+
+            // Converta os bytes do hash em uma representação hexadecimal
+            StringBuilder sb = new StringBuilder();
+            for (byte b : hashBytes) {
+                sb.append(String.format("%02x", b));
+            }
+
+            // Retorne a representação em MD5 da senha
+            return sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            // Trate possíveis exceções
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 
 }
