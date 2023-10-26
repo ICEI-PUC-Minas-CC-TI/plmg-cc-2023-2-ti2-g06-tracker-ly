@@ -4,6 +4,9 @@ import java.util.Locale;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
+import java.util.*;
+import java.text.SimpleDateFormat;
+
 import java.text.DateFormat;
 
 public class Usuario {
@@ -14,28 +17,46 @@ public class Usuario {
     Date nasc;
     String senha;
 
-    Usuario() {
+    public Usuario() {
 
     }
-
 
     public Usuario(int id, String nome, int nivel, String email, Date nasc, String senha) {
         this.id = id;
         this.nome = nome;
         this.nivel = nivel;
         this.email = email;
-        this.senha = senha;
+        setSenha(senha);
         this.nasc = nasc;
     }
 
-    public String getNasc() { // aqui ele transforma a data e retorna uma string com ela
-        Locale locale = new Locale("pt-br", "BR");
-        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.DEFAULT, locale);
-        String date = dateFormat.format(nasc);
-        return date;
+    public Usuario(int id, String nome, int nivel, String email, String senha, String nasc) {
+        this.id = id;
+        this.nome = nome;
+        this.nivel = nivel;
+        this.email = email;
+        setSenha(senha);
+        // try{
+        // SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        // java.util.Date parsedDate = dateFormat.parse(this.nasc.toString());
+        // java.sql.Date dataNasc = new java.sql.Date(parsedDate.getTime());
+        // this.nasc = dataNasc;
+        // }catch(Exception e){
+        //     e.printStackTrace();
+        //     this.nasc = null;
+        // }
+        this.nasc = Date.valueOf(nasc);
+
+
     }
 
-    public void setNasc(Date nasc) { // aqui ele seta a data do sistema operacional 
+    public Date getNasc() { // aqui ele transforma a data e retorna uma Date com ela
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String data = sdf.format(this.nasc);
+        return Date.valueOf(data);
+    }
+
+    public void setNasc(Date nasc) { // aqui ele seta a data do sistema operacional
         this.nasc = nasc;
     }
 
@@ -76,35 +97,38 @@ public class Usuario {
         return this.senha;
     }
 
-    public void setSenha(String senha) {
-        try {
-            // Crie uma instância do MessageDigest com o algoritmo MD5
-            MessageDigest md = MessageDigest.getInstance("MD5");
-
-            // Converte a senha em bytes
-            byte[] senhaBytes = senha.getBytes();
-
-            // Atualiza o MessageDigest com os bytes da senha
-            md.update(senhaBytes);
-
-            // Gere o hash MD5
-            byte[] digest = md.digest();
-
-            // Converte o hash MD5 em uma representação de string hexadecimal
-            StringBuilder hashString = new StringBuilder();
-            for (byte b : digest) {
-                hashString.append(String.format("%02x", b));
-            }
-
-            // Retorne a representação da senha em MD5 como uma string
-            this.senha = hashString.toString();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
+    public void setSenha(String pass) {
+        this.senha = toMD5(pass);
     }
 
+    public static String toMD5(String password) {
+        try {
+            // Crie uma instância de MessageDigest com o algoritmo MD5
+            MessageDigest md = MessageDigest.getInstance("MD5");
 
+            // Converte a senha em um array de bytes
+            byte[] passwordBytes = password.getBytes();
 
+            // Atualize o MessageDigest com os bytes da senha
+            md.update(passwordBytes);
+
+            // Calcule o hash MD5
+            byte[] hashBytes = md.digest();
+
+            // Converta os bytes do hash em uma representação hexadecimal
+            StringBuilder sb = new StringBuilder();
+            for (byte b : hashBytes) {
+                sb.append(String.format("%02x", b));
+            }
+
+            // Retorne a representação em MD5 da senha
+            return sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            // Trate possíveis exceções
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 
 }

@@ -4,23 +4,23 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.sql.Date;
 import java.util.*;
+import com.google.gson.Gson;
 
 import objetos.Usuario;
 
 public class UsuarioDAO extends DAO {
-    UsuarioDAO() {
+    public UsuarioDAO() {
         super();
     }
 
     public void inserirUsuario(Usuario cc) throws Exception {
-        String sql = "INSERT into usuario(id, nome, nivel, email, nasc, senha) values (?,?, ?, ?, ?, ?)";
+        String sql = "INSERT into usuario(nome, nivel, email, nasc, senha) values (?, ?, ?, ?, ?)";
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
-        preparedStatement.setInt(1, cc.getId());
-        preparedStatement.setString(2, cc.getNome());
-        preparedStatement.setInt(3, cc.getNivel());
-        preparedStatement.setString(4, cc.getEmail());
-        preparedStatement.setString(5, cc.getNasc());
-        preparedStatement.setString(6, cc.getSenha());
+        preparedStatement.setString(1, cc.getNome());
+        preparedStatement.setInt(2, cc.getNivel());
+        preparedStatement.setString(3, cc.getEmail());
+        preparedStatement.setDate(4, cc.getNasc());
+        preparedStatement.setString(5, cc.getSenha());
         preparedStatement.executeUpdate();
 
     }
@@ -42,7 +42,6 @@ public class UsuarioDAO extends DAO {
     public LinkedList<Usuario> getUsuario(int id, String nome, int nivel, String email, Date nasc) throws SQLException {
         LinkedList<Usuario> usuario = new LinkedList<Usuario>();
         String sql = "SELECT * FROM usuario where 1=1";
-        
 
         if (id > 0) {
             String addquery = "and id =" + id;
@@ -88,9 +87,11 @@ public class UsuarioDAO extends DAO {
 
     }
 
-    public boolean autenticar(String email, String senha) throws NoSuchAlgorithmException, SQLException { // autenticacao do usuario no login com senha md5
+    public Gson autenticar(String email, String senha) throws NoSuchAlgorithmException, SQLException { // autenticacao do usuario no login com senha md5
          // Crie uma instância do MessageDigest com o algoritmo MD5
             MessageDigest md = MessageDigest.getInstance("MD5");
+
+            Gson gson = new Gson();
 
             // Converte a senha em bytes
             byte[] senhaBytes = senha.getBytes();
@@ -109,16 +110,19 @@ public class UsuarioDAO extends DAO {
 
             // Retorne a representação da senha em MD5 como uma string
             String senhaConvertida = hashString.toString();
-
-            String sql = "SELECT * FROM usuario WHERE email=" + email + "AND senha=" + senhaConvertida;
+            System.out.println(senhaConvertida);
+            String sql = "SELECT * FROM usuario WHERE email= '{" + email + "}' AND senha= '{" + senhaConvertida + "}';";
             PreparedStatement ps = conexao.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
-            if (rs.toString() == "") {
-                return false;
+            if(rs.next()) {
+                Usuario usuario = new Usuario(rs.getInt("id"),rs.getString("nome"), rs.getInt("nivel"),rs.getString("email"), rs.getDate("nasc"), rs.getString("senha"));   
+                gson.toJson(usuario);
+                
+                return gson;
             }
-            return true;
-            
+
+            return gson;
     }
 }
 
