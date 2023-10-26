@@ -87,42 +87,51 @@ public class UsuarioDAO extends DAO {
 
     }
 
-    public Gson autenticar(String email, String senha) throws NoSuchAlgorithmException, SQLException { // autenticacao do usuario no login com senha md5
-         // Crie uma instância do MessageDigest com o algoritmo MD5
-            MessageDigest md = MessageDigest.getInstance("MD5");
-
-            Gson gson = new Gson();
-
-            // Converte a senha em bytes
-            byte[] senhaBytes = senha.getBytes();
-
-            // Atualiza o MessageDigest com os bytes da senha
-            md.update(senhaBytes);
-
-            // Gere o hash MD5
-            byte[] digest = md.digest();
-
-            // Converte o hash MD5 em uma representação de string hexadecimal
-            StringBuilder hashString = new StringBuilder();
-            for (byte b : digest) {
-                hashString.append(String.format("%02x", b));
-            }
-
-            // Retorne a representação da senha em MD5 como uma string
-            String senhaConvertida = hashString.toString();
-            System.out.println(senhaConvertida);
-            String sql = "SELECT * FROM usuario WHERE email= '{" + email + "}' AND senha= '{" + senhaConvertida + "}';";
-            PreparedStatement ps = conexao.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-
-            if(rs.next()) {
-                Usuario usuario = new Usuario(rs.getInt("id"),rs.getString("nome"), rs.getInt("nivel"),rs.getString("email"), rs.getDate("nasc"), rs.getString("senha"));   
-                gson.toJson(usuario);
-                
-                return gson;
-            }
-
-            return gson;
+    public Usuario autenticar(String email, String senha) throws NoSuchAlgorithmException, SQLException { // autenticacao do usuario no login com senha md5
+        // Crie uma instância do MessageDigest com o algoritmo MD5
+        MessageDigest md = MessageDigest.getInstance("MD5");
+  
+        // Converte a senha em bytes
+        byte[] senhaBytes = senha.getBytes();
+  
+        // Atualiza o MessageDigest com os bytes da senha
+        md.update(senhaBytes);
+  
+        // Gere o hash MD5
+        byte[] digest = md.digest();
+  
+        // Converte o hash MD5 em uma representação de string hexadecimal
+        StringBuilder hashString = new StringBuilder();
+        for (byte b : digest) {
+            hashString.append(String.format("%02x", b));
+        }
+  
+        // Retorne a representação da senha em MD5 como uma string
+        String senhaConvertida = hashString.toString();
+        System.out.println(senhaConvertida);
+  
+        Usuario usuario = new Usuario();
+  
+        Statement st = conexao.createStatement(
+          ResultSet.TYPE_SCROLL_INSENSITIVE,
+          ResultSet.CONCUR_READ_ONLY
+        );
+  
+        String sql =
+          "SELECT * FROM usuario WHERE email LIKE '" +
+          email +
+          "' AND senha LIKE '" +
+          senhaConvertida +
+          "'";
+  
+        ResultSet rs = st.executeQuery(sql);
+        if (rs.next()) {
+          usuario = new Usuario(rs.getInt("id"),rs.getString("nome"), rs.getInt("nivel"),rs.getString("email"), rs.getDate("nasc"), rs.getString("senha"));
+        } else  {
+          System.out.println("DEU RUIM");
+        }
+        return usuario;
+            
     }
 }
 
