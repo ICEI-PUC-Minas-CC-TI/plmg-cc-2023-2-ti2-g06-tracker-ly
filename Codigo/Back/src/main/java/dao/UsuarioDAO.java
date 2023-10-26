@@ -7,7 +7,6 @@ import java.util.*;
 import com.google.gson.Gson;
 
 import objetos.Usuario;
-import service.usuario;
 
 public class UsuarioDAO extends DAO {
     public UsuarioDAO() {
@@ -15,14 +14,13 @@ public class UsuarioDAO extends DAO {
     }
 
     public void inserirUsuario(Usuario cc) throws Exception {
-        String sql = "INSERT into usuario(id, nome, nivel, email, nasc, senha) values (?,?, ?, ?, ?, ?)";
+        String sql = "INSERT into usuario(nome, nivel, email, nasc, senha) values (?, ?, ?, ?, ?)";
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
-        preparedStatement.setInt(1, cc.getId());
-        preparedStatement.setString(2, cc.getNome());
-        preparedStatement.setInt(3, cc.getNivel());
-        preparedStatement.setString(4, cc.getEmail());
-        preparedStatement.setString(5, cc.getNasc());
-        preparedStatement.setString(6, cc.getSenha());
+        preparedStatement.setString(1, cc.getNome());
+        preparedStatement.setInt(2, cc.getNivel());
+        preparedStatement.setString(3, cc.getEmail());
+        preparedStatement.setDate(4, cc.getNasc());
+        preparedStatement.setString(5, cc.getSenha());
         preparedStatement.executeUpdate();
 
     }
@@ -113,17 +111,18 @@ public class UsuarioDAO extends DAO {
             // Retorne a representação da senha em MD5 como uma string
             String senhaConvertida = hashString.toString();
             System.out.println(senhaConvertida);
-            String sql = "SELECT * FROM usuario WHERE email=" + email + "AND senha=" + senhaConvertida;
+            String sql = "SELECT * FROM usuario WHERE email= '{" + email + "}' AND senha= '{" + senhaConvertida + "}';";
             PreparedStatement ps = conexao.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
             if(rs.next()) {
-                Usuario usuario = new Usuario(rs.getInt("id"),rs.getString("nome"), rs.getInt("nivel"),rs.getString("email"), rs.getDate("nasc"), rs.getString("senha"));
+                Usuario usuario = new Usuario(rs.getInt("id"),rs.getString("nome"), rs.getInt("nivel"),rs.getString("email"), rs.getDate("nasc"), rs.getString("senha"));   
                 gson.toJson(usuario);
+                
                 return gson;
             }
 
-            return null;
+            return gson;
     }
 }
 
