@@ -9,10 +9,12 @@ export const LoginProvider = ({ children }) => {
   // receber info do user
   const readUserData = () => {
     try {
-        const dataUser = localStorage.getItem("user");
+      const dataUser = localStorage.getItem("user");
+      if (dataUser != undefined) {
         setUserData(JSON.parse(dataUser));
         setLoginAuth(true);
-    } catch(e) {}
+      }
+      } catch (e) {}
   };
 
   // poe user info no local
@@ -31,7 +33,7 @@ export const LoginProvider = ({ children }) => {
   // mantem o login quando a página atualiza
   useEffect(() => {
     readUserData();
-  },[]);
+  }, []);
 
   return (
     <LoginContext.Provider
@@ -41,7 +43,7 @@ export const LoginProvider = ({ children }) => {
         setUserData,
         handleLogin,
         handleLogout,
-        readUserData
+        readUserData,
       }}
     >
       {children}

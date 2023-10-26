@@ -1,10 +1,10 @@
-"use client";
 // hooks
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import * as Yup from "yup";
 import { useLogin } from "../hooks/auth";
 import { Field, Form, Formik } from "formik";
-
+// services
+import { cadastro } from "../services/userService";
 // routes
 import {
   BrowserRouter as Router,
@@ -44,6 +44,7 @@ const Form1 = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
+  // restrições de cadastro
   const SignupSchema = Yup.object().shape({
     userName: Yup.string().required("Insira o seu username."),
     email: Yup.string()
@@ -52,15 +53,17 @@ const Form1 = () => {
     password: Yup.string()
       .min(2, "Senha muito curta!")
       .required("Insira a sua senha"),
+    date: Yup.string()
+    .required("Insira a sua data de nascimento."),
   });
 
   return (
     <>
       <Formik
-        initialValues={{ email: "", password: "" }}
+        initialValues={{ email: "", password: "", userName: "", date: "" }}
         //validationSchema={SignupSchema}
         onSubmit={async (values) => {
-          const response = await login(values.email, values.password);
+          const response = await cadastro(values);
           if (response) {
             handleLogin(response);
             navigate("/perfil");
@@ -82,6 +85,7 @@ const Form1 = () => {
               <Field
                 as={Input}
                 id="name"
+                name="name"
                 placeholder="Digite aqui..."
                 focusBorderColor="#B6DFD8"
               />
@@ -92,6 +96,7 @@ const Form1 = () => {
               <Field
                 as={Input}
                 id="username"
+                name="username"
                 placeholder="Digite aqui..."
                 focusBorderColor="#B6DFD8"
               />
@@ -103,6 +108,7 @@ const Form1 = () => {
             <Field
               as={Input}
               id="email"
+              name="email"
               type="email"
               placeholder={"Digite aqui..."}
               focusBorderColor="#B6DFD8"
@@ -113,7 +119,8 @@ const Form1 = () => {
             <FormLabel htmlFor="email">Data de Nascimento</FormLabel>
             <Field
               as={Input}
-              id="date"
+              id="nasc"
+              name="date"
               type="date"
               focusBorderColor="#B6DFD8"
             />
@@ -126,6 +133,7 @@ const Form1 = () => {
             <InputGroup size="md">
               <Field
                 as={Input}
+                name="password"
                 pr="4.5rem"
                 type={showPassword ? "text" : "password"}
                 placeholder="Digite aqui..."
@@ -149,6 +157,7 @@ const Form1 = () => {
             <InputGroup size="md">
               <Field
                 as={Input}
+                name="password"
                 pr="4.5rem"
                 type={showPassword ? "text" : "password"}
                 placeholder="Digite aqui..."
@@ -232,16 +241,35 @@ function Cadastro() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const [step, setStep] = useState(1);
+  const navigate = useNavigate();
+
+  // abertura dos modais
+  useEffect(() => {
+    const atual = window.location.href;
+
+    if (atual.split("/")[3] === "cadastro") {
+      console.log("entrou");
+      onOpen();
+    }
+  }, [window.location.href]);
 
   return (
     <>
-      <Button onClick={onOpen} variant={"btn1"}>
+      <Button
+        onClick={() => {
+          navigate("/cadastro");
+        }}
+        variant={"btn1"}
+      >
         Criar conta
       </Button>
 
       <Modal
         isOpen={isOpen}
-        onClose={onClose}
+        onClose={() => {
+          onClose();
+          navigate("/");
+        }}
         size={"xl"}
         backdropFilter={"blur(10px)"}
         scrollBehavior={"inside"}
@@ -298,7 +326,7 @@ function Cadastro() {
               </Button>
             </ButtonGroup>
 
-            <Button variant="ghost" mr={2} size={"sm"} onClick={onClose}>
+            <Button variant="ghost" mr={2} size={"sm"} onClick={ () => {onClose(); navigate("/login")}}>
               <Link>Já tem uma conta? Faça Login</Link>
             </Button>
           </ModalFooter>

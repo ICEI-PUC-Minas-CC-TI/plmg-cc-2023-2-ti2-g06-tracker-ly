@@ -27,12 +27,16 @@ function App() {
             element={ !loginAuth ? <Presentation /> : <Navigate to="/feed" />}
           />
           <Route
+            path="/cadastro"
+            element={ !loginAuth ? <Presentation /> : <Navigate to="/feed" />}
+          />
+          <Route
             path="/feed"
             element={ loginAuth ? <Feed /> : <Navigate to="/" /> }
           />
           <Route
             path="/perfil"
-            element={<Perfil />}
+            element={loginAuth ? <Perfil /> : <Navigate to="/" />}
           />
         </Routes>
       </BrowserRouter>

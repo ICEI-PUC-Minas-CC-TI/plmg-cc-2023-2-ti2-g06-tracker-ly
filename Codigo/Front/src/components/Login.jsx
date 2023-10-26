@@ -1,5 +1,10 @@
 // hooks
-import { BrowserRouter as Router, Route, Link, useNavigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  useNavigate,
+} from "react-router-dom";
 import * as Yup from "yup";
 import { useLogin } from "../hooks/auth";
 // services
@@ -30,11 +35,11 @@ import {
 import { useEffect, useState } from "react";
 
 function Login() {
-  const [changeState, setChangeState] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { handleLogin, setUserData } = useLogin();
   const navigate = useNavigate();
 
+  // restrições de login
   const SignupSchema = Yup.object().shape({
     email: Yup.string().email("Email inválido!").required("Campo obrigatório!"),
     password: Yup.string()
@@ -45,19 +50,22 @@ function Login() {
   // abertura dos modais
   useEffect(() => {
     const atual = window.location.href;
-    console.log();
 
-    if(atual.split("/")[3] === "login"){
+    if (atual.split("/")[3] === "login") {
       onOpen();
     }
-  }, [changeState]);
+  }, [window.location.href]);
 
   return (
     <>
-        <Button onClick={() =>{
-          navigate('/login');
-          setChangeState(!changeState);
-        }} variant={"btn1"}>Faça seu Login</Button>
+      <Button
+        onClick={() => {
+          navigate("/login");
+        }}
+        variant={"btn1"}
+      >
+        Faça seu Login
+      </Button>
 
       <Modal
         isOpen={isOpen}
@@ -142,7 +150,14 @@ function Login() {
           </ModalBody>
 
           <ModalFooter>
-            <Button variant="ghost" mr={2} onClick={onClose} size={"sm"}>
+            <Button
+              variant="ghost"
+              mr={2}
+              onClick={() => {
+                onClose(); navigate("/cadastro");
+              }}
+              size={"sm"}
+            >
               <Link>Não tem uma conta? Faça seu cadastro</Link>
             </Button>
           </ModalFooter>

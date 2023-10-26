@@ -28,7 +28,7 @@ export const cadastro = async (data) => {
     "&nome=" +
     data.nome +
     "&nasc=" +
-    data.nasc;
+    data.data;
 
   return true;
 
@@ -46,13 +46,13 @@ export const getUser = async (userId) => {
 };
 
 export const seguirUser = async (followerUserId, followedUserId) => {
-  return await (
-    await axios.post(``)
-  ).data;
+  // return await (
+  //   await axios.post(``)
+  // ).data;
 };
 
 export const seguidor = async (followerUserId, followedUserId) => {
-  return await (
-    await axios.get(``)
-  ).data;
+  // return await (
+  //   await axios.get(``)
+  // ).data;
 };

@@ -3,7 +3,7 @@ import Postar from "./Postar";
 // hooks
 import { useLogin } from "../hooks/auth";
 // routes
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, useNavigate } from "react-router-dom";
 // chakra
 import {
   Box,
@@ -46,6 +46,7 @@ const NavLink = (props) => {
 export default function WithAction() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {  handleLogout } = useLogin();
+  const navigate = useNavigate();
 
   return (
     <>
