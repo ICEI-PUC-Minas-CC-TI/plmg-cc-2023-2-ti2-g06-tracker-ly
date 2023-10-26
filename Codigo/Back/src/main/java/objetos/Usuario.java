@@ -60,7 +60,6 @@ public class Usuario {
         this.nasc = nasc;
     }
 
-
     public int getId() {
         return this.id;
     }
