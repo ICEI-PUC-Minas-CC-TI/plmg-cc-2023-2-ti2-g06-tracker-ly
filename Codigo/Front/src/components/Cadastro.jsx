@@ -64,17 +64,25 @@ const Form1 = () => {
   return (
     <>
       <Formik
-        initialValues={{ username: "", email: "", password: "", date: "", name: "" }}
+        initialValues={{
+          username: "",
+          email: "",
+          password: "",
+          date: "",
+          name: "",
+        }}
         //validationSchema={SignupSchema}
         onSubmit={async (values) => {
           console.log(values);
-          const response = await cadastro(values);
+          const response = await cadastro(values).then((response) =>
+            response.json().data
+          );
+
           console.log(response);
-          
+
           if (response) {
             console.log(response);
             handleLogin(response);
-            navigate("/perfil");
           }
           toast({
             title: "Algo deu errado, tente novamente.",
@@ -191,8 +199,8 @@ const Form1 = () => {
             variant="btn1"
             type="submit"
             mt={"20px"}
-            onClick={ async () => {
-              await toast({
+            onClick={() => {
+              toast({
                 title: "Perfeito!",
                 description: "Conta criada com sucesso.",
                 status: "success",

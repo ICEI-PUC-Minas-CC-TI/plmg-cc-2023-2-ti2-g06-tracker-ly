@@ -36,8 +36,9 @@ import { useEffect, useState } from "react";
 
 function Login() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { handleLogin, setUserData } = useLogin();
+  const { handleLogin } = useLogin();
   const navigate = useNavigate();
+  const toast = useToast();
 
   // restrições de login
   const SignupSchema = Yup.object().shape({
@@ -90,10 +91,17 @@ function Login() {
                 initialValues={{ email: "", password: "" }}
                 //validationSchema={SignupSchema}
                 onSubmit={async (values) => {
-                  const response = await login(values.email, values.password);
+                  console.log("values:" + values);
+                  const response = await login(
+                    values.email,
+                    values.password
+                  ).then((response) => response.json().data);
+
+                  console.log("response before if:" + response);
+
                   if (response) {
+                    console.log("response after if:" + response);
                     handleLogin(response);
-                    navigate("/perfil");
                   } else {
                     toast({
                       title: "Algo deu errado.",
@@ -105,7 +113,8 @@ function Login() {
                   }
                 }}
               >
-                <Form>
+                
+                <Form >
                   <Stack spacing={4}>
                     <FormControl id="email">
                       <FormLabel>Email</FormLabel>
@@ -131,19 +140,22 @@ function Login() {
                       />
                     </FormControl>
 
-                    <Stack spacing={10}>
-                      <Stack
-                        direction={{ base: "column", sm: "row" }}
-                        align={"start"}
-                        justify={"space-between"}
+                    <Button
+                        variant={"btn1"}
+                        type="submit"
+                        onClick={() => {
+                          toast({
+                            title: "Perfeito!",
+                            description: "Você está logado.",
+                            status: "success",
+                            duration: 3000,
+                            isClosable: true,
+                          });
+                        }}
                       >
-                        {/* <Checkbox>Remember me</Checkbox> */}
-                        {/* <Text color={"blue.400"}>Forgot password?</Text> */}
-                      </Stack>
-                      <Button variant={"btn1"} type="submit">
                         Entrar!
-                      </Button>
-                    </Stack>
+                    </Button>
+
                   </Stack>
                 </Form>
               </Formik>
@@ -154,8 +166,10 @@ function Login() {
             <Button
               variant="ghost"
               mr={2}
+              type="button"
               onClick={() => {
-                onClose(); navigate("/cadastro");
+                onClose();
+                navigate("/cadastro");
               }}
               size={"sm"}
             >
