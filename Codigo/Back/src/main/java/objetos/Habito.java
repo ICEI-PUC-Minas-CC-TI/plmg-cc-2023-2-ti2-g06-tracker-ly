@@ -13,17 +13,19 @@ public class Habito {
     String nome;
     int freq;
     String hora;
+    int perfil_id;
 
     public Habito() {
 
     }
 
-    public Habito(int id, String nome, String descr, int freq, String hora) {
+    public Habito(int id, String nome, String descr, int freq, String hora, int perfil_id) {
         this.id = id;
         this.descr = descr;
         this.nome = nome;
         this.freq = freq;
         this.hora = hora;
+        this.perfil_id = perfil_id;
     }
 
     public int getId() {
@@ -64,6 +66,14 @@ public class Habito {
 
     public void setHora(String hora) {
         this.hora = hora;
+    }
+
+    public int getPerfil_id() {
+        return this.perfil_id;
+    }
+
+    public void setPerfil_id(int perfil_id) {
+        this.perfil_id = perfil_id;
     }
 
 }
