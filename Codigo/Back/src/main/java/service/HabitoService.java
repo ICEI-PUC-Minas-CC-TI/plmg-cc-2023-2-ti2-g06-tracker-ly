@@ -36,15 +36,16 @@ public class HabitoService {
         String descr = request.queryParams("descr");
         int freq = Integer.parseInt(request.queryParams("freq"));
         String hora = request.queryParams("hora");
+        int id = Integer.parseInt(request.queryParams("perfil_id"));
 
-        //String nasc = request.queryParams("nasc");
+        // String nasc = request.queryParams("nasc");
 
         // Date dataFormatada = formato.parse(nasc);
 
         // int nivel = Integer.parseInt(request.queryParams("nivel"));
 
         try{
-            habito.inserirHabito(new Habito(-1, nome, descr, freq, hora));
+            habito.inserirHabito(new Habito(-1, nome, descr, freq, hora, id));
             return true;
         }
         catch (Exception e){
@@ -52,4 +53,17 @@ public class HabitoService {
             return false;
         }
     }
+
+    public String listar(Request request, Response response){
+        int id = Integer.parseInt(request.queryParams("perfil_id"));
+        Gson gson = new Gson();
+        try{
+            return gson.toJson(habito.getHabito(id));
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return gson.toJson(null);
+        }
+    }
+
 }
