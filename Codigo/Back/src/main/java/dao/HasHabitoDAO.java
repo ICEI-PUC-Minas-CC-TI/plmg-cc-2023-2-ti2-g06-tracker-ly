@@ -38,7 +38,6 @@ public class HasHabitoDAO extends DAO {
     public LinkedList<HasHabito> getHasHabito(int frequencia, int streak, int habito_id, int perfil_id) throws SQLException {
         LinkedList<HasHabito> hasHabito = new LinkedList<HasHabito>();
         String sql = "SELECT * FROM perfil_has_habito where 1=1";
-        
 
         if (frequencia > 0) {
             String addquery = "and frequencia =" + frequencia;
@@ -57,7 +56,6 @@ public class HasHabitoDAO extends DAO {
             String addquery = "and perfil_id =" + perfil_id;
             sql += addquery;
         }
-
 
         PreparedStatement ps = conexao.prepareStatement(sql);
         ResultSet result = ps.executeQuery();

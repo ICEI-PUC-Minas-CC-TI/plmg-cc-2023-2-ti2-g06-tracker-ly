@@ -43,11 +43,14 @@ public class Aplicacao {
 
         get("/login", (request, response) -> usuarioService.login(request, response));
 
-        // http://localhost:4567/cadastro/?user=bibs&senha=bibss&nome=Bibs&email=bibs@gmail.com&nasc=2000-01
+        //http://localhost:4567/cadastro?user=bibs&senha=bibss&nome=Bibs&email=bibs@gmail.com&nasc=2000-01
 
         post("/cadastro", (request, response) -> usuarioService.cadastro(request, response));
 
-        // http://localhost:4567/habitocadastro/?nome=bibshabituada&descr=habito+de+bibs&freq=1&hora=12:00
+        //http://localhost:4567/habitocadastro?nome=bibshabituada&descr=habito+de+bibs&freq=1&hora=12:00&perfil_id=1
         post("/habitocadastro", (request, response) -> HabitoService.cadastro(request, response));
+
+        //http://localhost:4567/habitoslistar?perfil_id=7
+        post("/habitoslistar", (request, response) -> HabitoService.listar(request, response));
     }
 }
