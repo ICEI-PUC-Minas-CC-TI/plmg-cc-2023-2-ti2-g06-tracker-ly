@@ -66,4 +66,16 @@ public class HabitoService {
         }
     }
 
+    public void delete(Request request, Response response){
+        int id = Integer.parseInt(request.queryParams("id"));
+        try{
+            habito.deleteHabito(id);
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    
+
 }

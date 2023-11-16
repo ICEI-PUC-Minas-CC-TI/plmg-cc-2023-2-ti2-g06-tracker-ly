@@ -88,7 +88,9 @@ public class UsuarioDAO extends DAO {
     }
 
     public Usuario autenticar(String email, String senha) throws NoSuchAlgorithmException, SQLException { // autenticacao do usuario no login com senha md5
-      // Crie uma instância do MessageDigest com o algoritmo MD5
+        System.out.println("As informações recebidas pelo autenticar são" + email + " " + senha);
+      
+        // Crie uma instância do MessageDigest com o algoritmo MD5
       MessageDigest md = MessageDigest.getInstance("MD5");
 
       // Converte a senha em bytes
@@ -108,15 +110,15 @@ public class UsuarioDAO extends DAO {
 
       // Retorne a representação da senha em MD5 como uma string
       String senhaConvertida = hashString.toString();
-      System.out.println(senhaConvertida);
 
-      Usuario usuario = new Usuario();
+      // !!! DANDO PAU A PARTIR DAQUI
 
       Statement st = conexao.createStatement(
         ResultSet.TYPE_SCROLL_INSENSITIVE,
         ResultSet.CONCUR_READ_ONLY
       );
 
+      System.out.println("Inserindo usuário no banco...");
       String sql =
         "SELECT * FROM usuario WHERE email LIKE '" +
         email +
@@ -126,12 +128,13 @@ public class UsuarioDAO extends DAO {
 
       ResultSet rs = st.executeQuery(sql);
       if (rs.next()) {
-        usuario = new Usuario(rs.getInt("id"),rs.getString("nome"), rs.getInt("nivel"),rs.getString("email"), rs.getDate("nasc"), rs.getString("senha"));
+        Usuario usuario = new Usuario(rs.getInt("id"),rs.getString("nome"), rs.getInt("nivel"),rs.getString("email"), rs.getDate("nasc"), rs.getString("senha"));
+        System.out.println("Usuario inserido com sucesso");
+        return usuario;
       } else  {
-        System.out.println("DEU RUIM");
+        System.out.println("Não foi possível inserir o usuário no banco.");
       }
-      return usuario;
-          
+      return null; 
     }
 }
 

@@ -1,9 +1,7 @@
 package service;
 
-import static spark.Spark.*;
 import spark.Request;
 import spark.Response;
-import java.text.SimpleDateFormat;
 
 import com.google.gson.Gson;
 import dao.UsuarioDAO;
@@ -25,18 +23,19 @@ public class UsuarioService {
     private static UsuarioDAO usuarioDAO = new UsuarioDAO();
 
     public String login(Request request, Response response){
+        UsuarioDAO user = new UsuarioDAO();
         response.type("application/json");
-        String user = request.queryParams("user");
+        String email = request.queryParams("email");
         String senha = request.queryParams("senha");
-        System.out.println(senha);
 
         Gson gson = new Gson();
         try{
-            Usuario u = usuarioDAO.autenticar(user, senha);
-            System.out.println("aaaaaa " + u.getNome());
+            System.out.println("O erro está na função autenticar");
+            Usuario u = user.autenticar(email, senha);
+            System.out.println("O erro não está na função autenticar" + u.getNome());
             return gson.toJson(u);
         } catch (Exception e){
-          System.out.println(e);
+          System.out.println(e.getMessage());
         }
         return gson.toJson(null);
     }
@@ -63,5 +62,5 @@ public class UsuarioService {
             System.out.println(e.getMessage());
             return false;
         }
-    };
+    }
 }
