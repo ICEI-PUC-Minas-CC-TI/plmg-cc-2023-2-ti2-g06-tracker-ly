@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export const LoginContext = React.createContext({});
 
@@ -8,17 +8,20 @@ export const LoginProvider = ({ children }) => {
 
   // receber info do user
   const readUserData = () => {
-    const dataUser = localStorage.getItem("user");
-
-    if (dataUser) {
-      setLoginAuth(true);
-      setUserData(JSON.parse(dataUser));
-    }
+    try {
+      const dataUser = localStorage.getItem("user");
+      console.log("dataUser:" + dataUser);
+      if (dataUser != undefined) {
+        setUserData(JSON.parse(dataUser));
+        setLoginAuth(true);
+      }
+      } catch (e) {}
   };
 
   // poe user info no local
-  const handleLogin = () => {
-    localStorage.setItem("user", JSON.stringify(userData));
+  const handleLogin = (param) => {
+    localStorage.setItem("user", JSON.stringify(param));
+    console.log("param:", param);
     readUserData();
   };
 
@@ -29,14 +32,20 @@ export const LoginProvider = ({ children }) => {
     setUserData(undefined);
   };
 
+  // mantem o login quando a página atualiza
+  useEffect(() => {
+    readUserData();
+  }, []);
+
   return (
     <LoginContext.Provider
       value={{
         loginAuth,
         userData,
+        setUserData,
         handleLogin,
         handleLogout,
-        readUserData
+        readUserData,
       }}
     >
       {children}

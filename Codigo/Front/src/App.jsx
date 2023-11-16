@@ -1,8 +1,9 @@
 // hooks
 import { useState } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useLogin } from './hooks/auth';
 // routes
-import Home from './routes/Home';
+import Presentation from './routes/Presentation';
 import Perfil from './routes/Perfil';
 import Rotina from './routes/Rotina';
 import Feed from './routes/Feed';
@@ -11,7 +12,7 @@ import { Box } from '@chakra-ui/react';
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { loginAuth } = useLogin();
 
   return (
     <Box>
@@ -19,15 +20,23 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={<Home />}
+            element={ !loginAuth ? <Presentation /> : <Navigate to="/feed" />}
+          />
+          <Route
+            path="/login"
+            element={ !loginAuth ? <Presentation /> : <Navigate to="/feed" />}
+          />
+          <Route
+            path="/cadastro"
+            element={ !loginAuth ? <Presentation /> : <Navigate to="/feed" />}
           />
           <Route
             path="/feed"
-            element={<Feed />}
+            element={ loginAuth ? <Feed /> : <Navigate to="/" /> }
           />
           <Route
             path="/perfil"
-            element={<Perfil />}
+            element={loginAuth ? <Perfil /> : <Navigate to="/" />}
           />
         </Routes>
       </BrowserRouter>

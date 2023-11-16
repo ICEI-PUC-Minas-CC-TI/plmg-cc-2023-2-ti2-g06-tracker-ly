@@ -1,3 +1,9 @@
+// hooks
+import { useEffect, useState } from "react";
+import { useLogin } from "../hooks/auth";
+import { getRotina } from "../services/rotinaService";
+import { getPost } from "../services/postService";
+import { parseFreq } from "../helpers";
 // components
 import Footer from "../components/Footer";
 import Nav from "../components/Nav";
@@ -19,68 +25,59 @@ import {
 } from "@chakra-ui/react";
 
 function Perfil() {
-  // rotinas mock
-  const Rotinas = [
-    {
-      id: 1,
-      nome: "Ler um livro",
-      duration: 0.25,
-      date: "Todo dia",
-      time: "18:00",
-    },
-    {
-      id: 2,
-      nome: "Fazer exercícios",
-      duration: 1,
-      date: "Três vezes na semana",
-      time: "9:00",
-    },
-    { id: 3, nome: "Estudar", duration: 2, date: "Todo dia", time: "14:00" },
-  ];
+  const { userData } = useLogin();
+  const [Rotinas, setRotinas] = useState([]);
+  const [Posts, setPosts] = useState([]);
+  
+  // fetch rotinas e salva em um array 
+  useEffect(() => {
+    const fetchRotinas = async () => {
+      const dataRotinas = await getRotina(userData.id);
+      setRotinas(dataRotinas);
+    };
 
-  // postagens mock
-  const Posts = [
-    {
-      id: 1,
-      habito: "Ler um livro",
-      duration: 0.25,
-      date: "19/10/2023",
-      time: "18:00",
-    },
-    {
-      id: 2,
-      habito: "Fazer exercícios",
-      duration: 1,
-      date: "19/10/2023",
-      time: "9:00",
-    },
-  ];
+    fetchRotinas();
+  }, []);
+
+  // fetch posts e salva em um array
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const dataPosts = await getPost(userData.id);
+      setPosts(dataPosts);
+    };
+
+    fetchPosts();
+  }, []);
 
   // rotinas renderizadas
   const RotinasRend = (props) => {
-    const { nome, duration, date, time } = props;
+    const { nome, desc, freq, hora } = props;
+
     return (
       <Box bg={"#EBF5F8"} px={4} py={5} rounded={"lg"} shadow={"lg"}>
         <Text fontSize={"md"}>{nome}</Text>
-        <Text fontSize={"sm"}>{duration} horas</Text>
-        <Text fontSize={"sm"}>
-          {date}, às {time}
-        </Text>
+        <Text fontSize={"sm"}>{desc}</Text>
+        <Text fontSize={"sm"}>{parseFreq(freq)}</Text>
+        <Text fontSize={"sm"}>{hora}</Text>
+
       </Box>
     );
   };
 
   // postagens renderizadas
   const PostsRend = (props) => {
-    const { habito, duration, date, time } = props;
+    const { habito_id, desc, data } = props;
     return (
       <Card>
         <CardHeader>
-          <Heading size="md">{habito}</Heading>
+          <Heading size="md">{habito_id}</Heading>
         </CardHeader>
         <CardBody>
           <Text>
-            Durante {duration} hora(s) no dia {date}, às {time}
+            {desc}
+          </Text>
+          <Text>
+            {data}
           </Text>
         </CardBody>
         <CardFooter>
@@ -102,13 +99,9 @@ function Perfil() {
       >
         <GridItem className="perfil-info-container" rowSpan={2}>
           <Avatar size={"2xl"} />
-          <Text fontSize={"3xl"}>Nome do Usuário</Text>
-          <Text fontSize={"xl"}>@username</Text>
-          <Text fontSize={"md"}>
-            Descrição do usuário: Lorem ipsum, dolor sit amet consectetur
-            adipisicing elit. Illo cum porro excepturi recusandae vel omnis
-            distinctio optio tempore nemo iusto?
-          </Text>
+          <Text fontSize={"3xl"}>{userData.nome}</Text>
+          <Text fontSize={"xl"}>@{userData.username}</Text>
+          <Text fontSize={"md"}>{userData.desc}</Text>
           <Button variant={"btn1"} marginY={"15px"}>
             Editar Perfil
           </Button>
@@ -121,10 +114,9 @@ function Perfil() {
               <RotinasRend
                 key={rotina.id}
                 nome={rotina.nome}
-                duration={rotina.duration}
-                date={rotina.date}
-                time={rotina.time}
-              />
+                freq={rotina.freq}
+                hora={rotina.hora}
+                />
             ))}
           </Box>
           <Button variant={"btn1"} marginY={"15px"}>
@@ -143,10 +135,8 @@ function Perfil() {
             {Posts.map((post) => (
               <PostsRend
                 key={post.id}
-                habito={post.habito}
-                duration={post.duration}
-                date={post.date}
-                time={post.time}
+                habito_id={post.habito_id}
+                data={post.data}
               />
             ))}
           </SimpleGrid>
