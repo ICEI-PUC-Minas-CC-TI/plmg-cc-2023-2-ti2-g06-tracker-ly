@@ -21,7 +21,7 @@ export const LoginProvider = ({ children }) => {
   // poe user info no local
   const handleLogin = (param) => {
     localStorage.setItem("user", JSON.stringify(param));
-    console.log("param:" + param);
+    console.log("param:", param);
     readUserData();
   };
 

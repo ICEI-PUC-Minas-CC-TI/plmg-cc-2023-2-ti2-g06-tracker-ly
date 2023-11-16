@@ -15,15 +15,15 @@ export const login = async (data) => {
   // };
 
   return await (
-    await axios.post(
-      `http://localhost:4567/login?user=${data.email}&senha=${data.password}`
+    await axios.get(
+      `http://localhost:4567/Presentation/login?email=${data.email}&senha=${data.password}`
     )
   ).data;
 };
 
 export const cadastro = async (data) => {
   return await axios.post(
-    `http://localhost:4567/cadastro?user=${data.email}&senha=${data.password}&nome=${data.name}&email=${data.email}&nasc=${data.date}`
+    `http://localhost:4567/Presentation/cadastro?user=${data.email}&senha=${data.password}&nome=${data.name}&email=${data.email}&nasc=${data.date}`
   ).data;
 };
 

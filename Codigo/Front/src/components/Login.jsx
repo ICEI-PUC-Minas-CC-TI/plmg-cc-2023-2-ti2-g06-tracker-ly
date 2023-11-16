@@ -89,18 +89,18 @@ function Login() {
             <Box>
               <Formik
                 initialValues={{ email: "", password: "" }}
-                //validationSchema={SignupSchema}
+                // validationSchema={SignupSchema}
                 onSubmit={async (values) => {
-                  console.log("values:" + values);
+                  console.log("values antes do fetch:", values)
                   const response = await login(
                     values.email,
                     values.password
-                  ).then((response) => response.json().data);
-
-                  console.log("response before if:" + response);
-
+                  );
+                  console.log("values depois do fetch:" + JSON.stringify(values));
+                  
+                  console.log("response before if:", response);
                   if (response) {
-                    console.log("response after if:" + response);
+                    console.log("response after if:", response);
                     handleLogin(response);
                   } else {
                     toast({

@@ -58,20 +58,46 @@ function Feed() {
   ];
 
   // amigos mock
-  const Amigos = [{ id: 1, nome: "Mariana F. Costa" }];
+  const Amigos = [
+    {
+      id: 1,
+      nome: "Mariana F. Costa",
+      habitos: [{ h1: "estudar frances todo dia", h2: "sair para tomar sol" }],
+    },
+    {
+      id: 2,
+      nome: "Robesvaldo Pinto",
+      habitos: [
+        {
+          h1: "ir na academia de manha",
+          h2: "aprender uma receita nova por semana",
+        },
+      ],
+    },
+  ];
 
   return (
     <>
       <Nav />
-      {/* <Text justifySelf={"center"}>Veja as publicações mais recentes de seus amigos: </Text> */}
 
-      <SimpleGrid columns={2} >
-        <Container backgroundColor={"blue"}>PROGRESSO AQUI</Container>
-
-        <Container>
-          <Text fontSize={"large"}>
-            Veja as publicações mais recentes dos seus amigos:
+      <SimpleGrid columns={2}>
+        <Container
+          backgroundColor={"blue"}
+          height={"30rem"}
+          position={"sticky"}
+          top={"20px"}
+          marginTop={"20px"}
+        >
+          <Text fontSize='3xl'>
+            O benefício futuro é maior que o desconforto de agora!
+            
           </Text>
+        </Container>
+
+        <Container backgroundColor={"red"}  padding={"10px"}>
+          {/* <Text fontSize={"large"}>
+            Veja as publicações mais recentes dos seus amigos:
+          </Text> */}
 
           <Card marginBottom={"15px"} maxW="md">
             <CardHeader>
