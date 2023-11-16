@@ -90,7 +90,6 @@ function Feed() {
         >
           <Text fontSize='3xl'>
             O benefício futuro é maior que o desconforto de agora!
-            
           </Text>
         </Container>
 

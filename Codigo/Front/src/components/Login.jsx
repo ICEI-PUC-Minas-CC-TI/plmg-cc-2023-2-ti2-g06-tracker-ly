@@ -96,7 +96,7 @@ function Login() {
                     values.email,
                     values.password
                   );
-                  console.log("values depois do fetch:" + JSON.stringify(values));
+                  console.log("values depois do fetch:", values);
                   
                   console.log("response before if:", response);
                   if (response) {

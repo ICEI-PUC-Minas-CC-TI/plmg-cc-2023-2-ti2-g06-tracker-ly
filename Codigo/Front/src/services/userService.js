@@ -2,7 +2,7 @@ import axios from "axios";
 
 // faltou o list user
 
-export const login = async (data) => {
+export const login = async (email, password) => {
   // return {
   //   id: 1,
   //   nome: "João da Silva",
@@ -15,8 +15,8 @@ export const login = async (data) => {
   // };
 
   return await (
-    await axios.get(
-      `http://localhost:4567/Presentation/login?email=${data.email}&senha=${data.password}`
+    await axios.post(
+      `http://localhost:4567/Presentation/login?email=${email}&senha=${password}`
     )
   ).data;
 };
