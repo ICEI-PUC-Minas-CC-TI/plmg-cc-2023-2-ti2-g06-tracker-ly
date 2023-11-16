@@ -9,12 +9,14 @@ import dao.UsuarioDAO;
 import objetos.Usuario;
 import java.util.Date;
 import service.HabitoService;
+import service.PostService;
 
 public class Aplicacao {
 
     private static UsuarioDAO usuarioDAO = new UsuarioDAO();
     private static UsuarioService usuarioService = new UsuarioService();
     private static HabitoService HabitoService = new HabitoService();
+    private static PostService PostService = new PostService();
 
     public static void main(String[] args) {
         // Configuração de CORS para permitir conexão com o front-end hospedado em outra
@@ -47,10 +49,31 @@ public class Aplicacao {
 
         post("/cadastro", (request, response) -> usuarioService.cadastro(request, response));
 
-        //http://localhost:4567/habitocadastro?nome=bibshabituada&descr=habito+de+bibs&freq=1&hora=12:00&perfil_id=1
+
+        //Habitos
+
+        //http://localhost:4567/habitocadastro?nome=bibshabituada&descr=habito+de+bibs&freq=1&hora=12:00&perfil_id=7
         post("/habitocadastro", (request, response) -> HabitoService.cadastro(request, response));
 
         //http://localhost:4567/habitoslistar?perfil_id=7
         post("/habitoslistar", (request, response) -> HabitoService.listar(request, response));
+
+        //http://localhost:4567/habitosdelete?id=3
+        post("/habitosdelete", (request, response) -> HabitoService.delete(request, response));
+
+        //http://localhost:4567/habitoseditar?id=4&nome=bibshabituada&descr=teste&freq=1&hora=13:00&perfil_id=7
+        post("/habitoseditar", (request, response) -> HabitoService.editar(request, response));
+
+        //Posts
+
+        //http://localhost:4567/postcadastro?descricao=teste&foto=teste&habito_id=1&perfil_id=7
+        post("/postcadastro", (request, response) -> PostService.cadastro(request, response));
+
+        //http://localhost:4567/postdelete?id=1
+        post ("/postdelete", (request, response) -> PostService.delete(request, response));
+
+        //http://localhost:4567/posteditar?id=1&descricao=teste&foto=teste&habito_id=1&perfil_id=7
+        post ("/posteditar", (request, response) -> PostService.editar(request, response));
     }
+
 }

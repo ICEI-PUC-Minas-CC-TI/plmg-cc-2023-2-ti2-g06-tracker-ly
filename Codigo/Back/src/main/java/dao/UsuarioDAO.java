@@ -131,7 +131,7 @@ public class UsuarioDAO extends DAO {
         System.out.println("DEU RUIM");
       }
       return usuario;
-          
+
     }
 }
 

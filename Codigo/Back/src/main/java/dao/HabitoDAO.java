@@ -55,12 +55,22 @@ public class HabitoDAO extends DAO {
         return habitos;
     }
 
-    public void delete(Habito hh) throws SQLException {
-
-        String sql = "DELETE FROM  habito WHERE id= ?" + hh.getId();
+    public void deletarHabito(int id) throws SQLException {
+        String sql = "DELETE FROM habito WHERE id= ?";
         PreparedStatement ps = conexao.prepareStatement(sql);
-        ps.setInt(1, hh.getId());
+        ps.setInt(1, id);
         ps.executeUpdate();
+    }
 
+    public void editarHabito(Habito cc) throws SQLException {
+        String sql = "UPDATE habito SET nome = ?, descr = ?, freq = ?, hora = ?, perfil_id = ? WHERE id = ?";
+        PreparedStatement ps = conexao.prepareStatement(sql);
+        ps.setString(1, cc.getNome());
+        ps.setString(2, cc.getdescr());
+        ps.setInt(3, cc.getFreq());
+        ps.setString(4, cc.getHora());
+        ps.setInt(5, cc.getPerfil_id());
+        ps.setInt(6, cc.getId());
+        ps.executeUpdate();
     }
 }
