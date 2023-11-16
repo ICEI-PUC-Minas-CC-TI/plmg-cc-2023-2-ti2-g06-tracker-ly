@@ -16,43 +16,31 @@ export const login = async (data) => {
 
   return await (
     await axios.post(
-      `http://localhost:4567/login?user=${data.email}&senha=${data.senha}`
+      `http://localhost:4567/login?user=${data.email}&senha=${data.password}`
     )
   ).data;
 };
 
 export const cadastro = async (data) => {
-  // const strData =
-  //   "http://localhost:6789/login?email=" +
-  //   data.email +
-  //   "&password=" +
-  //   data.password +
-  //   "&nome=" +
-  //   data.nome +
-  //   "&nasc=" +
-  //   data.data;
-
-  // return true;
-
   return await axios.post(
-    `http://localhost:4567/cadastro/?email=${data.email}&senha=${data.password}&nome=${data.name}&nasc=${data.date}`
-  );
+    `http://localhost:4567/cadastro?user=${data.email}&senha=${data.password}&nome=${data.name}&email=${data.email}&nasc=${data.date}`
+  ).data;
 };
 
-export const getUser = async (userId) => {
-  //   return await (
-  //     await axios.get(``)
-  //   ).data;
-};
+// export const getUser = async (userId) => {
+//   //   return await (
+//   //     await axios.get(``)
+//   //   ).data;
+// };
 
-export const seguirUser = async (followerUserId, followedUserId) => {
-  // return await (
-  //   await axios.post(``)
-  // ).data;
-};
+// export const seguirUser = async (followerUserId, followedUserId) => {
+//   // return await (
+//   //   await axios.post(``)
+//   // ).data;
+// };
 
-export const seguidor = async (followerUserId, followedUserId) => {
-  // return await (
-  //   await axios.get(``)
-  // ).data;
-};
+// export const seguidor = async (followerUserId, followedUserId) => {
+//   // return await (
+//   //   await axios.get(``)
+//   // ).data;
+// };
