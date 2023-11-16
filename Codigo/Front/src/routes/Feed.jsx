@@ -1,3 +1,9 @@
+// hooks
+import { useEffect, useState } from "react";
+// services
+import { getRotina } from "../services/rotinaService";
+import { useLogin } from "../hooks/auth";
+import { parseFreq } from "../helpers";
 // components
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
@@ -17,64 +23,36 @@ import {
   Button,
   Container,
   SimpleGrid,
+  Stack,
 } from "@chakra-ui/react";
 
 function Feed() {
-  // rotinas mock
-  const Rotinas = [
-    {
-      id: 1,
-      nome: "Ler um livro",
-      duration: 0.25,
-      date: "Todo dia",
-      time: "18:00",
-    },
-    {
-      id: 2,
-      nome: "Fazer exercícios",
-      duration: 1,
-      date: "Três vezes na semana",
-      time: "9:00",
-    },
-    { id: 3, nome: "Estudar", duration: 2, date: "Todo dia", time: "14:00" },
-  ];
+  const { userData } = useLogin();
+  const [Rotinas, setRotinas] = useState([]);
 
-  // postagens mock
-  const Posts = [
-    {
-      id: 1,
-      habito: "Ler um livro",
-      duration: 0.25,
-      date: "19/10/2023",
-      time: "18:00",
-    },
-    {
-      id: 2,
-      habito: "Fazer exercícios",
-      duration: 1,
-      date: "19/10/2023",
-      time: "9:00",
-    },
-  ];
+  // fetch rotinas e salva em um array
+  useEffect(() => {
+    const fetchRotinas = async () => {
+      const dataRotinas = await getRotina(userData.id);
+      setRotinas(dataRotinas);
+    };
 
-  // amigos mock
-  const Amigos = [
-    {
-      id: 1,
-      nome: "Mariana F. Costa",
-      habitos: [{ h1: "estudar frances todo dia", h2: "sair para tomar sol" }],
-    },
-    {
-      id: 2,
-      nome: "Robesvaldo Pinto",
-      habitos: [
-        {
-          h1: "ir na academia de manha",
-          h2: "aprender uma receita nova por semana",
-        },
-      ],
-    },
-  ];
+    fetchRotinas();
+  }, []);
+
+  const RotinasRend = (props) => {
+    const { nome, descr, freq, hora } = props;
+    return (
+      <>
+        <Box bg={"#EBF5F8"} px={4} py={5} rounded={"lg"} shadow={"lg"}>
+          <Text fontSize={"md"}>{nome}</Text>
+          <Text fontSize={"sm"}>{descr}</Text>
+          <Text fontSize={"sm"}>{parseFreq(freq)}</Text>
+          <Text fontSize={"sm"}>{hora}</Text>
+        </Box>
+      </>
+    );
+  };
 
   return (
     <>
@@ -88,12 +66,24 @@ function Feed() {
           top={"20px"}
           marginTop={"20px"}
         >
-          <Text fontSize='3xl'>
+          <Text fontSize="3xl">
             O benefício futuro é maior que o desconforto de agora!
           </Text>
+
+          <Stack>
+            {Rotinas.map((rotina) => (
+              <RotinasRend
+                key={rotina.id}
+                nome={rotina.nome}
+                descr={rotina.descr}
+                freq={rotina.freq}
+                hora={rotina.hora}
+              />
+            ))}
+          </Stack>
         </Container>
 
-        <Container backgroundColor={"red"}  padding={"10px"}>
+        <Container backgroundColor={"red"} padding={"10px"}>
           {/* <Text fontSize={"large"}>
             Veja as publicações mais recentes dos seus amigos:
           </Text> */}

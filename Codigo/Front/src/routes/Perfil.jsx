@@ -51,12 +51,12 @@ function Perfil() {
 
   // rotinas renderizadas
   const RotinasRend = (props) => {
-    const { nome, desc, freq, hora } = props;
+    const { nome, descr, freq, hora } = props;
 
     return (
       <Box bg={"#EBF5F8"} px={4} py={5} rounded={"lg"} shadow={"lg"}>
         <Text fontSize={"md"}>{nome}</Text>
-        <Text fontSize={"sm"}>{desc}</Text>
+        <Text fontSize={"sm"}>{descr}</Text>
         <Text fontSize={"sm"}>{parseFreq(freq)}</Text>
         <Text fontSize={"sm"}>{hora}</Text>
 
