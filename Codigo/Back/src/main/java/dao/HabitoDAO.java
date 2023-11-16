@@ -10,12 +10,13 @@ public class HabitoDAO extends DAO {
     }
 
     public void inserirHabito(Habito cc) throws Exception {
-        String sql = "INSERT into habito(nome, descr, freq, hora) values (?, ?, ?, ?)";
+        String sql = "INSERT into habito(nome, descr, freq, hora, perfil_id) values (?, ?, ?, ?, ?)";
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
         preparedStatement.setString(1, cc.getNome());
         preparedStatement.setString(2, cc.getdescr());
         preparedStatement.setInt(3, cc.getFreq());
         preparedStatement.setString(4, cc.getHora());
+        preparedStatement.setInt(5, cc.getPerfil_id());
         preparedStatement.executeUpdate();
 
     }
@@ -28,22 +29,18 @@ public class HabitoDAO extends DAO {
 
         while(result.next()) {
            habitos.add(
-            new Habito(result.getInt("id"), result.getString("nome"), result.getString("descr"), result.getInt("freq"), result.getString("hora"))
+            new Habito(result.getInt("id"), result.getString("nome"), result.getString("descr"), result.getInt("freq"), result.getString("hora"), result.getInt("perfil_id"))
            );
         }
         return habitos;
     }
 
-    public LinkedList<Habito> getHabito(int id, String descr) throws SQLException {
+    public LinkedList<Habito> getHabito(int id) throws SQLException {
         LinkedList<Habito> habitos = new LinkedList<Habito>();
         String sql = "SELECT * FROM habito where 1=1";
 
         if (id > 0) {
-            String addquery = "and id =" + id;
-            sql += addquery;
-        }
-        if (!descr.equals("")) {
-            String addquery = "and descr =" + descr;
+            String addquery = "and perfil_id =" + id;
             sql += addquery;
         }
 
@@ -52,7 +49,7 @@ public class HabitoDAO extends DAO {
 
         while(result.next()) {
            habitos.add(
-            new Habito(result.getInt("id"), result.getString("nome"), result.getString("descr"), result.getInt("freq"), result.getString("hora"))
+            new Habito(result.getInt("id"), result.getString("nome"), result.getString("descr"), result.getInt("freq"), result.getString("hora"), result.getInt("perfil_id"))
            );
         }
         return habitos;
