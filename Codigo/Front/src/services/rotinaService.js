@@ -20,7 +20,14 @@ export const getHabito = async (id) => {
       freq: "seg,qua,sex",
       hora: "9:00",
     },
-    { id: 3, perfil_id: 32, nome: "Estudar", descr: "", freq: "smp", hora: "14:00" },
+    {
+      id: 3,
+      perfil_id: 32,
+      nome: "Estudar",
+      descr: "",
+      freq: "smp",
+      hora: "14:00",
+    },
   ];
 
   // return await axios.post(
@@ -50,9 +57,7 @@ export const getRotina = async (userId) => {
     { id: 3, perfil_id: 32, nome: "Estudar", desc: "", freq: "smp", hora: "14:00" },
   ];
 
-  // return await (
-  //     await axios.post(
-  //         ``;
-  //     )
-  // ).data;
+  // return await axios.post(
+  //   `http://localhost:4567/habitoslistar?perfil_id=${userId}`
+  // );
 };

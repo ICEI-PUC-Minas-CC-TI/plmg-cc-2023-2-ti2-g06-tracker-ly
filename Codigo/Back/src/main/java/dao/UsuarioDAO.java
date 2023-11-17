@@ -111,8 +111,6 @@ public class UsuarioDAO extends DAO {
       // Retorne a representação da senha em MD5 como uma string
       String senhaConvertida = hashString.toString();
 
-      // !!! DANDO PAU A PARTIR DAQUI
-
       Statement st = conexao.createStatement(
         ResultSet.TYPE_SCROLL_INSENSITIVE,
         ResultSet.CONCUR_READ_ONLY
