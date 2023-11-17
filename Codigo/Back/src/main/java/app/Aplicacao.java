@@ -42,17 +42,14 @@ public class Aplicacao {
                 });
 
         before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
-
-        get("/login", (request, response) -> usuarioService.login(request, response));
-
-        //http://localhost:4567/cadastro?user=bibs&senha=bibss&nome=Bibs&email=bibs@gmail.com&nasc=2000-01
-
-        post("/cadastro", (request, response) -> usuarioService.cadastro(request, response));
-
-
-        //Habitos
-
-        //http://localhost:4567/habitocadastro?nome=bibshabituada&descr=habito+de+bibs&freq=1&hora=12:00&perfil_id=7
+    
+        path("/Presentation",()->{
+            //login de usuario
+            post("/login", (request, response) -> usuarioService.login(request, response));
+            //cadastro de usuario
+            post("/cadastro", (request, response) -> usuarioService.cadastro(request, response));
+        });
+        
         post("/habitocadastro", (request, response) -> HabitoService.cadastro(request, response));
 
         //http://localhost:4567/habitoslistar?perfil_id=7
@@ -77,3 +74,7 @@ public class Aplicacao {
     }
 
 }
+        //http://localhost:4567/Presentation/login?email=${data.email}&senha=${data.password}
+        //http://localhost:4567/Presentation/cadastro?user=bibs&senha=bibss&nome=Bibs&email=bibs@gmail.com&nasc=2000-0101
+
+        //http://localhost:4567/habitocadastro?nome=bibshabituada&descr=habito+de+bibs&freq=1&hora=12:00&perfil_id=1
