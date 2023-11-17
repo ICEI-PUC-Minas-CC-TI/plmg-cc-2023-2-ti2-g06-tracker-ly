@@ -33,7 +33,7 @@ function Perfil() {
   useEffect(() => {
     const fetchRotinas = async () => {
       const dataRotinas = await getRotina(userData.id);
-      setRotinas(dataRotinas);
+      setRotinas(dataRotinas.data);
     };
 
     fetchRotinas();
@@ -114,6 +114,7 @@ function Perfil() {
               <RotinasRend
                 key={rotina.id}
                 nome={rotina.nome}
+                descr = {rotina.descr}
                 freq={rotina.freq}
                 hora={rotina.hora}
                 />

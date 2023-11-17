@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 // services
 import { getRotina } from "../services/rotinaService";
 import { useLogin } from "../hooks/auth";
+import { getPost } from "../services/postService";
 import { parseFreq } from "../helpers";
 // components
 import Nav from "../components/Nav";
@@ -34,14 +35,17 @@ function Feed() {
   useEffect(() => {
     const fetchRotinas = async () => {
       const dataRotinas = await getRotina(userData.id);
-      setRotinas(dataRotinas);
+      setRotinas(dataRotinas.data);
     };
 
     fetchRotinas();
   }, []);
 
+  console.log("Rotinas:", Rotinas);
+
   const RotinasRend = (props) => {
     const { nome, descr, freq, hora } = props;
+
     return (
       <>
         <Box bg={"#EBF5F8"} px={4} py={5} rounded={"lg"} shadow={"lg"}>
@@ -140,7 +144,7 @@ function Feed() {
         </Container>
 
         <Container backgroundColor={"red"} padding={"10px"}>
-              {PostsRend()};
+          {PostsRend()};
         </Container>
       </SimpleGrid>
 

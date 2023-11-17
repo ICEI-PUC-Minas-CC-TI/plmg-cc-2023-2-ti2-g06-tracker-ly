@@ -10,7 +10,6 @@ export const LoginProvider = ({ children }) => {
   const readUserData = () => {
     try {
       const dataUser = localStorage.getItem("user");
-      console.log("dataUser:" + dataUser);
       if (dataUser != undefined) {
         setUserData(JSON.parse(dataUser));
         setLoginAuth(true);
@@ -18,10 +17,9 @@ export const LoginProvider = ({ children }) => {
       } catch (e) {}
   };
 
-  // poe user info no local
+  // poe user info no localhost
   const handleLogin = (param) => {
     localStorage.setItem("user", JSON.stringify(param));
-    console.log("param:", param);
     readUserData();
   };
 

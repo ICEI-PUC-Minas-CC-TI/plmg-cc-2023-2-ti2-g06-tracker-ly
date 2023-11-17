@@ -1,4 +1,5 @@
 package objetos;
+
 import java.util.Locale;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -7,25 +8,26 @@ import java.util.*;
 import java.text.SimpleDateFormat;
 
 import java.text.DateFormat;
+
 public class Habito {
     int id;
     String descr;
     String nome;
-    int freq;
+    String freq;
     String hora;
-    int perfil_id;
+    int user_id;
 
     public Habito() {
 
     }
 
-    public Habito(int id, String nome, String descr, int freq, String hora, int perfil_id) {
+    public Habito(int id, String nome, String descr, String freq, String hora, int user_id) {
         this.id = id;
         this.descr = descr;
         this.nome = nome;
         this.freq = freq;
         this.hora = hora;
-        this.perfil_id = perfil_id;
+        this.user_id = user_id;
     }
 
     public int getId() {
@@ -52,11 +54,11 @@ public class Habito {
         this.descr = descr;
     }
 
-    public int getFreq() {
+    public String getFreq() {
         return this.freq;
     }
 
-    public void setFreq(int freq) {
+    public void setFreq(String freq) {
         this.freq = freq;
     }
 
@@ -68,12 +70,12 @@ public class Habito {
         this.hora = hora;
     }
 
-    public int getPerfil_id() {
-        return this.perfil_id;
+    public int getUser_id() {
+        return this.user_id;
     }
 
-    public void setPerfil_id(int perfil_id) {
-        this.perfil_id = perfil_id;
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
 }
