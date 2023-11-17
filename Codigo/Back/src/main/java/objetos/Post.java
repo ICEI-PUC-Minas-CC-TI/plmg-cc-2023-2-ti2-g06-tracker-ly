@@ -6,17 +6,17 @@ import java.time.format.DateTimeFormatter;
 public class Post {
     int id;
     String desc;
-    byte[] foto;
-    LocalDate data;
+    String foto;
+    String data;
     int habito_id;
     int perfil_id;
 
-    Post(){
+    public Post(){
 
     }
 
 
-    public Post(int id, String desc, byte[] foto, int habito_id, int perfil_id) {
+    public Post(int id, String desc, String foto, int habito_id, int perfil_id) {
         this.id = id;
         this.desc = desc;
         this.foto = foto;
@@ -42,11 +42,11 @@ public class Post {
         this.desc = desc;
     }
 
-    public byte[] getFoto() {
+    public String getFoto() {
         return this.foto;
     }
 
-    public void setFoto(byte[] foto) {
+    public void setFoto(String foto) {
         this.foto = foto;
     }
 
@@ -68,14 +68,12 @@ public class Post {
 
 
     public String getData() { // aqui ele transforma a data e retorna uma string com ela
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String dataFormatada = this.data.format(formatter);
-        return dataFormatada;
+        return this.data;
     }
 
     public void setData() { // aqui ele seta a data do sistema operacional 
         LocalDate dataAtual = LocalDate.now();
-        this.data = dataAtual;
+        this.data = dataAtual.toString();
     }
 }
 
