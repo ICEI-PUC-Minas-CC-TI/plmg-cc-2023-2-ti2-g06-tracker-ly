@@ -1,4 +1,4 @@
-// formata string de freq
+// formata string de freq, do bd
 export const parseFreq = (freq) => {
   
   const splitFreq = freq.split(",");
@@ -26,8 +26,11 @@ export const parseFreq = (freq) => {
       case "dom":
         return "Domingos ";
         break;
-      default:
+      case "smp":
         return "Todos os dias";
+        break;
+      default:
+        return "";
     }
   });
 

@@ -42,39 +42,44 @@ public class Aplicacao {
                 });
 
         before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
-    
-        path("/Presentation",()->{
-            //login de usuario
+
+
+        // * USUARIO ---------------------------------------------------------------------------
+
+        path("/Presentation", () -> {
+            // [OK] http://localhost:4567/Presentation/login?email=${email}&senha=${password}
             post("/login", (request, response) -> usuarioService.login(request, response));
-            //cadastro de usuario
+
+            // [OK] http://localhost:4567/Presentation/cadastro?user={data.user}&senha=bibss&nome=Bibs&email=bibs@gmail.com&nasc=2000-0101
             post("/cadastro", (request, response) -> usuarioService.cadastro(request, response));
         });
-        
+
+
+        // * HABITO ---------------------------------------------------------------------------
+
+        // http://localhost:4567/habitocadastro?nome=bibshabituada&descr=habito+de+bibs&freq=1&hora=12:00&perfil_id=1
         post("/habitocadastro", (request, response) -> HabitoService.cadastro(request, response));
 
-        //http://localhost:4567/habitoslistar?perfil_id=7
-        post("/habitoslistar", (request, response) -> HabitoService.listar(request, response));
+        // [OK] http://localhost:4567/habitoslistar?user_id=7
+        get("/habitoslistar", (request, response) -> HabitoService.listar(request, response));
 
-        //http://localhost:4567/habitosdelete?id=3
+        // http://localhost:4567/habitosdelete?id=3
         post("/habitosdelete", (request, response) -> HabitoService.delete(request, response));
 
-        //http://localhost:4567/habitoseditar?id=4&nome=bibshabituada&descr=teste&freq=1&hora=13:00&perfil_id=7
+        // http://localhost:4567/habitoseditar?id=4&nome=bibshabituada&descr=teste&freq=1&hora=13:00&perfil_id=7
         post("/habitoseditar", (request, response) -> HabitoService.editar(request, response));
 
-        //Posts
 
-        //http://localhost:4567/postcadastro?descricao=teste&foto=teste&habito_id=1&perfil_id=7
+        // * POSTS [ainda nao em funcionamento] ---------------------------------------------------------------------------
+
+        // http://localhost:4567/postcadastro?descricao=teste&foto=teste&habito_id=1&perfil_id=7
         post("/postcadastro", (request, response) -> PostService.cadastro(request, response));
 
-        //http://localhost:4567/postdelete?id=1
-        post ("/postdelete", (request, response) -> PostService.delete(request, response));
+        // http://localhost:4567/postdelete?id=1
+        post("/postdelete", (request, response) -> PostService.delete(request, response));
 
-        //http://localhost:4567/posteditar?id=1&descricao=teste&foto=teste&habito_id=1&perfil_id=7
-        post ("/posteditar", (request, response) -> PostService.editar(request, response));
+        // http://localhost:4567/posteditar?id=1&descricao=teste&foto=teste&habito_id=1&perfil_id=7
+        post("/posteditar", (request, response) -> PostService.editar(request, response));
     }
 
 }
-        //http://localhost:4567/Presentation/login?email=${data.email}&senha=${data.password}
-        //http://localhost:4567/Presentation/cadastro?user=bibs&senha=bibss&nome=Bibs&email=bibs@gmail.com&nasc=2000-0101
-
-        //http://localhost:4567/habitocadastro?nome=bibshabituada&descr=habito+de+bibs&freq=1&hora=12:00&perfil_id=1
