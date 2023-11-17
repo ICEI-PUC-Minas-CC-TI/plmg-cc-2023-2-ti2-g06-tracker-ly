@@ -1,5 +1,6 @@
 // components
 import Postar from "./Postar";
+import Questionario from "./Questionario";
 // hooks
 import { useLogin } from "../hooks/auth";
 // routes
@@ -88,6 +89,7 @@ export default function WithAction() {
 
           <Flex alignItems={"center"}>
             <Postar />
+            <Questionario />
 
             <Menu>
               <MenuButton

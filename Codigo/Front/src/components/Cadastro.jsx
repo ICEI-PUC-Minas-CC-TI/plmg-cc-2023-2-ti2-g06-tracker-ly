@@ -168,33 +168,6 @@ const Form1 = () => {
             </InputGroup>
           </FormControl>
 
-          {/* <FormControl mt={"20px"} isRequired>
-            <FormLabel htmlFor="password" mt="2%">
-              Confirmar senha
-            </FormLabel>
-            <InputGroup size="md">
-              <Field
-                as={Input}
-                name="confirmPassword"
-                id="confirmar-senha"
-                pr="4.5rem"
-                type={showPassword ? "text" : "password"}
-                placeholder="Digite aqui..."
-                focusBorderColor="#B6DFD8"
-              />
-              <InputRightElement width="4.5rem">
-                <Button
-                  variant={"ghost"}
-                  onClick={() =>
-                    setShowPassword((showPassword) => !showPassword)
-                  }
-                >
-                  {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                </Button>
-              </InputRightElement>
-            </InputGroup>
-          </FormControl> */}
-
           <Button
             variant="btn1"
             type="submit"
@@ -294,7 +267,6 @@ function Cadastro() {
         type="button"
         onClick={() => {
           onOpen();
-          //navigate("/cadastro");
         }}
         variant={"btn1"}
       >
