@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 public class Post {
     int id;
     String desc;
-    String foto;
+    byte[] foto;
     String data;
     int habito_id;
     int perfil_id;
@@ -16,7 +16,7 @@ public class Post {
     }
 
 
-    public Post(int id, String desc, String foto, int habito_id, int perfil_id) {
+    public Post(int id, String desc, byte[] foto, int habito_id, int perfil_id) {
         this.id = id;
         this.desc = desc;
         this.foto = foto;
@@ -42,11 +42,11 @@ public class Post {
         this.desc = desc;
     }
 
-    public String getFoto() {
+    public byte[] getFoto() {
         return this.foto;
     }
 
-    public void setFoto(String foto) {
+    public void setFoto(byte[] foto) {
         this.foto = foto;
     }
 

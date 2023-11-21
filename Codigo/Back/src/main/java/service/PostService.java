@@ -26,7 +26,7 @@ public class PostService {
 
         //id, descrição, foto, habito_id, perfil_id
         String descricao = request.queryParams("descricao");;
-        String foto = request.queryParams("foto");
+        byte[] foto = request.queryParams("foto").getBytes();
         int habito_id = Integer.parseInt(request.queryParams("habito_id"));
         int perfil_id = Integer.parseInt(request.queryParams("perfil_id"));
 
@@ -58,7 +58,7 @@ public class PostService {
 
         int id = Integer.parseInt(request.queryParams("id"));
         String descricao = request.queryParams("descricao");
-        String foto = request.queryParams("foto");
+        byte[] foto = request.queryParams("foto").getBytes();
         int habito_id = Integer.parseInt(request.queryParams("habito_id"));
         int perfil_id = Integer.parseInt(request.queryParams("perfil_id"));
 
@@ -72,9 +72,6 @@ public class PostService {
         }
 
     }
-
-
-
 
 
 }

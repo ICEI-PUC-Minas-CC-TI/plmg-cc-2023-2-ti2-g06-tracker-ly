@@ -42,14 +42,14 @@ public class Aplicacao {
                 });
 
         before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
-    
+
         path("/Presentation",()->{
             //login de usuario
             post("/login", (request, response) -> usuarioService.login(request, response));
             //cadastro de usuario
             post("/cadastro", (request, response) -> usuarioService.cadastro(request, response));
         });
-        
+
         post("/habitocadastro", (request, response) -> HabitoService.cadastro(request, response));
 
         //http://localhost:4567/habitoslistar?perfil_id=7
@@ -63,7 +63,7 @@ public class Aplicacao {
 
         //Posts
 
-        //http://localhost:4567/postcadastro?descricao=teste&foto=teste&habito_id=1&perfil_id=7
+        //http://localhost:4567/postcadastro?descricao=teste&foto=123&habito_id=1&perfil_id=7
         post("/postcadastro", (request, response) -> PostService.cadastro(request, response));
 
         //http://localhost:4567/postdelete?id=1
@@ -72,6 +72,8 @@ public class Aplicacao {
         //http://localhost:4567/posteditar?id=1&descricao=teste&foto=teste&habito_id=1&perfil_id=7
         post ("/posteditar", (request, response) -> PostService.editar(request, response));
     }
+
+    //mudar o banco de dados --> problema novo
 
 }
         //http://localhost:4567/Presentation/login?email=${data.email}&senha=${data.password}
