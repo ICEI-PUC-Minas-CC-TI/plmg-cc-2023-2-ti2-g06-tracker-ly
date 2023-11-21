@@ -7,7 +7,7 @@ import { parseFreq } from "../helpers";
 // components
 import Footer from "../components/Footer";
 import Nav from "../components/Nav";
-// chakra
+// chakra e formik
 import {
   Avatar,
   Box,
@@ -23,12 +23,18 @@ import {
   Grid,
   GridItem,
   Flex,
+  Input,
+  FormControl,
+  Textarea,
+  FormLabel,
 } from "@chakra-ui/react";
+import { Field, Form, Formik, useFormik } from "formik";
 
 function Perfil() {
   const { userData } = useLogin();
   const [Rotinas, setRotinas] = useState([]);
   const [Posts, setPosts] = useState([]);
+  const [isEditingHabito, setIsEditingHabito] = useState(true);
 
   // fetch rotinas e salva em um array
   useEffect(() => {
@@ -55,7 +61,14 @@ function Perfil() {
     const { nome, descr, freq, hora } = props;
 
     return (
-      <Box bg={"#EBF5F8"} px={4} py={5} rounded={"lg"} shadow={"lg"} margin={"10px"} >
+      <Box
+        bg={"#EBF5F8"}
+        px={4}
+        py={5}
+        rounded={"lg"}
+        shadow={"lg"}
+        margin={"10px"}
+      >
         <Flex>
           <Container>
             <Text fontSize={"md"}>{nome}</Text>
@@ -68,6 +81,74 @@ function Perfil() {
           </Button>
         </Flex>
       </Box>
+    );
+  };
+
+  const RotinasEditRend = (props) => {
+    const { nome, descr, freq, hora } = props;
+
+    return (
+      <Formik
+        initialValues={{
+          habNome: nome,
+          descr: descr,
+          password: "",
+          date: "",
+          name: "",
+        }}
+      >
+        <Form>
+          <Box
+            bg={"#EBF5F8"}
+            px={4}
+            py={5}
+            rounded={"lg"}
+            shadow={"lg"}
+            margin={"10px"}
+          >
+            <Flex>
+              <Container>
+                <FormControl mr="5%" isRequired>
+                  <Field
+                    as={Input}
+                    id="habNome"
+                    name="habNome"
+                    placeholder="Seu hábito..."
+                    focusBorderColor="#B6DFD8"
+                  />
+                </FormControl>
+
+                <FormControl mr="5%" isRequired>
+                  <Field
+                    as={Textarea}
+                    id="descr"
+                    name="descr"
+                    placeholder="Descrição..."
+                    focusBorderColor="#B6DFD8"
+                  />
+                </FormControl>
+
+                <FormControl mr="5%" isRequired>
+                  <Field
+                    as={Input}
+                    id="freq"
+                    name="freq"
+                    placeholder="Seu hábito..."
+                    focusBorderColor="#B6DFD8"
+                  />
+                </FormControl>
+
+                <Text fontSize={"sm"}>{descr}</Text>
+                <Text fontSize={"sm"}>{parseFreq(freq)}</Text>
+                <Text fontSize={"sm"}>{hora}</Text>
+              </Container>
+              <Button variant={"btn2"} type={"edit"}>
+                Editar
+              </Button>
+            </Flex>
+          </Box>
+        </Form>
+      </Formik>
     );
   };
 
@@ -111,9 +192,32 @@ function Perfil() {
         </GridItem>
 
         <GridItem className="perfil-rotinas-container" colSpan={3}>
-          <Box bgColor={"lightPink"} padding={"5px"} >
-            <Text fontSize={"22px"} marginLeft={"20px"} >Minha Rotina</Text>
-            {Rotinas.map((rotina) => (
+          <Box bgColor={"lightPink"} padding={"5px"}>
+            <Text fontSize={"22px"} marginLeft={"20px"}>
+              Minha Rotina
+            </Text>
+
+            {Rotinas.map((rotina) =>
+              isEditingHabito ? (
+                <RotinasEditRend
+                  key={rotina.id}
+                  nome={rotina.nome}
+                  descr={rotina.descr}
+                  freq={rotina.freq}
+                  hora={rotina.hora}
+                />
+              ) : (
+                <RotinasRend
+                  key={rotina.id}
+                  nome={rotina.nome}
+                  descr={rotina.descr}
+                  freq={rotina.freq}
+                  hora={rotina.hora}
+                />
+              )
+            )}
+
+            {/* {Rotinas.map((rotina) => (
               <RotinasRend
                 key={rotina.id}
                 nome={rotina.nome}
@@ -121,10 +225,10 @@ function Perfil() {
                 freq={rotina.freq}
                 hora={rotina.hora}
               />
-            ))}
+            ))} */}
           </Box>
-          <Button variant={"btn1"} marginY={"15px"} className="btn-add-hab" >
-            Adicionais mais um Hábito 
+          <Button variant={"btn1"} marginY={"15px"} className="btn-add-hab">
+            Adicionais mais um Hábito
           </Button>
         </GridItem>
 
