@@ -14,7 +14,9 @@ const getTheme = () => ({
   },
 
   colors: {
-    blue: "#B6DFD8"
+    blue: "#B6DFD8",
+    pink: "#FF93A6",
+    lightPink: "#FFCBD4",
   },
 
   // componentes chakra

@@ -22,14 +22,15 @@ import {
   SimpleGrid,
   Grid,
   GridItem,
+  Flex,
 } from "@chakra-ui/react";
 
 function Perfil() {
   const { userData } = useLogin();
   const [Rotinas, setRotinas] = useState([]);
   const [Posts, setPosts] = useState([]);
-  
-  // fetch rotinas e salva em um array 
+
+  // fetch rotinas e salva em um array
   useEffect(() => {
     const fetchRotinas = async () => {
       const dataRotinas = await getRotina(userData.id);
@@ -54,12 +55,18 @@ function Perfil() {
     const { nome, descr, freq, hora } = props;
 
     return (
-      <Box bg={"#EBF5F8"} px={4} py={5} rounded={"lg"} shadow={"lg"}>
-        <Text fontSize={"md"}>{nome}</Text>
-        <Text fontSize={"sm"}>{descr}</Text>
-        <Text fontSize={"sm"}>{parseFreq(freq)}</Text>
-        <Text fontSize={"sm"}>{hora}</Text>
-
+      <Box bg={"#EBF5F8"} px={4} py={5} rounded={"lg"} shadow={"lg"} margin={"10px"} >
+        <Flex>
+          <Container>
+            <Text fontSize={"md"}>{nome}</Text>
+            <Text fontSize={"sm"}>{descr}</Text>
+            <Text fontSize={"sm"}>{parseFreq(freq)}</Text>
+            <Text fontSize={"sm"}>{hora}</Text>
+          </Container>
+          <Button variant={"btn2"} type={"edit"}>
+            Editar
+          </Button>
+        </Flex>
       </Box>
     );
   };
@@ -73,12 +80,8 @@ function Perfil() {
           <Heading size="md">{habito_id}</Heading>
         </CardHeader>
         <CardBody>
-          <Text>
-            {desc}
-          </Text>
-          <Text>
-            {data}
-          </Text>
+          <Text>{desc}</Text>
+          <Text>{data}</Text>
         </CardBody>
         <CardFooter>
           <Button variant={"btn2"}>Ver mais</Button>
@@ -101,27 +104,27 @@ function Perfil() {
           <Avatar size={"2xl"} />
           <Text fontSize={"3xl"}>{userData.nome}</Text>
           <Text fontSize={"xl"}>@{userData.username}</Text>
-          <Text fontSize={"md"}>{userData.desc}</Text>
-          <Button variant={"btn1"} marginY={"15px"}>
+          <Text fontSize={"md"}>{userData.descr}</Text>
+          <Button variant={"btn1"} marginY={"15px"} className="btn-edit-hab">
             Editar Perfil
           </Button>
         </GridItem>
 
         <GridItem className="perfil-rotinas-container" colSpan={3}>
-          <Box>
-            <Text fontSize={"xl"}>Minha Rotina</Text>
+          <Box bgColor={"lightPink"} padding={"5px"} >
+            <Text fontSize={"22px"} marginLeft={"20px"} >Minha Rotina</Text>
             {Rotinas.map((rotina) => (
               <RotinasRend
                 key={rotina.id}
                 nome={rotina.nome}
-                descr = {rotina.descr}
+                descr={rotina.descr}
                 freq={rotina.freq}
                 hora={rotina.hora}
-                />
+              />
             ))}
           </Box>
-          <Button variant={"btn1"} marginY={"15px"}>
-            Editar Rotina
+          <Button variant={"btn1"} marginY={"15px"} className="btn-add-hab" >
+            Adicionais mais um Hábito 
           </Button>
         </GridItem>
 
