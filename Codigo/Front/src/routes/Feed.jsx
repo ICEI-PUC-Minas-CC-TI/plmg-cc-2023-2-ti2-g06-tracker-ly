@@ -42,6 +42,7 @@ function Feed() {
     fetchRotinas();
   }, []);
 
+  // renderiza rotinas do user
   const RotinasRend = (props) => {
     const { nome, descr, freq, hora } = props;
 
@@ -57,6 +58,7 @@ function Feed() {
     );
   };
 
+  // renderiza posts do usuário
   const PostsRend = (props) => {
     return (
       <>
@@ -120,7 +122,7 @@ function Feed() {
 
                 <Box>
                   <Heading size="sm">
-                    Marcela Aguiar - Aprendender Francês
+                    Marcela Aguiar - Aprendender Inglês
                   </Heading>
                   <Text>Creator, Chakra UI</Text>
                 </Box>

@@ -48,7 +48,8 @@ const getTheme = () => ({
     Input: {
       _focus: {
         borderColor: '#B6DFD8'
-      }
+      },
+      backgroundColor: "#faf2f4",
     }
   },
 });
