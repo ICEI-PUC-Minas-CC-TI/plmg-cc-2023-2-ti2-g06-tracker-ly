@@ -33,7 +33,7 @@ import { Field, Form, Formik, useFormik } from "formik";
 
 // input para edição de hábitos
 const RotinasEditRend = (props) => {
-  const { id, nome, descr, freq, hora, perfil_id, user_id, setIsEditingHabito, } = props;
+  const { id, nome, descr, freq, hora, user_id, setIsEditingHabito } = props;
   const toast = useToast();
 
   return (
@@ -41,10 +41,9 @@ const RotinasEditRend = (props) => {
       initialValues={{
         habNome: nome,
         descr: descr,
-        freq: parseFreq(freq),
+        freq: freq,
         date: hora,
-        perfil_id: perfil_id,
-        user_id:user_id,
+        user_id: user_id,
       }}
       onSubmit={async (values) => {
         console.log(values);
@@ -54,9 +53,8 @@ const RotinasEditRend = (props) => {
           values.descr,
           values.freq,
           values.date,
-          values.perfil_id,
           values.user_id
-        ).then((response) => console.log(response));
+        )
 
         if (response) {
           setIsEditingHabito(false);
@@ -133,7 +131,9 @@ const RotinasEditRend = (props) => {
           <Button
             variant={"ghost"}
             type={"button"}
-            onClick={() => {setIsEditingHabito(false)}}
+            onClick={() => {
+              setIsEditingHabito(false);
+            }}
           >
             Cancelar
           </Button>
@@ -145,7 +145,7 @@ const RotinasEditRend = (props) => {
 
 // rotinas renderizadas
 const RotinasRend = (props) => {
-  const { id, nome, descr, freq, hora, perfil_id, user_id } = props;
+  const { id, nome, descr, freq, hora, user_id } = props;
   const [isEditingHabito, setIsEditingHabito] = useState(false);
 
   return (
@@ -163,7 +163,7 @@ const RotinasRend = (props) => {
             <Container>
               <Text fontSize={"md"}>{nome}</Text>
               <Text fontSize={"sm"}>{descr}</Text>
-              <Text fontSize={"sm"}>{parseFreq(freq)}</Text>
+              <Text fontSize={"sm"}>{freq}</Text>
               <Text fontSize={"sm"}>{hora}</Text>
             </Container>
           </Flex>
@@ -179,11 +179,11 @@ const RotinasRend = (props) => {
       ) : (
         <RotinasEditRend
           key={id}
+          id={id}
           nome={nome}
           descr={descr}
           freq={freq}
           hora={hora}
-          perfil_id={perfil_id}
           user_id={user_id}
           setIsEditingHabito={setIsEditingHabito}
         />
@@ -270,7 +270,6 @@ function Perfil() {
                 descr={rotina.descr}
                 freq={rotina.freq}
                 hora={rotina.hora}
-                perfil_id={userData.id}
                 user_id={userData.id}
               />
             ))}

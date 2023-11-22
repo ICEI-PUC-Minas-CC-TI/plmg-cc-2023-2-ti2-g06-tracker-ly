@@ -5,7 +5,7 @@ import java.util.*;
 import objetos.Seguindo;
 
 public class SeguindoDAO extends DAO {
-    SeguindoDAO() {
+    public SeguindoDAO() {
         super();
     }
 
@@ -13,7 +13,7 @@ public class SeguindoDAO extends DAO {
         String sql = "INSERT into seguindo(segue_id, seguido_id) values (?,?)";
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
         preparedStatement.setInt(1, cc.getSegue_id());
-        preparedStatement.setInt(1, cc.getSeguido_id());
+        preparedStatement.setInt(2, cc.getSeguido_id());
         preparedStatement.executeUpdate();
 
     }

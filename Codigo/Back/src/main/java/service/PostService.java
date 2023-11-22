@@ -24,14 +24,14 @@ public class PostService {
     public boolean cadastro(Request request, Response response){
         // SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 
-        //id, descrição, foto, habito_id, perfil_id
+        //id, descrição, foto, habito_id, user_id
         String descricao = request.queryParams("descricao");;
-        String foto = request.queryParams("foto");
+        byte[] foto = request.queryParams("foto").getBytes();
         int habito_id = Integer.parseInt(request.queryParams("habito_id"));
-        int perfil_id = Integer.parseInt(request.queryParams("perfil_id"));
+        int user_id = Integer.parseInt(request.queryParams("user_id"));
 
         try{
-            post.inserirPost(new Post(-1, descricao, foto, habito_id, perfil_id ));
+            post.inserirPost(new Post(-1, descricao, foto, habito_id, user_id ));
             return true;
         }
         catch (Exception e){
@@ -58,12 +58,12 @@ public class PostService {
 
         int id = Integer.parseInt(request.queryParams("id"));
         String descricao = request.queryParams("descricao");
-        String foto = request.queryParams("foto");
+        byte[] foto = request.queryParams("foto").getBytes();
         int habito_id = Integer.parseInt(request.queryParams("habito_id"));
-        int perfil_id = Integer.parseInt(request.queryParams("perfil_id"));
+        int user_id = Integer.parseInt(request.queryParams("user_id"));
 
         try{
-            post.editarPost(new Post(id, descricao, foto, habito_id, perfil_id ));
+            post.editarPost(new Post(id, descricao, foto, habito_id, user_id ));
             return true;
         }
         catch (Exception e){
@@ -72,9 +72,6 @@ public class PostService {
         }
 
     }
-
-
-
 
 
 }

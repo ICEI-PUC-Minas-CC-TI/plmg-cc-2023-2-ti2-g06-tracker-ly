@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 // services
 import { getRotina } from "../services/rotinaService";
 import { useLogin } from "../hooks/auth";
-import { getPost } from "../services/postService";
+//import { getPost } from "../services/postService";
 import { parseFreq } from "../helpers";
 // components
 import Nav from "../components/Nav";
@@ -51,7 +51,7 @@ function Feed() {
         <Box bg={"#EBF5F8"} px={4} py={5} rounded={"lg"} shadow={"lg"}>
           <Text fontSize={"md"}>{nome}</Text>
           <Text fontSize={"sm"}>{descr}</Text>
-          <Text fontSize={"sm"}>{parseFreq(freq)}</Text>
+          <Text fontSize={"sm"}>{freq}</Text>
           <Text fontSize={"sm"}>{hora}</Text>
         </Box>
       </>

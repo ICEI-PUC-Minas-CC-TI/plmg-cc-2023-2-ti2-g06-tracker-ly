@@ -16,6 +16,9 @@ public class Usuario {
     String email;
     Date nasc;
     String senha;
+    String nick;
+    String bio;
+    byte[] foto;
 
     public Usuario() {
         this.id = -1;
@@ -26,7 +29,8 @@ public class Usuario {
         setSenha("");
     }
 
-    public Usuario(int id, String nome, int nivel, String email, Date nasc, String senha) {
+    public Usuario(int id, String nome, int nivel, String email, Date nasc, String senha, String nick, String bio,
+            byte[] foto) {
         this.id = id;
         this.nome = nome;
         this.nivel = nivel;
@@ -35,7 +39,8 @@ public class Usuario {
         this.nasc = nasc;
     }
 
-    public Usuario(int id, String nome, int nivel, String email, String senha, String nasc) {
+    public Usuario(int id, String nome, int nivel, String email, String senha, String nasc , String nick, String bio,
+            byte[] foto) {
         this.id = id;
         this.nome = nome;
         this.nivel = nivel;
@@ -103,6 +108,38 @@ public class Usuario {
 
     public void setSenha(String pass) {
         this.senha = toMD5(pass);
+    }
+
+    public String getNick() {
+        return this.nick;
+    }
+
+    public void setNick(String nick) {
+        if (nick.length() > 20) {
+            this.nick = nick.substring(0, 20);
+        } else {
+            this.nick = nick;
+        }
+    }
+
+    public String getBio() {
+        return this.bio;
+    }
+
+    public void setBio(String bio) {
+        if (bio.length() > 200) {
+            this.bio = bio.substring(0, 200);
+        } else {
+            this.bio = bio;
+        }
+    }
+
+    public byte[] getFoto() {
+        return this.foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
     }
 
     public static String toMD5(String password) {
