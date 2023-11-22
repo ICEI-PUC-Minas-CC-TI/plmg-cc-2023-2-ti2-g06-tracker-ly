@@ -1,4 +1,5 @@
 package objetos;
+
 import java.util.Locale;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -7,11 +8,12 @@ import java.util.*;
 import java.text.SimpleDateFormat;
 
 import java.text.DateFormat;
+
 public class Habito {
     int id;
     String descr;
     String nome;
-    int freq;
+    String freq;
     String hora;
     int user_id;
 
@@ -19,7 +21,7 @@ public class Habito {
 
     }
 
-    public Habito(int id, String nome, String descr, int freq, String hora, int user_id) {
+    public Habito(int id, String nome, String descr, String freq, String hora, int user_id) {
         this.id = id;
         this.descr = descr;
         this.nome = nome;
@@ -52,11 +54,11 @@ public class Habito {
         this.descr = descr;
     }
 
-    public int getFreq() {
+    public String getFreq() {
         return this.freq;
     }
 
-    public void setFreq(int freq) {
+    public void setFreq(String freq) {
         this.freq = freq;
     }
 

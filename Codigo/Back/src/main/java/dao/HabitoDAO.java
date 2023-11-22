@@ -1,4 +1,5 @@
 package dao;
+
 import java.sql.*;
 import java.util.*;
 
@@ -14,7 +15,7 @@ public class HabitoDAO extends DAO {
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
         preparedStatement.setString(1, cc.getNome());
         preparedStatement.setString(2, cc.getdescr());
-        preparedStatement.setInt(3, cc.getFreq());
+        preparedStatement.setString(3, cc.getFreq());
         preparedStatement.setString(4, cc.getHora());
         preparedStatement.setInt(5, cc.getuser_id());
         preparedStatement.executeUpdate();
@@ -29,7 +30,7 @@ public class HabitoDAO extends DAO {
 
         while(result.next()) {
            habitos.add(
-            new Habito(result.getInt("id"), result.getString("nome"), result.getString("descr"), result.getInt("freq"), result.getString("hora"), result.getInt("user_id"))
+            new Habito(result.getInt("id"), result.getString("nome"), result.getString("descr"), result.getString("freq"), result.getString("hora"), result.getInt("user_id"))
            );
         }
         return habitos;
@@ -49,7 +50,7 @@ public class HabitoDAO extends DAO {
 
         while(result.next()) {
            habitos.add(
-            new Habito(result.getInt("id"), result.getString("nome"), result.getString("descr"), result.getInt("freq"), result.getString("hora"), result.getInt("user_id"))
+            new Habito(result.getInt("id"), result.getString("nome"), result.getString("descr"), result.getString("freq"), result.getString("hora"), result.getInt("user_id"))
            );
         }
         return habitos;
@@ -67,7 +68,7 @@ public class HabitoDAO extends DAO {
         PreparedStatement ps = conexao.prepareStatement(sql);
         ps.setString(1, cc.getNome());
         ps.setString(2, cc.getdescr());
-        ps.setInt(3, cc.getFreq());
+        ps.setString(3, cc.getFreq());
         ps.setString(4, cc.getHora());
         ps.setInt(5, cc.getuser_id());
         ps.setInt(6, cc.getId());
