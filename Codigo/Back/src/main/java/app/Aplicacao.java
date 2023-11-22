@@ -23,7 +23,6 @@ public class Aplicacao {
     public static void main(String[] args) {
         // Configuração de CORS para permitir conexão com o front-end hospedado em outra
         // porta/servidor
-        port(3001);
         options("/*",
                 (request, response) -> {
 
@@ -66,19 +65,19 @@ public class Aplicacao {
         // http://localhost:4567/habitosdelete?id=3
         delete("/habitosdelete", (request, response) -> HabitoService.delete(request, response));
 
-        // http://localhost:4567/habitoseditar?id=4&nome=bibshabituada&descr=teste&freq=1&hora=13:00&user_id=7
+        // [OK] http://localhost:4567/habitoseditar?id=4&nome=bibshabituada&descr=teste&freq=1&hora=13:00&user_id=7
         put("/habitoseditar", (request, response) -> HabitoService.editar(request, response));
 
 
         // * POSTS ---------------------------------------------------------------------------
 
-        //http://localhost:4567/postcadastro?descricao=teste&foto=123&habito_id=1&user_id=7
+        // http://localhost:4567/postcadastro?descricao=teste&foto=123&habito_id=1&user_id=7
         post("/postcadastro", (request, response) -> PostService.cadastro(request, response));
 
         // http://localhost:4567/postdelete?id=1
         delete("/postdelete", (request, response) -> PostService.delete(request, response));
 
-        //http://localhost:4567/posteditar?id=1&descricao=teste&foto=teste&habito_id=1&user_id=7
+        // http://localhost:4567/posteditar?id=1&descricao=teste&foto=teste&habito_id=1&user_id=7
         put("/posteditar", (request, response) -> PostService.editar(request, response));
 
 

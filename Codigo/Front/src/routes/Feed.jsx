@@ -3,11 +3,12 @@ import { useEffect, useState } from "react";
 // services
 import { getRotina } from "../services/rotinaService";
 import { useLogin } from "../hooks/auth";
-import { getPost } from "../services/postService";
+//import { getPost } from "../services/postService";
 import { parseFreq } from "../helpers";
 // components
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
+import Questionario from "../components/Questionario";
 // chakra
 import {
   Card,
@@ -41,8 +42,7 @@ function Feed() {
     fetchRotinas();
   }, []);
 
-  console.log("Rotinas:", Rotinas);
-
+  // renderiza rotinas do user
   const RotinasRend = (props) => {
     const { nome, descr, freq, hora } = props;
 
@@ -51,56 +51,58 @@ function Feed() {
         <Box bg={"#EBF5F8"} px={4} py={5} rounded={"lg"} shadow={"lg"}>
           <Text fontSize={"md"}>{nome}</Text>
           <Text fontSize={"sm"}>{descr}</Text>
-          <Text fontSize={"sm"}>{parseFreq(freq)}</Text>
+          <Text fontSize={"sm"}>{freq}</Text>
           <Text fontSize={"sm"}>{hora}</Text>
         </Box>
       </>
     );
   };
 
+  // renderiza posts do usuário
   const PostsRend = (props) => {
     return (
-      <Card marginBottom={"15px"} maxW="md">
-        <CardHeader>
-          <Flex spacing="4">
-            <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
-              <Avatar name="Segun Adebayo" src="https://bit.ly/sage-adebayo" />
+      <>
+        <Card marginBottom={"15px"} maxW="md">
+          <CardHeader>
+            <Flex spacing="4">
+              <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
+                <Avatar />
 
-              <Box>
-                <Heading size="sm">Segun Adebayo</Heading>
-                <Text>Creator, Chakra UI</Text>
-              </Box>
+                <Box>
+                  <Heading size="sm">
+                    Marcela Aguiar - Aprendender Francês
+                  </Heading>
+                  <Text>Creator, Chakra UI</Text>
+                </Box>
+              </Flex>
+              <IconButton
+                variant="ghost"
+                colorScheme="gray"
+                aria-label="See menu"
+              />
             </Flex>
-            <IconButton
-              variant="ghost"
-              colorScheme="gray"
-              aria-label="See menu"
-            />
-          </Flex>
-        </CardHeader>
-        <CardBody>
-          <Text>
-            With Chakra UI, I wanted to sync the speed of development with the
-            speed of design. I wanted the developer to be just as excited as the
-            designer to create a screen.
-          </Text>
-        </CardBody>
-        <Image
-          objectFit="cover"
-          src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
-          alt="Chakra UI"
-        />
+          </CardHeader>
+          <CardBody>
+            <Text>
+              30 dias de estudo autônomo de inglês! A gringa me espera!!
+            </Text>
+          </CardBody>
+          <Image
+            objectFit="cover"
+            src="https://source.unsplash.com/E9NcsvbRVqo"
+            alt="Chakra UI"
+          />
 
-        <CardFooter
-          justify="space-between"
-          flexWrap="wrap"
-          sx={{
-            "& > button": {
-              minW: "136px",
-            },
-          }}
-        >
-          <Button flex="1" variant="ghost">
+          <CardFooter
+            justify="space-between"
+            flexWrap="wrap"
+            sx={{
+              "& > button": {
+                minW: "136px",
+              },
+            }}
+          >
+            {/* <Button flex="1" variant="ghost">
             Like
           </Button>
           <Button flex="1" variant="ghost">
@@ -108,9 +110,62 @@ function Feed() {
           </Button>
           <Button flex="1" variant="ghost">
             Share
+          </Button> */}
+          </CardFooter>
+        </Card>
+
+        <Card marginBottom={"15px"} maxW="md">
+          <CardHeader>
+            <Flex spacing="4">
+              <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
+                <Avatar />
+
+                <Box>
+                  <Heading size="sm">
+                    Marcela Aguiar - Aprendender Inglês
+                  </Heading>
+                  <Text>Creator, Chakra UI</Text>
+                </Box>
+              </Flex>
+              <IconButton
+                variant="ghost"
+                colorScheme="gray"
+                aria-label="See menu"
+              />
+            </Flex>
+          </CardHeader>
+          <CardBody>
+            <Text>
+              30 dias de estudo autônomo de inglês! A gringa me espera!!
+            </Text>
+          </CardBody>
+          <Image
+            objectFit="cover"
+            src="https://source.unsplash.com/E9NcsvbRVqo"
+            alt="Chakra UI"
+          />
+
+          <CardFooter
+            justify="space-between"
+            flexWrap="wrap"
+            sx={{
+              "& > button": {
+                minW: "136px",
+              },
+            }}
+          >
+            {/* <Button flex="1" variant="ghost">
+            Like
           </Button>
-        </CardFooter>
-      </Card>
+          <Button flex="1" variant="ghost">
+            Comment
+          </Button>
+          <Button flex="1" variant="ghost">
+            Share
+          </Button> */}
+          </CardFooter>
+        </Card>
+      </>
     );
   };
 
@@ -123,10 +178,10 @@ function Feed() {
           backgroundColor={"blue"}
           height={"30rem"}
           position={"sticky"}
-          top={"20px"}
-          marginTop={"20px"}
+          margin={"40px auto"}
+          top={"50px"}
         >
-          <Text fontSize="3xl">
+          <Text fontSize="30px">
             O benefício futuro é maior que o desconforto de agora!
           </Text>
 
@@ -141,11 +196,11 @@ function Feed() {
               />
             ))}
           </Stack>
-        </Container>
 
-        <Container backgroundColor={"red"} padding={"10px"}>
-          {PostsRend()};
         </Container>
+        
+
+        <Container padding={"10px"}>{PostsRend()}</Container>
       </SimpleGrid>
 
       <Footer />

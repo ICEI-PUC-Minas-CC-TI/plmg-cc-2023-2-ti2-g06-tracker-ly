@@ -1,9 +1,8 @@
-// hooks
+// hooks e services
 import { useState, useEffect } from "react";
 import * as Yup from "yup";
 import { useLogin } from "../hooks/auth";
 import { Field, Form, Formik, useFormik } from "formik";
-// services
 import { cadastro } from "../services/userService";
 // routes
 import {
@@ -42,7 +41,6 @@ import { useToast } from "@chakra-ui/react";
 // criar conta
 const Form1 = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();
   const toast = useToast();
 
   // restrições de cadastro
@@ -71,14 +69,11 @@ const Form1 = () => {
           date: "",
           name: "",
         }}
-        //validationSchema={SignupSchema}
+        validationSchema={SignupSchema}
         onSubmit={async (values) => {
-          console.log(values);
           const response = await cadastro(values).then((response) =>
             response.json().data
           );
-
-          console.log(response);
 
           if (response) {
             console.log(response);
@@ -167,33 +162,6 @@ const Form1 = () => {
               </InputRightElement>
             </InputGroup>
           </FormControl>
-
-          {/* <FormControl mt={"20px"} isRequired>
-            <FormLabel htmlFor="password" mt="2%">
-              Confirmar senha
-            </FormLabel>
-            <InputGroup size="md">
-              <Field
-                as={Input}
-                name="confirmPassword"
-                id="confirmar-senha"
-                pr="4.5rem"
-                type={showPassword ? "text" : "password"}
-                placeholder="Digite aqui..."
-                focusBorderColor="#B6DFD8"
-              />
-              <InputRightElement width="4.5rem">
-                <Button
-                  variant={"ghost"}
-                  onClick={() =>
-                    setShowPassword((showPassword) => !showPassword)
-                  }
-                >
-                  {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                </Button>
-              </InputRightElement>
-            </InputGroup>
-          </FormControl> */}
 
           <Button
             variant="btn1"
@@ -294,7 +262,6 @@ function Cadastro() {
         type="button"
         onClick={() => {
           onOpen();
-          //navigate("/cadastro");
         }}
         variant={"btn1"}
       >
