@@ -8,8 +8,8 @@ export const getRotina = async (userId) => {
 };
 
 // editar rotina/hábitos
-export const editRotina = async (data) => {
+export const editRotina = async (id, nome, descr, freq, hora, perfil_id, user_id) => {
   return await axios.put(
-    `http://localhost:4567/habitoseditar?id=${data.id}&nome=${data.nome}&descr=${data.teste}&freq=${data.freq}&hora=${data.hora}&perfil_id=${data.perfil_id}&user_id=${data.user_id}`
+    `http://localhost:4567/habitoseditar?id=${id}&nome=${nome}&descr=${descr}&freq=${freq}&hora=${hora}&perfil_id=${user_id}`
   );
 };

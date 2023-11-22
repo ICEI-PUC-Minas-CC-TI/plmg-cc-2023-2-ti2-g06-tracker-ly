@@ -1,9 +1,8 @@
-// hooks
+// hooks e services
 import { useState, useEffect } from "react";
 import * as Yup from "yup";
 import { useLogin } from "../hooks/auth";
 import { Field, Form, Formik, useFormik } from "formik";
-// services
 import { cadastro } from "../services/userService";
 // routes
 import {
@@ -42,7 +41,6 @@ import { useToast } from "@chakra-ui/react";
 // criar conta
 const Form1 = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();
   const toast = useToast();
 
   // restrições de cadastro
@@ -71,14 +69,11 @@ const Form1 = () => {
           date: "",
           name: "",
         }}
-        //validationSchema={SignupSchema}
+        validationSchema={SignupSchema}
         onSubmit={async (values) => {
-          console.log(values);
           const response = await cadastro(values).then((response) =>
             response.json().data
           );
-
-          console.log(response);
 
           if (response) {
             console.log(response);

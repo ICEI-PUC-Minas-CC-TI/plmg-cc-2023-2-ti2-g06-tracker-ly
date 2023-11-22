@@ -62,7 +62,6 @@ function Login() {
       <Button
         onClick={() => {
           onOpen();
-          // navigate("/login");
         }}
         variant={"btn1"}
       >

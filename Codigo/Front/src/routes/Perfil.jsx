@@ -1,7 +1,7 @@
-// hooks
+// hooks e services
 import { useEffect, useState } from "react";
 import { useLogin } from "../hooks/auth";
-import { getRotina } from "../services/rotinaService";
+import { getRotina, editRotina } from "../services/rotinaService";
 import { getPost } from "../services/postService";
 import { parseFreq } from "../helpers";
 // components
@@ -28,11 +28,13 @@ import {
   Textarea,
   FormLabel,
 } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
 import { Field, Form, Formik, useFormik } from "formik";
 
 // input para edição de hábitos
 const RotinasEditRend = (props) => {
-  const { id, nome, descr, freq, hora, setIsEditingHabito } = props;
+  const { id, nome, descr, freq, hora, perfil_id, user_id, setIsEditingHabito, } = props;
+  const toast = useToast();
 
   return (
     <Formik
@@ -41,10 +43,31 @@ const RotinasEditRend = (props) => {
         descr: descr,
         freq: parseFreq(freq),
         date: hora,
+        perfil_id: perfil_id,
+        user_id:user_id,
       }}
-
       onSubmit={async (values) => {
         console.log(values);
+        const response = await editRotina(
+          id,
+          values.habNome,
+          values.descr,
+          values.freq,
+          values.date,
+          values.perfil_id,
+          values.user_id
+        ).then((response) => console.log(response));
+
+        if (response) {
+          setIsEditingHabito(false);
+          toast({
+            title: "Perfeito!",
+            description: "Hábito editado com sucesso.",
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+          });
+        }
       }}
     >
       <Form>
@@ -103,9 +126,16 @@ const RotinasEditRend = (props) => {
           <Button
             variant={"btn2"}
             type={"submit"}
-            onClick={() => setIsEditingHabito(false)}
           >
             Pronto!
+          </Button>
+
+          <Button
+            variant={"ghost"}
+            type={"button"}
+            onClick={() => {setIsEditingHabito(false)}}
+          >
+            Cancelar
           </Button>
         </Box>
       </Form>
@@ -115,7 +145,7 @@ const RotinasEditRend = (props) => {
 
 // rotinas renderizadas
 const RotinasRend = (props) => {
-  const { id, nome, descr, freq, hora } = props;
+  const { id, nome, descr, freq, hora, perfil_id, user_id } = props;
   const [isEditingHabito, setIsEditingHabito] = useState(false);
 
   return (
@@ -153,6 +183,8 @@ const RotinasRend = (props) => {
           descr={descr}
           freq={freq}
           hora={hora}
+          perfil_id={perfil_id}
+          user_id={user_id}
           setIsEditingHabito={setIsEditingHabito}
         />
       )}
@@ -238,6 +270,8 @@ function Perfil() {
                 descr={rotina.descr}
                 freq={rotina.freq}
                 hora={rotina.hora}
+                perfil_id={userData.id}
+                user_id={userData.id}
               />
             ))}
           </Box>

@@ -67,7 +67,7 @@ public class Aplicacao {
         post("/habitosdelete", (request, response) -> HabitoService.delete(request, response));
 
         // http://localhost:4567/habitoseditar?id=4&nome=bibshabituada&descr=teste&freq=1&hora=13:00&perfil_id=7
-        post("/habitoseditar", (request, response) -> HabitoService.editar(request, response));
+        put("/habitoseditar", (request, response) -> HabitoService.editar(request, response));
 
 
         // * POSTS [ainda nao em funcionamento] ---------------------------------------------------------------------------
