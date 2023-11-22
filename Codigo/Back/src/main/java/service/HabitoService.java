@@ -51,7 +51,7 @@ public class HabitoService {
         }
     }
 
-    public String listar(Request request, Response response) {
+    public String listar(Request request, Response response){
         int id = Integer.parseInt(request.queryParams("user_id"));
         Gson gson = new Gson();
         try {

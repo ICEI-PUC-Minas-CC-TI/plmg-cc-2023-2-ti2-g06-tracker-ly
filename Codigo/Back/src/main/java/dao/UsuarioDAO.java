@@ -14,13 +14,16 @@ public class UsuarioDAO extends DAO {
     }
 
     public void inserirUsuario(Usuario cc) throws Exception {
-        String sql = "INSERT into usuario(nome, nivel, email, nasc, senha) values (?, ?, ?, ?, ?)";
+        String sql = "INSERT into usuario(nome, nivel, email, nasc, senha, nick, bio, foto) values (?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
         preparedStatement.setString(1, cc.getNome());
         preparedStatement.setInt(2, cc.getNivel());
         preparedStatement.setString(3, cc.getEmail());
         preparedStatement.setDate(4, cc.getNasc());
         preparedStatement.setString(5, cc.getSenha());
+        preparedStatement.setString(6, cc.getNick());
+        preparedStatement.setString(7, cc.getBio());
+        preparedStatement.setBytes(8, cc.getFoto());
         preparedStatement.executeUpdate();
 
     }
@@ -33,7 +36,7 @@ public class UsuarioDAO extends DAO {
 
         while(result.next()) {
            usuario.add(
-            new Usuario(result.getInt("id"),result.getString("nome"), result.getInt("nivel"),result.getString("email"), result.getDate("nasc"), result.getString("senha"))
+            new Usuario(result.getInt("id"),result.getString("nome"), result.getInt("nivel"),result.getString("email"), result.getDate("nasc"), result.getString("senha"), result.getString("nick"), result.getString("bio"), result.getBytes("foto"))
            );
         }
         return usuario;
@@ -66,14 +69,12 @@ public class UsuarioDAO extends DAO {
             sql += addquery;
         }
 
-
         PreparedStatement ps = conexao.prepareStatement(sql);
         ResultSet result = ps.executeQuery();
 
         while(result.next()) {
            usuario.add(
-            new Usuario(result.getInt("id"),result.getString("nome"), result.getInt("nivel"),result.getString("email"), result.getDate("nasc"), result.getString("senha"))
-           );
+            new Usuario(result.getInt("id"),result.getString("nome"), result.getInt("nivel"),result.getString("email"), result.getDate("nasc"), result.getString("senha"), result.getString("nick"), result.getString("bio"), result.getBytes("foto")));
         }
         return usuario;
     }
@@ -89,7 +90,7 @@ public class UsuarioDAO extends DAO {
 
     public Usuario autenticar(String email, String senha) throws NoSuchAlgorithmException, SQLException { // autenticacao do usuario no login com senha md5
         System.out.println("As informações recebidas pelo autenticar são" + email + " " + senha);
-      
+
         // Crie uma instância do MessageDigest com o algoritmo MD5
       MessageDigest md = MessageDigest.getInstance("MD5");
 
@@ -104,9 +105,10 @@ public class UsuarioDAO extends DAO {
 
       // Converte o hash MD5 em uma representação de string hexadecimal
       StringBuilder hashString = new StringBuilder();
-      for (byte b : digest) {
-          hashString.append(String.format("%02x", b));
-      }
+
+        for (byte b : digest) {
+            hashString.append(String.format("%02x", b));
+        }
 
       // Retorne a representação da senha em MD5 como uma string
       String senhaConvertida = hashString.toString();
@@ -126,13 +128,13 @@ public class UsuarioDAO extends DAO {
 
       ResultSet rs = st.executeQuery(sql);
       if (rs.next()) {
-        Usuario usuario = new Usuario(rs.getInt("id"),rs.getString("nome"), rs.getInt("nivel"),rs.getString("email"), rs.getDate("nasc"), rs.getString("senha"));
+        Usuario usuario = new Usuario(rs.getInt("id"),rs.getString("nome"), rs.getInt("nivel"),rs.getString("email"), rs.getDate("nasc"), rs.getString("senha"), rs.getString("nick"), rs.getString("bio"), rs.getBytes("foto"));
         System.out.println("Usuario inserido com sucesso");
         return usuario;
       } else  {
         System.out.println("Não foi possível inserir o usuário no banco.");
       }
-      return null; 
+      return null;
     }
 }
 

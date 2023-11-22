@@ -70,11 +70,11 @@ public class Habito {
         this.hora = hora;
     }
 
-    public int getUser_id() {
+    public int getuser_id() {
         return this.user_id;
     }
 
-    public void setUser_id(int user_id) {
+    public void setuser_id(int user_id) {
         this.user_id = user_id;
     }
 

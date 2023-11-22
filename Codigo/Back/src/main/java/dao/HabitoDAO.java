@@ -17,7 +17,7 @@ public class HabitoDAO extends DAO {
         preparedStatement.setString(2, cc.getdescr());
         preparedStatement.setString(3, cc.getFreq());
         preparedStatement.setString(4, cc.getHora());
-        preparedStatement.setInt(5, cc.getUser_id());
+        preparedStatement.setInt(5, cc.getuser_id());
         preparedStatement.executeUpdate();
 
     }
@@ -28,10 +28,10 @@ public class HabitoDAO extends DAO {
         PreparedStatement ps = conexao.prepareStatement(sql);
         ResultSet result = ps.executeQuery();
 
-        while (result.next()) {
-            habitos.add(
-                    new Habito(result.getInt("id"), result.getString("nome"), result.getString("descr"),
-                            result.getString("freq"), result.getString("hora"), result.getInt("user_id")));
+        while(result.next()) {
+           habitos.add(
+            new Habito(result.getInt("id"), result.getString("nome"), result.getString("descr"), result.getString("freq"), result.getString("hora"), result.getInt("user_id"))
+           );
         }
         return habitos;
     }
@@ -48,10 +48,10 @@ public class HabitoDAO extends DAO {
         PreparedStatement ps = conexao.prepareStatement(sql);
         ResultSet result = ps.executeQuery();
 
-        while (result.next()) {
-            habitos.add(
-                    new Habito(result.getInt("id"), result.getString("nome"), result.getString("descr"),
-                            result.getString("freq"), result.getString("hora"), result.getInt("user_id")));
+        while(result.next()) {
+           habitos.add(
+            new Habito(result.getInt("id"), result.getString("nome"), result.getString("descr"), result.getString("freq"), result.getString("hora"), result.getInt("user_id"))
+           );
         }
         return habitos;
     }
@@ -70,7 +70,7 @@ public class HabitoDAO extends DAO {
         ps.setString(2, cc.getdescr());
         ps.setString(3, cc.getFreq());
         ps.setString(4, cc.getHora());
-        ps.setInt(5, cc.getUser_id());
+        ps.setInt(5, cc.getuser_id());
         ps.setInt(6, cc.getId());
         ps.executeUpdate();
     }

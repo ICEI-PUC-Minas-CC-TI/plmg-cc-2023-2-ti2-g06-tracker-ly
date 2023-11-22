@@ -47,6 +47,9 @@ public class UsuarioService {
         String email = request.queryParams("email");
         String senha = request.queryParams("senha");
         String nasc = request.queryParams("nasc");
+        String nick = request.queryParams("nick");
+        String bio = request.queryParams("bio");
+        byte[] foto = request.queryParams("foto").getBytes();
 
         //String nasc = request.queryParams("nasc");
 
@@ -55,7 +58,7 @@ public class UsuarioService {
         // int nivel = Integer.parseInt(request.queryParams("nivel"));
 
         try{
-            usuarioDAO.inserirUsuario(new Usuario(-1, nome, 1, email, senha, nasc));
+            usuarioDAO.inserirUsuario(new Usuario(-1, nome, 1, email, senha, nasc, nick, bio, foto));
             return true;
         }
         catch (Exception e){
