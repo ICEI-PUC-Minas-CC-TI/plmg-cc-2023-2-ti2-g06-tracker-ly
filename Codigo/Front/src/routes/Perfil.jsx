@@ -30,11 +30,140 @@ import {
 } from "@chakra-ui/react";
 import { Field, Form, Formik, useFormik } from "formik";
 
+// input para edição de hábitos
+const RotinasEditRend = (props) => {
+  const { id, nome, descr, freq, hora, setIsEditingHabito } = props;
+
+  return (
+    <Formik
+      initialValues={{
+        habNome: nome,
+        descr: descr,
+        freq: parseFreq(freq),
+        date: hora,
+      }}
+
+      onSubmit={async (values) => {
+        console.log(values);
+      }}
+    >
+      <Form>
+        <Box
+          bg={"#EBF5F8"}
+          px={4}
+          py={5}
+          rounded={"lg"}
+          shadow={"lg"}
+          margin={"10px"}
+        >
+          <Flex>
+            <Container>
+              <FormControl m={"10px"} isRequired>
+                <Field
+                  as={Input}
+                  id="habNome"
+                  name="habNome"
+                  placeholder="Seu hábito..."
+                  focusBorderColor="#B6DFD8"
+                />
+              </FormControl>
+
+              <FormControl m={"10px"} isRequired>
+                <Field
+                  as={Textarea}
+                  id="descr"
+                  name="descr"
+                  placeholder="Descrição..."
+                  focusBorderColor="#B6DFD8"
+                />
+              </FormControl>
+
+              <FormControl m={"10px"} isRequired>
+                <Field
+                  as={Input}
+                  id="freq"
+                  name="freq"
+                  placeholder="Frequência..."
+                  focusBorderColor="#B6DFD8"
+                />
+              </FormControl>
+
+              <FormControl m={"10px"} isRequired>
+                <Field
+                  as={Input}
+                  type="time"
+                  id="date"
+                  name="date"
+                  focusBorderColor="#B6DFD8"
+                />
+              </FormControl>
+            </Container>
+          </Flex>
+
+          <Button
+            variant={"btn2"}
+            type={"submit"}
+            onClick={() => setIsEditingHabito(false)}
+          >
+            Pronto!
+          </Button>
+        </Box>
+      </Form>
+    </Formik>
+  );
+};
+
+// rotinas renderizadas
+const RotinasRend = (props) => {
+  const { id, nome, descr, freq, hora } = props;
+  const [isEditingHabito, setIsEditingHabito] = useState(false);
+
+  return (
+    <>
+      {!isEditingHabito ? (
+        <Box
+          bg={"#EBF5F8"}
+          px={4}
+          py={5}
+          rounded={"lg"}
+          shadow={"lg"}
+          margin={"10px"}
+        >
+          <Flex>
+            <Container>
+              <Text fontSize={"md"}>{nome}</Text>
+              <Text fontSize={"sm"}>{descr}</Text>
+              <Text fontSize={"sm"}>{parseFreq(freq)}</Text>
+              <Text fontSize={"sm"}>{hora}</Text>
+            </Container>
+          </Flex>
+
+          <Button
+            variant={"btn2"}
+            type={"button"}
+            onClick={() => setIsEditingHabito(true)}
+          >
+            Editar
+          </Button>
+        </Box>
+      ) : (
+        <RotinasEditRend
+          key={id}
+          nome={nome}
+          descr={descr}
+          freq={freq}
+          hora={hora}
+          setIsEditingHabito={setIsEditingHabito}
+        />
+      )}
+    </>
+  );
+};
+
 function Perfil() {
   const { userData } = useLogin();
   const [Rotinas, setRotinas] = useState([]);
   const [Posts, setPosts] = useState([]);
-  const [isEditingHabito, setIsEditingHabito] = useState(false);
 
   // fetch rotinas e salva em um array
   useEffect(() => {
@@ -55,110 +184,6 @@ function Perfil() {
 
     fetchPosts();
   }, []);
-
-  // rotinas renderizadas
-  const RotinasRend = (props) => {
-    const { nome, descr, freq, hora } = props;
-
-    return (
-      <Box
-        bg={"#EBF5F8"}
-        px={4}
-        py={5}
-        rounded={"lg"}
-        shadow={"lg"}
-        margin={"10px"}
-      >
-        <Flex>
-          <Container>
-            <Text fontSize={"md"}>{nome}</Text>
-            <Text fontSize={"sm"}>{descr}</Text>
-            <Text fontSize={"sm"}>{parseFreq(freq)}</Text>
-            <Text fontSize={"sm"}>{hora}</Text>
-          </Container>
-        </Flex>
-      </Box>
-    );
-  };
-
-  // input para edição de hábitos
-  const RotinasEditRend = (props) => {
-    const { nome, descr, freq, hora } = props;
-
-    return (
-      <Formik
-        initialValues={{
-          habNome: nome,
-          descr: descr,
-          freq: parseFreq(freq),
-          date: hora,
-        }}
-      >
-        <Form>
-          <Box
-            bg={"#EBF5F8"}
-            px={4}
-            py={5}
-            rounded={"lg"}
-            shadow={"lg"}
-            margin={"10px"}
-          >
-            <Flex>
-              <Container>
-                <FormControl m={"10px"} isRequired>
-                  <Field
-                    as={Input}
-                    id="habNome"
-                    name="habNome"
-                    placeholder="Seu hábito..."
-                    focusBorderColor="#B6DFD8"
-                  />
-                </FormControl>
-
-                <FormControl m={"10px"} isRequired>
-                  <Field
-                    as={Textarea}
-                    id="descr"
-                    name="descr"
-                    placeholder="Descrição..."
-                    focusBorderColor="#B6DFD8"
-                  />
-                </FormControl>
-
-                <FormControl m={"10px"} isRequired>
-                  <Field
-                    as={Input}
-                    id="freq"
-                    name="freq"
-                    placeholder="Frequência..."
-                    focusBorderColor="#B6DFD8"
-                  />
-                </FormControl>
-
-                <FormControl m={"10px"} isRequired>
-                  <Field
-                    as={Input}
-                    type="time"
-                    id="date"
-                    name="date"
-                    focusBorderColor="#B6DFD8"
-                  />
-                </FormControl>
-              </Container>
-            </Flex>
-
-            <Button
-              variant={"btn2"}
-              type={"submit"}
-              onClick={() => setIsEditingHabito(false)}
-            >
-              Pronto!
-            </Button>
-          </Box>
-        </Form>
-      </Formik>
-    );
-  };
 
   // postagens renderizadas
   const PostsRend = (props) => {
@@ -205,38 +230,16 @@ function Perfil() {
               Minha Rotina
             </Text>
 
-            {isEditingHabito ? (
-              <>
-                {Rotinas.map((rotina) => (
-                  <RotinasEditRend
-                    key={rotina.id}
-                    nome={rotina.nome}
-                    descr={rotina.descr}
-                    freq={rotina.freq}
-                    hora={rotina.hora}
-                  />
-                ))}
-              </>
-            ) : (
-              <>
-                {Rotinas.map((rotina) => (
-                  <RotinasRend
-                    key={rotina.id}
-                    nome={rotina.nome}
-                    descr={rotina.descr}
-                    freq={rotina.freq}
-                    hora={rotina.hora}
-                  />
-                ))}
-                <Button
-                  variant={"btn2"}
-                  type={"button"}
-                  onClick={() => setIsEditingHabito(true)}
-                >
-                  Editar
-                </Button>
-              </>
-            )}
+            {Rotinas.map((rotina) => (
+              <RotinasRend
+                key={rotina.id}
+                id={rotina.id}
+                nome={rotina.nome}
+                descr={rotina.descr}
+                freq={rotina.freq}
+                hora={rotina.hora}
+              />
+            ))}
           </Box>
 
           <Button
