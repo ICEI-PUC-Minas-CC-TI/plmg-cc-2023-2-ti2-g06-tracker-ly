@@ -80,6 +80,8 @@ public class Aplicacao {
         // http://localhost:4567/posteditar?id=1&descricao=teste&foto=teste&habito_id=1&user_id=7
         put("/posteditar", (request, response) -> PostService.editar(request, response));
 
+        // http://localhost:4567/postusuario?user_id=7
+        get("/postusuario", (request, response) -> PostService.postusuario(request, response));
 
         // * SEGUIR ---------------------------------------------------------------------------
 

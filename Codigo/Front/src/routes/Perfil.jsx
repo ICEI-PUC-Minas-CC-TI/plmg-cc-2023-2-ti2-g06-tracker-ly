@@ -1,7 +1,7 @@
 // hooks e services
 import { useEffect, useState } from "react";
 import { useLogin } from "../hooks/auth";
-import { getRotina, editRotina } from "../services/rotinaService";
+import { getRotina, editRotina, criarHabito } from "../services/rotinaService";
 import { getPost } from "../services/postService";
 import { parseFreq } from "../helpers";
 // components
@@ -27,8 +27,17 @@ import {
   FormControl,
   Textarea,
   FormLabel,
+  Modal,
+  ModalBody,
+  ModalOverlay,
+  ModalContent,
+  ModalCloseButton,
+  ModalHeader,
+  ModalFooter,
+  Stack,
+  Link,
 } from "@chakra-ui/react";
-import { useToast } from "@chakra-ui/react";
+import { useToast, useDisclosure } from "@chakra-ui/react";
 import { Field, Form, Formik, useFormik } from "formik";
 
 // input para edição de hábitos
@@ -46,7 +55,6 @@ const RotinasEditRend = (props) => {
         user_id: user_id,
       }}
       onSubmit={async (values) => {
-        console.log(values);
         const response = await editRotina(
           id,
           values.habNome,
@@ -54,7 +62,7 @@ const RotinasEditRend = (props) => {
           values.freq,
           values.date,
           values.user_id
-        )
+        );
 
         if (response) {
           setIsEditingHabito(false);
@@ -79,7 +87,7 @@ const RotinasEditRend = (props) => {
         >
           <Flex>
             <Container>
-              <FormControl m={"10px"} isRequired>
+              <FormControl my={"10px"} isRequired>
                 <Field
                   as={Input}
                   id="habNome"
@@ -89,7 +97,7 @@ const RotinasEditRend = (props) => {
                 />
               </FormControl>
 
-              <FormControl m={"10px"} isRequired>
+              <FormControl my={"10px"} isRequired>
                 <Field
                   as={Textarea}
                   id="descr"
@@ -121,10 +129,7 @@ const RotinasEditRend = (props) => {
             </Container>
           </Flex>
 
-          <Button
-            variant={"btn2"}
-            type={"submit"}
-          >
+          <Button variant={"btn2"} type={"submit"}>
             Pronto!
           </Button>
 
@@ -188,6 +193,144 @@ const RotinasRend = (props) => {
           setIsEditingHabito={setIsEditingHabito}
         />
       )}
+    </>
+  );
+};
+
+// modal para criação de novo hábito
+const CriarHab = (id) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  return (
+    <>
+      <Button
+        variant={"btn1"}
+        marginY={"15px"}
+        ml={"10px"}
+        className="btn-add-hab"
+        onClick={() => {
+          onOpen();
+        }}
+      >
+        Criar novo hábito!
+      </Button>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={() => {
+          onClose();
+        }}
+        backdropFilter={"blur(10px)"}
+        isCentered
+      >
+        <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(10px)" />
+        <ModalContent>
+          <ModalHeader justifySelf={"center"} fontSize={"xl"}>
+            Criar novo hábito!
+          </ModalHeader>
+          <ModalCloseButton />
+
+          <ModalBody>
+            <Box>
+              <Formik
+                initialValues={{
+                  habNome: "",
+                  descr: "",
+                  freq: "",
+                  date: "",
+                  user_id: id,
+                }}
+                onSubmit={async (values) => {
+                  console.log(values);
+                  const response = await criarHabito(
+                    values.habNome,
+                    values.descr,
+                    values.freq,
+                    values.date,
+                    values.user_id
+                  );
+
+                  if (response) {
+                    toast({
+                      title: "Perfeito!",
+                      description: "Hábito editado com sucesso.",
+                      status: "success",
+                      duration: 3000,
+                      isClosable: true,
+                    });
+                  }
+                }}
+              >
+                <Form>
+                  <Box>
+                    <Flex>
+                      <Container>
+                        <FormControl my={"10px"} isRequired>
+                          <Field
+                            as={Input}
+                            id="habNome"
+                            name="habNome"
+                            placeholder="Seu hábito..."
+                            focusBorderColor="#B6DFD8"
+                          />
+                        </FormControl>
+
+                        <FormControl my={"10px"} isRequired>
+                          <Field
+                            as={Textarea}
+                            id="descr"
+                            name="descr"
+                            placeholder="Descrição..."
+                            focusBorderColor="#B6DFD8"
+                          />
+                        </FormControl>
+
+                        <FormControl my={"10px"} isRequired>
+                          <Field
+                            as={Input}
+                            id="freq"
+                            name="freq"
+                            placeholder="Frequência..."
+                            focusBorderColor="#B6DFD8"
+                          />
+                        </FormControl>
+
+                        <FormControl my={"10px"} isRequired>
+                          <Field
+                            as={Input}
+                            type="time"
+                            id="date"
+                            name="date"
+                            focusBorderColor="#B6DFD8"
+                          />
+                        </FormControl>
+                      </Container>
+                    </Flex>
+
+                    <Button variant={"btn2"} type={"submit"}>
+                      Pronto!
+                    </Button>
+                  </Box>
+                </Form>
+              </Formik>
+            </Box>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button
+              variant="ghost"
+              mr={2}
+              type="button"
+              onClick={() => {
+                onClose();
+              }}
+              size={"sm"}
+            >
+              <Link>Cancelar</Link>
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   );
 };
@@ -275,14 +418,7 @@ function Perfil() {
             ))}
           </Box>
 
-          <Button
-            variant={"btn1"}
-            marginY={"15px"}
-            ml={"10px"}
-            className="btn-add-hab"
-          >
-            Adicionais mais um Hábito
-          </Button>
+          <CriarHab id={userData.id}/>
         </GridItem>
 
         <GridItem className="perfil-posts-container" colSpan={3}>
