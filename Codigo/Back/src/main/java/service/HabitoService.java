@@ -37,7 +37,7 @@ public class HabitoService {
         String descr = request.queryParams("descr");
         int freq = Integer.parseInt(request.queryParams("freq"));
         String hora = request.queryParams("hora");
-        int id = Integer.parseInt(request.queryParams("perfil_id"));
+        int id = Integer.parseInt(request.queryParams("user_id"));
 
         // String nasc = request.queryParams("nasc");
         // Date dataFormatada = formato.parse(nasc);
@@ -54,7 +54,7 @@ public class HabitoService {
     }
 
     public String listar(Request request, Response response){
-        int id = Integer.parseInt(request.queryParams("perfil_id"));
+        int id = Integer.parseInt(request.queryParams("user_id"));
         Gson gson = new Gson();
         try{
             return gson.toJson(habito.getHabito(id));
@@ -84,13 +84,13 @@ public class HabitoService {
         String descr = request.queryParams("descr");
         int freq = Integer.parseInt(request.queryParams("freq"));
         String hora = request.queryParams("hora");
-        int perfil_id = Integer.parseInt(request.queryParams("perfil_id"));
+        int user_id = Integer.parseInt(request.queryParams("user_id"));
 
 
         System.out.println(1);
         try{
             System.out.println(2);
-            habito.editarHabito(new Habito(id, nome, descr, freq, hora, perfil_id));
+            habito.editarHabito(new Habito(id, nome, descr, freq, hora, user_id));
             System.out.println(3);
             return true;
         }

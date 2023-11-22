@@ -10,13 +10,13 @@ public class HabitoDAO extends DAO {
     }
 
     public void inserirHabito(Habito cc) throws Exception {
-        String sql = "INSERT into habito(nome, descr, freq, hora, perfil_id) values (?, ?, ?, ?, ?)";
+        String sql = "INSERT into habito(nome, descr, freq, hora, user_id) values (?, ?, ?, ?, ?)";
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
         preparedStatement.setString(1, cc.getNome());
         preparedStatement.setString(2, cc.getdescr());
         preparedStatement.setInt(3, cc.getFreq());
         preparedStatement.setString(4, cc.getHora());
-        preparedStatement.setInt(5, cc.getPerfil_id());
+        preparedStatement.setInt(5, cc.getuser_id());
         preparedStatement.executeUpdate();
 
     }
@@ -29,7 +29,7 @@ public class HabitoDAO extends DAO {
 
         while(result.next()) {
            habitos.add(
-            new Habito(result.getInt("id"), result.getString("nome"), result.getString("descr"), result.getInt("freq"), result.getString("hora"), result.getInt("perfil_id"))
+            new Habito(result.getInt("id"), result.getString("nome"), result.getString("descr"), result.getInt("freq"), result.getString("hora"), result.getInt("user_id"))
            );
         }
         return habitos;
@@ -40,7 +40,7 @@ public class HabitoDAO extends DAO {
         String sql = "SELECT * FROM habito where 1=1";
 
         if (id > 0) {
-            String addquery = "and perfil_id =" + id;
+            String addquery = "and user_id =" + id;
             sql += addquery;
         }
 
@@ -49,7 +49,7 @@ public class HabitoDAO extends DAO {
 
         while(result.next()) {
            habitos.add(
-            new Habito(result.getInt("id"), result.getString("nome"), result.getString("descr"), result.getInt("freq"), result.getString("hora"), result.getInt("perfil_id"))
+            new Habito(result.getInt("id"), result.getString("nome"), result.getString("descr"), result.getInt("freq"), result.getString("hora"), result.getInt("user_id"))
            );
         }
         return habitos;
@@ -63,13 +63,13 @@ public class HabitoDAO extends DAO {
     }
 
     public void editarHabito(Habito cc) throws SQLException {
-        String sql = "UPDATE habito SET nome = ?, descr = ?, freq = ?, hora = ?, perfil_id = ? WHERE id = ?";
+        String sql = "UPDATE habito SET nome = ?, descr = ?, freq = ?, hora = ?, user_id = ? WHERE id = ?";
         PreparedStatement ps = conexao.prepareStatement(sql);
         ps.setString(1, cc.getNome());
         ps.setString(2, cc.getdescr());
         ps.setInt(3, cc.getFreq());
         ps.setString(4, cc.getHora());
-        ps.setInt(5, cc.getPerfil_id());
+        ps.setInt(5, cc.getuser_id());
         ps.setInt(6, cc.getId());
         ps.executeUpdate();
     }

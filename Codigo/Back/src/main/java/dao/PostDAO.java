@@ -11,14 +11,14 @@ public class PostDAO extends DAO {
 
     public void inserirPost(Post cc) throws Exception {
 
-        String sql = "INSERT into post(id, descr, foto, data, habito_id, perfil_id) values (?,?,?,?,?,?)";
+        String sql = "INSERT into post(id, descr, foto, data, habito_id, user_id) values (?,?,?,?,?,?)";
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
         preparedStatement.setInt(1, cc.getId());
         preparedStatement.setString(2, cc.getDesc());
         preparedStatement.setBytes(3, cc.getFoto());
         preparedStatement.setString(4, cc.getData());
         preparedStatement.setInt(5, cc.getHabito_id());
-        preparedStatement.setInt(6, cc.getPerfil_id());
+        preparedStatement.setInt(6, cc.getuser_id());
         preparedStatement.executeUpdate();
 
     }
@@ -32,13 +32,13 @@ public class PostDAO extends DAO {
 
         while(result.next()) {
            post.add(
-            new Post(result.getInt("id"),result.getString("desc"), result.getBytes("foto"),result.getInt("habito_id"), result.getInt("perfil_id"))
+            new Post(result.getInt("id"),result.getString("desc"), result.getBytes("foto"),result.getInt("habito_id"), result.getInt("user_id"))
            );
         }
         return post;
     }
 
-    public LinkedList<Post> getPost(int id, String desc, byte[] foto, int habito_id, int perfil_id) throws SQLException {
+    public LinkedList<Post> getPost(int id, String desc, byte[] foto, int habito_id, int user_id) throws SQLException {
         LinkedList<Post> post = new LinkedList<Post>();
         String sql = "SELECT * FROM post where 1=1";
 
@@ -55,8 +55,8 @@ public class PostDAO extends DAO {
             String addquery = "and habito_id =" + habito_id;
             sql += addquery;
         }
-        if (perfil_id > 0) {
-            String addquery = "and perfil_id =" + perfil_id;
+        if (user_id > 0) {
+            String addquery = "and user_id =" + user_id;
             sql += addquery;
         }
 
@@ -66,7 +66,7 @@ public class PostDAO extends DAO {
 
         while(result.next()) {
            post.add(
-            new Post(result.getInt("id"),result.getString("desc"), result.getBytes("foto"),result.getInt("habito_id"), result.getInt("perfil_id"))
+            new Post(result.getInt("id"),result.getString("desc"), result.getBytes("foto"),result.getInt("habito_id"), result.getInt("user_id"))
            );
         }
         return post;
@@ -83,14 +83,14 @@ public class PostDAO extends DAO {
 
     public void editarPost(Post p){
 
-        String sql = "UPDATE post SET desc = ?, foto = ?, habito_id = ?, perfil_id = ? WHERE id = ?";
+        String sql = "UPDATE post SET desc = ?, foto = ?, habito_id = ?, user_id = ? WHERE id = ?";
 
         try{
             PreparedStatement ps = conexao.prepareStatement(sql);
             ps.setString(1, p.getDesc());
             ps.setBytes(2, p.getFoto());
             ps.setInt(3, p.getHabito_id());
-            ps.setInt(4, p.getPerfil_id());
+            ps.setInt(4, p.getuser_id());
             ps.setInt(5, p.getId());
             ps.executeUpdate();
         }

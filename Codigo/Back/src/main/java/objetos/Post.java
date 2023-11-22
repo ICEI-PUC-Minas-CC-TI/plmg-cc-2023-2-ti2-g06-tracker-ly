@@ -9,19 +9,19 @@ public class Post {
     byte[] foto;
     String data;
     int habito_id;
-    int perfil_id;
+    int user_id;
 
     public Post(){
 
     }
 
 
-    public Post(int id, String desc, byte[] foto, int habito_id, int perfil_id) {
+    public Post(int id, String desc, byte[] foto, int habito_id, int user_id) {
         this.id = id;
         this.desc = desc;
         this.foto = foto;
         this.habito_id = habito_id;
-        this.perfil_id = perfil_id;
+        this.user_id = user_id;
         setData();
     }
 
@@ -58,12 +58,12 @@ public class Post {
         this.habito_id = habito_id;
     }
 
-    public int getPerfil_id() {
-        return this.perfil_id;
+    public int getuser_id() {
+        return this.user_id;
     }
 
-    public void setPerfil_id(int perfil_id) {
-        this.perfil_id = perfil_id;
+    public void setuser_id(int user_id) {
+        this.user_id = user_id;
     }
 
 
