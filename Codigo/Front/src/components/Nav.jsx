@@ -47,7 +47,6 @@ const NavLink = (props) => {
 export default function WithAction() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {  handleLogout } = useLogin();
-  const navigate = useNavigate();
 
   return (
     <>

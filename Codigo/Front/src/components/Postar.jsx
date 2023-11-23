@@ -1,4 +1,7 @@
-// chakra
+// services
+import { postar } from "../services/postService";
+import { useLogin } from "../hooks/auth";
+// chakra and formik
 import {
   Modal,
   ModalOverlay,
@@ -10,12 +13,26 @@ import {
   Button,
   Text,
   FormLabel,
+  FormControl,
+  Input,
+  Box,
+  Textarea,
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import { useDisclosure } from "@chakra-ui/react";
+import { Formik, Form, Field } from "formik";
 
 function Postar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { userData } = useLogin();
+
+  // const handleSubmit = async (values) => {
+  //   const now = new Date();
+  //   const data = now.toISOString();
+
+  //   const response = await postar(userData.id, "", 1, values.descricao, data);
+  // };
+
   return (
     <>
       <Button
@@ -31,26 +48,71 @@ function Postar() {
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(10px)" />
         <ModalContent>
-          <ModalHeader>Chegou a Hora!</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Text>Compartilhe o seu progresso com seus amigos!</Text>
+          <Formik
+            initialValues={{ descricao: "" }}
+            onSubmit={async (values) => {
+              const now = new Date();
+              const data = now.toISOString();
 
-            <Button mt={"20px"} variant={"btn1"} leftIcon={<AddIcon />}>
-              Escolher foto
-            </Button>
+              console.log("valores passados pro back:  ", userData.id,
+              values.descricao)
 
-            <Text> [HÁBITO AQUI]</Text>
+              const response = await postar(
+                values.descricao,
+                1,
+                1,
+                userData.id
+              );
+            }}
+          >
+            <Form>
+              <ModalHeader>Chegou a Hora!</ModalHeader>
+              <ModalCloseButton />
 
-            <FormLabel mt={"20px"}>Descrição</FormLabel>
-            
-          </ModalBody>
+              <ModalBody>
+                <Text>Compartilhe o seu progresso com seus amigos!</Text>
 
-          <ModalFooter>
-            <Button variant={"ghost"} mr={3} onClick={onClose}>
-              Cancelar
-            </Button>
-          </ModalFooter>
+                <Box>
+                  <Text>ADICIONAR FOTO AQUI</Text>
+                  {/* <FormControl my={"15px"} backgroundColor={"green"}>
+                    <Field
+                      as={Input}
+                      type="file"
+                      focusBorderColor="#B6DFD8"
+                      placeholder="Compartilhe seu progresso!"
+                      id="foto"
+                      name="foto"
+                    />
+                  </FormControl> */}
+
+                  <FormControl my={"15px"}>
+                    <FormLabel>Descrição:</FormLabel>
+                    <Field
+                      as={Textarea}
+                      focusBorderColor="#B6DFD8"
+                      placeholder="Compartilhe seu progresso!"
+                      id="descricao"
+                      name="descricao"
+                    />
+                  </FormControl>
+                </Box>
+              </ModalBody>
+
+              <ModalFooter>
+                <Button
+                  variant={"ghost"}
+                  type={"button"}
+                  mr={3}
+                  onClick={onClose}
+                >
+                  Cancelar
+                </Button>
+                <Button my={"10px"} type={"submit"} variant={"btn1"}>
+                  Publicar!
+                </Button>
+              </ModalFooter>
+            </Form>
+          </Formik>
         </ModalContent>
       </Modal>
     </>

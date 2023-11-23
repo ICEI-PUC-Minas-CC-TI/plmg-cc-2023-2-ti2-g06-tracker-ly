@@ -16,8 +16,8 @@ public class Post {
     }
 
 
-    public Post(int id, String desc, byte[] foto, int habito_id, int user_id) {
-        this.id = id;
+    public Post(String desc, byte[] foto, int habito_id, int user_id) {
+        
         this.desc = desc;
         this.foto = foto;
         this.habito_id = habito_id;
