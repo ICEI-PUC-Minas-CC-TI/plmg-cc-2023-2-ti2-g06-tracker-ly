@@ -85,4 +85,18 @@ public class PostService {
 
     }
 
+    public String postamigos(Request request, Response response) {
+
+        int user_id = Integer.parseInt(request.queryParams("user_id"));
+
+        try {
+            LinkedList<Post> posts = post.getPostsAmigos(user_id);
+            return gson.toJson(posts);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return "Error ao procurar Posts";
+        }
+
+    }
+
 }

@@ -1,7 +1,7 @@
 // hooks e services
 import { useEffect, useState } from "react";
 import { useLogin } from "../hooks/auth";
-import { getRotina, editRotina, criarHabito } from "../services/rotinaService";
+import { getRotina, editRotina, criarHabito, deleteHabito } from "../services/rotinaService";
 import { getPost } from "../services/postService";
 import { parseFreq } from "../helpers";
 // components
@@ -142,11 +142,45 @@ const RotinasEditRend = (props) => {
           >
             Cancelar
           </Button>
+
+          <DeletarHab id={id} setIsEditingHabito={setIsEditingHabito}/>
         </Box>
       </Form>
     </Formik>
   );
 };
+
+// deletar hábito
+const DeletarHab = (id, setIsEditingHabito) => {
+  const toast = useToast();
+
+  const handleDelete = async () => {
+    const response = await deleteHabito(id);
+
+    if (response) {
+      toast({
+        title: "Perfeito!",
+        description: "Hábito deletado com sucesso.",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  };
+
+  return (
+    <Button
+      variant={"btn1"}
+      type={"button"}
+      onClick={() => {
+        handleDelete();
+        setIsEditingHabito(false);
+      }}
+    >
+      Deletar
+    </Button>
+  );
+}
 
 // rotinas renderizadas
 const RotinasRend = (props) => {
@@ -200,6 +234,7 @@ const RotinasRend = (props) => {
 // modal para criação de novo hábito
 const CriarHab = (id) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
 
   return (
     <>
@@ -258,6 +293,8 @@ const CriarHab = (id) => {
                       duration: 3000,
                       isClosable: true,
                     });
+
+                    onClose();
                   }
                 }}
               >

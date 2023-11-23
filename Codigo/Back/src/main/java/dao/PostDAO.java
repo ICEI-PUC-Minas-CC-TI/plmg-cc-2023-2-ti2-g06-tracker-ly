@@ -97,4 +97,20 @@ public class PostDAO extends DAO {
             System.out.println(e.getMessage());
         }
     }
+
+    public LinkedList<Post> getPostsAmigos(int user_id) throws SQLException {
+
+        LinkedList<Post> post = new LinkedList<Post>();
+        String sql = "SELECT post.* FROM usuario JOIN segue ON usuario.id = segue.segue_id JOIN post ON segue.seguido_id = post.user_id WHERE usuario.id = ";
+        sql += user_id;
+        PreparedStatement ps = conexao.prepareStatement(sql);
+        ResultSet result = ps.executeQuery();
+
+        while (result.next()) {
+            post.add(
+                    new Post(result.getInt("id"), result.getString("descr"), result.getBytes("foto"),
+                            result.getInt("habito_id"), result.getInt("user_id")));
+        }
+        return post;
+    }
 }
