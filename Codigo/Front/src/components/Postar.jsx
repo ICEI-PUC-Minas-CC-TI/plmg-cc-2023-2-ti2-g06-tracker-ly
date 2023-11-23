@@ -1,6 +1,9 @@
+// hooks
+import { useState, useEffect } from "react";
 // services
 import { postar } from "../services/postService";
 import { useLogin } from "../hooks/auth";
+import { getRotina } from "../services/rotinaService";
 // chakra and formik
 import {
   Modal,
@@ -25,13 +28,17 @@ import { Formik, Form, Field } from "formik";
 function Postar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { userData } = useLogin();
+  const [Rotinas, setRotinas] = useState([]);
 
-  // const handleSubmit = async (values) => {
-  //   const now = new Date();
-  //   const data = now.toISOString();
+  // fetch rotinas e salva em um array
+  useEffect(() => {
+    const fetchRotinas = async () => {
+      const dataRotinas = await getRotina(userData.id);
+      setRotinas(dataRotinas.data);
+    };
 
-  //   const response = await postar(userData.id, "", 1, values.descricao, data);
-  // };
+    fetchRotinas();
+  }, []);
 
   return (
     <>
@@ -54,14 +61,17 @@ function Postar() {
               const now = new Date();
               const data = now.toISOString();
 
-              console.log("valores passados pro back:  ", userData.id,
-              values.descricao)
+              console.log(
+                "valores passados pro back:  ",
+                userData.id,
+                values.descricao
+              );
 
               const response = await postar(
+                userData.id,
                 values.descricao,
                 1,
-                1,
-                userData.id
+                1
               );
             }}
           >
@@ -84,6 +94,8 @@ function Postar() {
                       name="foto"
                     />
                   </FormControl> */}
+
+                  
 
                   <FormControl my={"15px"}>
                     <FormLabel>Descrição:</FormLabel>

@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Post {
-    int id;
+    Integer id;
     String desc;
     byte[] foto;
     String data;
@@ -16,8 +16,8 @@ public class Post {
     }
 
 
-    public Post(String desc, byte[] foto, int habito_id, int user_id) {
-        
+    public Post(Integer id, String desc, byte[] foto, int habito_id, int user_id) {
+        this.id = id;
         this.desc = desc;
         this.foto = foto;
         this.habito_id = habito_id;
