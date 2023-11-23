@@ -20,7 +20,6 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  useDisclosure,
   Button,
   FormControl,
   FormLabel,
@@ -31,6 +30,7 @@ import {
   Checkbox,
   Text,
   useToast,
+  useDisclosure
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 

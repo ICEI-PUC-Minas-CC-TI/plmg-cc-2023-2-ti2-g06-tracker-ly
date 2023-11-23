@@ -1,11 +1,5 @@
 import axios from "axios";
 
-// export const postar = async (data) => {
-// return await (
-//     await axios.post(``, data)
-// ).data;
-// };
-
 export const getPost = async (user_id) => {
   // return [
   //   {
@@ -31,8 +25,10 @@ export const getPost = async (user_id) => {
   //   },
   // ];
 
+  console.log(user_id);
+
   return await axios.get(
-    ``
+    `http://localhost:4567/postusuario?user_id=${user_id}`
   );
 };
 

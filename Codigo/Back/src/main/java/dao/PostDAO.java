@@ -1,4 +1,5 @@
 package dao;
+
 import java.sql.*;
 import java.util.*;
 
@@ -30,15 +31,15 @@ public class PostDAO extends DAO {
         PreparedStatement ps = conexao.prepareStatement(sql);
         ResultSet result = ps.executeQuery();
 
-        while(result.next()) {
-           post.add(
-            new Post(result.getInt("id"),result.getString("desc"), result.getBytes("foto"),result.getInt("habito_id"), result.getInt("user_id"))
-           );
+        while (result.next()) {
+            post.add(
+                    new Post(result.getInt("id"), result.getString("desc"), result.getBytes("foto"),
+                            result.getInt("habito_id"), result.getInt("user_id")));
         }
         return post;
     }
 
-    public LinkedList<Post> getPost(int id, String desc, byte[] foto, int habito_id, int user_id) throws SQLException {
+    public LinkedList<Post> getPost(int id, String desc, int habito_id, int user_id) throws SQLException {
         LinkedList<Post> post = new LinkedList<Post>();
         String sql = "SELECT * FROM post where 1=1";
 
@@ -60,14 +61,13 @@ public class PostDAO extends DAO {
             sql += addquery;
         }
 
-
         PreparedStatement ps = conexao.prepareStatement(sql);
         ResultSet result = ps.executeQuery();
 
-        while(result.next()) {
-           post.add(
-            new Post(result.getInt("id"),result.getString("desc"), result.getBytes("foto"),result.getInt("habito_id"), result.getInt("user_id"))
-           );
+        while (result.next()) {
+            post.add(
+                    new Post(result.getInt("id"), result.getString("descr"), result.getBytes("foto"),
+                            result.getInt("habito_id"), result.getInt("user_id")));
         }
         return post;
     }
@@ -81,11 +81,11 @@ public class PostDAO extends DAO {
 
     }
 
-    public void editarPost(Post p){
+    public void editarPost(Post p) {
 
         String sql = "UPDATE post SET desc = ?, foto = ?, habito_id = ?, user_id = ? WHERE id = ?";
 
-        try{
+        try {
             PreparedStatement ps = conexao.prepareStatement(sql);
             ps.setString(1, p.getDesc());
             ps.setBytes(2, p.getFoto());
@@ -93,10 +93,24 @@ public class PostDAO extends DAO {
             ps.setInt(4, p.getuser_id());
             ps.setInt(5, p.getId());
             ps.executeUpdate();
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
-}
 
+    public LinkedList<Post> getPostsAmigos(int user_id) throws SQLException {
+
+        LinkedList<Post> post = new LinkedList<Post>();
+        String sql = "SELECT post.* FROM usuario JOIN segue ON usuario.id = segue.segue_id JOIN post ON segue.seguido_id = post.user_id WHERE usuario.id = ";
+        sql += user_id;
+        PreparedStatement ps = conexao.prepareStatement(sql);
+        ResultSet result = ps.executeQuery();
+
+        while (result.next()) {
+            post.add(
+                    new Post(result.getInt("id"), result.getString("descr"), result.getBytes("foto"),
+                            result.getInt("habito_id"), result.getInt("user_id")));
+        }
+        return post;
+    }
+}
