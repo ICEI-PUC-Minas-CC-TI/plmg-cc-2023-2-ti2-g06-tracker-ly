@@ -1,5 +1,6 @@
 // services
 import { postar } from "../services/postService";
+import { useLogin } from "../hooks/auth";
 // chakra and formik
 import {
   Modal,
@@ -23,6 +24,15 @@ import { Formik, Form, Field } from "formik";
 
 function Postar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { userData } = useLogin();
+
+  // const handleSubmit = async (values) => {
+  //   const now = new Date();
+  //   const data = now.toISOString();
+
+  //   const response = await postar(userData.id, "", 1, values.descricao, data);
+  // };
+
   return (
     <>
       <Button
@@ -38,7 +48,23 @@ function Postar() {
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(10px)" />
         <ModalContent>
-          <Formik initialValues={{ descricao: "" }}>
+          <Formik
+            initialValues={{ descricao: "" }}
+            onSubmit={async (values) => {
+              const now = new Date();
+              const data = now.toISOString();
+
+              console.log("valores passados pro back:  ", userData.id,
+              values.descricao)
+
+              const response = await postar(
+                values.descricao,
+                1,
+                1,
+                userData.id
+              );
+            }}
+          >
             <Form>
               <ModalHeader>Chegou a Hora!</ModalHeader>
               <ModalCloseButton />
@@ -47,9 +73,17 @@ function Postar() {
                 <Text>Compartilhe o seu progresso com seus amigos!</Text>
 
                 <Box>
-                  <Button mt={"20px"} variant={"btn2"} leftIcon={<AddIcon />}>
-                    Escolher foto
-                  </Button>
+                  <Text>ADICIONAR FOTO AQUI</Text>
+                  {/* <FormControl my={"15px"} backgroundColor={"green"}>
+                    <Field
+                      as={Input}
+                      type="file"
+                      focusBorderColor="#B6DFD8"
+                      placeholder="Compartilhe seu progresso!"
+                      id="foto"
+                      name="foto"
+                    />
+                  </FormControl> */}
 
                   <FormControl my={"15px"}>
                     <FormLabel>Descrição:</FormLabel>
@@ -65,11 +99,15 @@ function Postar() {
               </ModalBody>
 
               <ModalFooter>
-                <Button variant={"ghost"} mr={3} onClick={onClose}>
+                <Button
+                  variant={"ghost"}
+                  type={"button"}
+                  mr={3}
+                  onClick={onClose}
+                >
                   Cancelar
                 </Button>
-
-                <Button my={"10px"} variant={"btn1"}>
+                <Button my={"10px"} type={"submit"} variant={"btn1"}>
                   Publicar!
                 </Button>
               </ModalFooter>

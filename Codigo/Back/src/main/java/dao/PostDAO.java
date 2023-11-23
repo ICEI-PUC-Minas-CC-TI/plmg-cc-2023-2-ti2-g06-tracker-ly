@@ -12,14 +12,14 @@ public class PostDAO extends DAO {
 
     public void inserirPost(Post cc) throws Exception {
 
-        String sql = "INSERT into post(id, descr, foto, data, habito_id, user_id) values (?,?,?,?,?,?)";
+        String sql = "INSERT into post(descr, foto, data, habito_id, user_id) values (?,?,?,?,?)";
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
-        preparedStatement.setInt(1, cc.getId());
-        preparedStatement.setString(2, cc.getDesc());
-        preparedStatement.setBytes(3, cc.getFoto());
-        preparedStatement.setString(4, cc.getData());
-        preparedStatement.setInt(5, cc.getHabito_id());
-        preparedStatement.setInt(6, cc.getuser_id());
+        //preparedStatement.setInt(1, cc.getId());
+        preparedStatement.setString(1, cc.getDesc());
+        preparedStatement.setBytes(2, cc.getFoto());
+        preparedStatement.setString(3, cc.getData());
+        preparedStatement.setInt(4, cc.getHabito_id());
+        preparedStatement.setInt(5, cc.getuser_id());
         preparedStatement.executeUpdate();
 
     }
@@ -33,7 +33,7 @@ public class PostDAO extends DAO {
 
         while (result.next()) {
             post.add(
-                    new Post(result.getInt("id"), result.getString("desc"), result.getBytes("foto"),
+                    new Post(result.getString("desc"), result.getBytes("foto"),
                             result.getInt("habito_id"), result.getInt("user_id")));
         }
         return post;
@@ -66,7 +66,7 @@ public class PostDAO extends DAO {
 
         while (result.next()) {
             post.add(
-                    new Post(result.getInt("id"), result.getString("descr"), result.getBytes("foto"),
+                    new Post(result.getString("descr"), result.getBytes("foto"),
                             result.getInt("habito_id"), result.getInt("user_id")));
         }
         return post;
@@ -108,7 +108,7 @@ public class PostDAO extends DAO {
 
         while (result.next()) {
             post.add(
-                    new Post(result.getInt("id"), result.getString("descr"), result.getBytes("foto"),
+                    new Post( result.getString("descr"), result.getBytes("foto"),
                             result.getInt("habito_id"), result.getInt("user_id")));
         }
         return post;

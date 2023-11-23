@@ -282,7 +282,6 @@ const CriarHab = (id) => {
                   user_id: id,
                 }}
                 onSubmit={async (values) => {
-                  console.log(values);
                   const response = await criarHabito(
                     values.habNome,
                     values.descr,
@@ -379,6 +378,7 @@ const CriarHab = (id) => {
 };
 
 const PostsRend = ({id, habito, user_id, descr, data}) => {
+
   return (
     <Card>
       <CardHeader>

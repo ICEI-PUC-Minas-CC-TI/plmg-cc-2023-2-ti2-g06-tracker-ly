@@ -16,6 +16,7 @@ const getTheme = () => ({
   colors: {
     blue: "#B6DFD8",
     pink: "#FF93A6",
+    green: "#8FD4A1",
     lightPink: "#FFCBD4",
   },
 
