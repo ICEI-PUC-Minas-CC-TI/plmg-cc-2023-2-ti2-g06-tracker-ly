@@ -1,12 +1,18 @@
 // hooks e services
 import { useEffect, useState } from "react";
 import { useLogin } from "../hooks/auth";
-import { getRotina, editRotina, criarHabito, deleteHabito } from "../services/rotinaService";
+import {
+  getRotina,
+  editRotina,
+  criarHabito,
+  deleteHabito,
+} from "../services/rotinaService";
 import { getPost } from "../services/postService";
 import { parseFreq } from "../helpers";
 // components
 import Footer from "../components/Footer";
 import Nav from "../components/Nav";
+import Post from "../components/Post";
 // chakra e formik
 import {
   Avatar,
@@ -143,7 +149,7 @@ const RotinasEditRend = (props) => {
             Cancelar
           </Button>
 
-          <DeletarHab id={id} setIsEditingHabito={setIsEditingHabito}/>
+          <DeletarHab id={id} setIsEditingHabito={setIsEditingHabito} />
         </Box>
       </Form>
     </Formik>
@@ -180,7 +186,7 @@ const DeletarHab = (id, setIsEditingHabito) => {
       Deletar
     </Button>
   );
-}
+};
 
 // rotinas renderizadas
 const RotinasRend = (props) => {
@@ -372,6 +378,30 @@ const CriarHab = (id) => {
   );
 };
 
+const PostsRend = ({id, habito, user_id, descr, data}) => {
+  return (
+    <Card>
+      <CardHeader>
+        <Heading size="md">{habito.nome}</Heading>
+      </CardHeader>
+      <CardBody>
+        <Text>[INSERIR FOTO AQUI]</Text>
+        <Text>{descr}</Text>
+        <Text>{data}</Text>
+      </CardBody>
+      <CardFooter>
+        <Post
+          id={id}
+          habito={habito}
+          user_id={user_id}
+          descr={descr}
+          data={data}
+        />
+      </CardFooter>
+    </Card>
+  );
+};
+
 function Perfil() {
   const { userData } = useLogin();
   const [Rotinas, setRotinas] = useState([]);
@@ -391,30 +421,11 @@ function Perfil() {
   useEffect(() => {
     const fetchPosts = async () => {
       const dataPosts = await getPost(userData.id);
-      setPosts(dataPosts);
+      setPosts(dataPosts.data);
     };
 
     fetchPosts();
   }, []);
-
-  // postagens renderizadas
-  const PostsRend = (props) => {
-    const { habito_id, desc, data } = props;
-    return (
-      <Card>
-        <CardHeader>
-          <Heading size="md">{habito_id}</Heading>
-        </CardHeader>
-        <CardBody>
-          <Text>{desc}</Text>
-          <Text>{data}</Text>
-        </CardBody>
-        <CardFooter>
-          <Button variant={"btn2"}>Ver mais</Button>
-        </CardFooter>
-      </Card>
-    );
-  };
 
   return (
     <>
@@ -429,7 +440,7 @@ function Perfil() {
         <GridItem className="perfil-info-container" rowSpan={2}>
           <Avatar size={"2xl"} />
           <Text fontSize={"3xl"}>{userData.nome}</Text>
-          <Text fontSize={"xl"}>@{userData.username}</Text>
+          <Text fontSize={"xl"}>@{userData.nick}</Text>
           <Text fontSize={"md"}>{userData.descr}</Text>
           <Button variant={"btn1"} marginY={"15px"} className="btn-edit-hab">
             Editar Perfil
@@ -455,7 +466,7 @@ function Perfil() {
             ))}
           </Box>
 
-          <CriarHab id={userData.id}/>
+          <CriarHab id={userData.id} />
         </GridItem>
 
         <GridItem className="perfil-posts-container" colSpan={3}>
@@ -466,13 +477,18 @@ function Perfil() {
             bgColor={"#EBF5F8"}
             p={"20px"}
           >
-            {Posts.map((post) => (
+            {Posts.map((post) => {
+              const habito = Rotinas.find(rotina => rotina.id === post.habito_id);
+              return (
               <PostsRend
                 key={post.id}
-                habito_id={post.habito_id}
+                id={post.id}
+                habito={habito}
+                user_id={post.user_id}
+                descr={post.desc}
                 data={post.data}
               />
-            ))}
+            )})}
           </SimpleGrid>
         </GridItem>
       </Grid>
