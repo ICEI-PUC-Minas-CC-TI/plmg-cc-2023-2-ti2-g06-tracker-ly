@@ -31,7 +31,7 @@ public class PostService {
         int user_id = Integer.parseInt(request.queryParams("user_id"));
 
         try {
-            post.inserirPost(new Post(descricao, foto, habito_id, user_id));
+            post.inserirPost(new Post(null, descricao, foto, habito_id, user_id));
             return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -61,7 +61,7 @@ public class PostService {
         int user_id = Integer.parseInt(request.queryParams("user_id"));
 
         try {
-            post.editarPost(new Post(descricao, foto, habito_id, user_id));
+            post.editarPost(new Post(id, descricao, foto, habito_id, user_id));
             return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());

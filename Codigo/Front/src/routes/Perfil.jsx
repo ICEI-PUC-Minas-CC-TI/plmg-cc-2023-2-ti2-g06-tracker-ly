@@ -1,5 +1,5 @@
 // hooks e services
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useLogin } from "../hooks/auth";
 import {
   getRotina,
@@ -377,7 +377,9 @@ const CriarHab = (id) => {
   );
 };
 
-const PostsRend = ({id, habito, user_id, descr, data}) => {
+const PostsRend = ({ id, habito, user_id, descr, data }) => {
+  console.log(habito.nome);
+  console.log("post id: ", id);
 
   return (
     <Card>
@@ -407,6 +409,22 @@ function Perfil() {
   const [Rotinas, setRotinas] = useState([]);
   const [Posts, setPosts] = useState([]);
 
+  // renderiza posts depois das rotinas
+  const handlePost = useCallback((post) => {
+    if (!Rotinas.length) return null;
+    const habito = Rotinas.find((rotina) => rotina.id === post.habito_id);
+    return (
+      <PostsRend
+        key={`post-${post.id}`}
+        id={post.id}
+        habito={habito}
+        user_id={post.user_id}
+        descr={post.desc}
+        data={post.data}
+      />
+    );
+  }, [Rotinas, Posts]);
+
   // fetch rotinas e salva em um array
   useEffect(() => {
     const fetchRotinas = async () => {
@@ -426,6 +444,8 @@ function Perfil() {
 
     fetchPosts();
   }, []);
+
+  console.log("rotinas: ", Rotinas);
 
   return (
     <>
@@ -455,7 +475,7 @@ function Perfil() {
 
             {Rotinas.map((rotina) => (
               <RotinasRend
-                key={rotina.id}
+                key={`rotina-${rotina.id}`}
                 id={rotina.id}
                 nome={rotina.nome}
                 descr={rotina.descr}
@@ -477,18 +497,10 @@ function Perfil() {
             bgColor={"#EBF5F8"}
             p={"20px"}
           >
-            {Posts.map((post) => {
-              const habito = Rotinas.find(rotina => rotina.id === post.habito_id);
-              return (
-              <PostsRend
-                key={post.id}
-                id={post.id}
-                habito={habito}
-                user_id={post.user_id}
-                descr={post.desc}
-                data={post.data}
-              />
-            )})}
+            {Posts.map((post) => 
+              handlePost(post)              
+            )}
+
           </SimpleGrid>
         </GridItem>
       </Grid>

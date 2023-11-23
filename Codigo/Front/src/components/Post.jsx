@@ -30,7 +30,7 @@ function Post({ id, habito, user_id, descr, data }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { userData } = useLogin();
 
-  console.log(userData);
+  // console.log(userData);
 
   return (
     <>

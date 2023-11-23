@@ -2,7 +2,7 @@ package dao;
 
 import java.sql.*;
 import java.util.*;
-
+import com.google.gson.Gson;
 import objetos.Post;
 
 public class PostDAO extends DAO {
@@ -33,7 +33,7 @@ public class PostDAO extends DAO {
 
         while (result.next()) {
             post.add(
-                    new Post(result.getString("desc"), result.getBytes("foto"),
+                    new Post(null, result.getString("desc"), result.getBytes("foto"),
                             result.getInt("habito_id"), result.getInt("user_id")));
         }
         return post;
@@ -41,6 +41,7 @@ public class PostDAO extends DAO {
 
     public LinkedList<Post> getPost(int id, String desc, int habito_id, int user_id) throws SQLException {
         LinkedList<Post> post = new LinkedList<Post>();
+        Gson gson = new Gson();
         String sql = "SELECT * FROM post where 1=1";
 
         if (id > 0) {
@@ -66,9 +67,11 @@ public class PostDAO extends DAO {
 
         while (result.next()) {
             post.add(
-                    new Post(result.getString("descr"), result.getBytes("foto"),
+                    new Post(result.getInt("id"), result.getString("descr"), result.getBytes("foto"),
                             result.getInt("habito_id"), result.getInt("user_id")));
         }
+
+
         return post;
     }
 
@@ -108,7 +111,7 @@ public class PostDAO extends DAO {
 
         while (result.next()) {
             post.add(
-                    new Post( result.getString("descr"), result.getBytes("foto"),
+                    new Post(null, result.getString("descr"), result.getBytes("foto"),
                             result.getInt("habito_id"), result.getInt("user_id")));
         }
         return post;
