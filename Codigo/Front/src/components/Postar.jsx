@@ -1,4 +1,6 @@
-// chakra
+// services
+import { postar } from "../services/postService";
+// chakra and formik
 import {
   Modal,
   ModalOverlay,
@@ -10,9 +12,14 @@ import {
   Button,
   Text,
   FormLabel,
+  FormControl,
+  Input,
+  Box,
+  Textarea,
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import { useDisclosure } from "@chakra-ui/react";
+import { Formik, Form, Field } from "formik";
 
 function Postar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -31,26 +38,43 @@ function Postar() {
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(10px)" />
         <ModalContent>
-          <ModalHeader>Chegou a Hora!</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Text>Compartilhe o seu progresso com seus amigos!</Text>
+          <Formik initialValues={{ descricao: "" }}>
+            <Form>
+              <ModalHeader>Chegou a Hora!</ModalHeader>
+              <ModalCloseButton />
 
-            <Button mt={"20px"} variant={"btn1"} leftIcon={<AddIcon />}>
-              Escolher foto
-            </Button>
+              <ModalBody>
+                <Text>Compartilhe o seu progresso com seus amigos!</Text>
 
-            <Text> [HÁBITO AQUI]</Text>
+                <Box>
+                  <Button mt={"20px"} variant={"btn2"} leftIcon={<AddIcon />}>
+                    Escolher foto
+                  </Button>
 
-            <FormLabel mt={"20px"}>Descrição</FormLabel>
-            
-          </ModalBody>
+                  <FormControl my={"15px"}>
+                    <FormLabel>Descrição:</FormLabel>
+                    <Field
+                      as={Textarea}
+                      focusBorderColor="#B6DFD8"
+                      placeholder="Compartilhe seu progresso!"
+                      id="descricao"
+                      name="descricao"
+                    />
+                  </FormControl>
+                </Box>
+              </ModalBody>
 
-          <ModalFooter>
-            <Button variant={"ghost"} mr={3} onClick={onClose}>
-              Cancelar
-            </Button>
-          </ModalFooter>
+              <ModalFooter>
+                <Button variant={"ghost"} mr={3} onClick={onClose}>
+                  Cancelar
+                </Button>
+
+                <Button my={"10px"} variant={"btn1"}>
+                  Publicar!
+                </Button>
+              </ModalFooter>
+            </Form>
+          </Formik>
         </ModalContent>
       </Modal>
     </>
