@@ -28,10 +28,10 @@ import {
 } from "@chakra-ui/react";
 
 function Questionario() {
-  const [value, setValue] = useState("1");
+  const [value, setValue] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const Questoes = (params) => {
+  const Questoes = (pergunta, respostas) => {
     return (
       <>
         <FormLabel>TESTE</FormLabel>
@@ -47,7 +47,7 @@ function Questionario() {
     );
   };
 
-  const perguntas = [
+  const Perguntas = [
     {
       label:
         "Quanto tempo você costuma gastar planejando antes de começar uma tarefa?",
@@ -142,24 +142,61 @@ function Questionario() {
         <ModalContent>
           <ModalCloseButton />
 
-          <ModalBody>
-            <ModalHeader fontSize={"16px"} fontWeight={"normal"}>
-              Por favor, responda rapidamente esse questionário para que nós
-              possamos identificar a melhor rotina pra você
-            </ModalHeader>
+          <Formik
+            initialValues={Perguntas.reduce((acc, curr, index) => {
+              acc[`question${index}`] = "";
+              return acc;
+            }, {})}
+            onSubmit={(values) => {
+              console.log(values);
+            }}
+          >
+            <Form>
+              <ModalBody>
+                <ModalHeader fontSize={"16px"} fontWeight={"normal"}>
+                  Por favor, responda rapidamente esse questionário para que nós
+                  possamos identificar a melhor rotina pra você
+                </ModalHeader>
 
-            <Box>
-              <Questoes />
-            </Box>
-          </ModalBody>
+                <Box>
+                  {Perguntas.map((pergunta, index) => {
+                    return (
+                      <Box key={index}>
+                        <FormLabel>{pergunta.label}</FormLabel>
 
-          <ModalFooter>
-            <ButtonGroup>
-              <Button type="submit" variant="btn2">
-                Pronto!
-              </Button>
-            </ButtonGroup>
-          </ModalFooter>
+                        <Field name={`question${index}`}>
+                          {({ field }) => (
+                            <RadioGroup {...field} onChange={setValue}>
+                              <Stack>
+                                {pergunta.options.map((opcao, i) => {
+                                  const key = Object.keys(opcao)[0];
+                                  return (
+                                    <>
+                                      <Radio key={i} value={key}>
+                                        {opcao[key]}
+                                      </Radio>
+                                    </>
+                                  );
+                                })}
+                              </Stack>
+                            </RadioGroup>
+                          )}
+                        </Field>
+                      </Box>
+                    );
+                  })}
+                </Box>
+              </ModalBody>
+
+              <ModalFooter>
+                <ButtonGroup>
+                  <Button type="submit" variant="btn2">
+                    Pronto!
+                  </Button>
+                </ButtonGroup>
+              </ModalFooter>
+            </Form>
+          </Formik>
         </ModalContent>
       </Modal>
     </>
