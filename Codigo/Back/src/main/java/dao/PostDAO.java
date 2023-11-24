@@ -16,7 +16,7 @@ public class PostDAO extends DAO {
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
         //preparedStatement.setInt(1, cc.getId());
         preparedStatement.setString(1, cc.getDesc());
-        preparedStatement.setBytes(2, cc.getFoto());
+        preparedStatement.setString(2, cc.getFoto());
         preparedStatement.setString(3, cc.getData());
         preparedStatement.setInt(4, cc.getHabito_id());
         preparedStatement.setInt(5, cc.getuser_id());
@@ -33,7 +33,7 @@ public class PostDAO extends DAO {
 
         while (result.next()) {
             post.add(
-                    new Post(null, result.getString("desc"), result.getBytes("foto"),
+                    new Post(null, result.getString("desc"), result.getString("foto"),
                             result.getInt("habito_id"), result.getInt("user_id")));
         }
         return post;
@@ -67,7 +67,7 @@ public class PostDAO extends DAO {
 
         while (result.next()) {
             post.add(
-                    new Post(result.getInt("id"), result.getString("descr"), result.getBytes("foto"),
+                    new Post(result.getInt("id"), result.getString("descr"), result.getString("foto"),
                             result.getInt("habito_id"), result.getInt("user_id")));
         }
 
@@ -77,7 +77,7 @@ public class PostDAO extends DAO {
 
     public void deletePost(int id) throws SQLException {
 
-        String sql = "DELETE FROM post WHERE id= ?" + id;
+        String sql = "DELETE FROM post WHERE id= ?";
         PreparedStatement ps = conexao.prepareStatement(sql);
         ps.setInt(1, id);
         ps.executeUpdate();
@@ -91,7 +91,7 @@ public class PostDAO extends DAO {
         try {
             PreparedStatement ps = conexao.prepareStatement(sql);
             ps.setString(1, p.getDesc());
-            ps.setBytes(2, p.getFoto());
+            ps.setString(2, p.getFoto());
             ps.setInt(3, p.getHabito_id());
             ps.setInt(4, p.getuser_id());
             ps.setInt(5, p.getId());
@@ -111,7 +111,7 @@ public class PostDAO extends DAO {
 
         while (result.next()) {
             post.add(
-                    new Post(null, result.getString("descr"), result.getBytes("foto"),
+                    new Post(null, result.getString("descr"), result.getString("foto"),
                             result.getInt("habito_id"), result.getInt("user_id")));
         }
         return post;

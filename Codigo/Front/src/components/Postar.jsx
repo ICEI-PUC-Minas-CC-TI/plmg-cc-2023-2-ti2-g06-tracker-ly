@@ -20,6 +20,7 @@ import {
   Input,
   Box,
   Textarea,
+  Select,
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import { useDisclosure } from "@chakra-ui/react";
@@ -56,23 +57,24 @@ function Postar() {
         <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(10px)" />
         <ModalContent>
           <Formik
-            initialValues={{ descricao: "" }}
+            initialValues={{
+              descricao: "",
+              rotina: "",
+              foto: "public/img.jpg",
+            }}
             onSubmit={async (values) => {
               const now = new Date();
               const data = now.toISOString();
 
-              console.log(
-                "valores passados pro back:  ",
-                userData.id,
-                values.descricao
-              );
-
               const response = await postar(
                 userData.id,
                 values.descricao,
-                1,
-                1
+                values.foto,
+                values.rotina
               );
+
+              onClose();
+              window.location.reload();
             }}
           >
             <Form>
@@ -84,18 +86,32 @@ function Postar() {
 
                 <Box>
                   <Text>ADICIONAR FOTO AQUI</Text>
-                  {/* <FormControl my={"15px"} backgroundColor={"green"}>
-                    <Field
-                      as={Input}
-                      type="file"
-                      focusBorderColor="#B6DFD8"
-                      placeholder="Compartilhe seu progresso!"
-                      id="foto"
-                      name="foto"
-                    />
-                  </FormControl> */}
 
-                  
+                  <Field
+                    as={Input}
+                    type="file"
+                    focusBorderColor="#B6DFD8"
+                    placeholder="Compartilhe seu progresso!"
+                    value={null}
+                  />
+
+                  <FormControl my={"15px"}>
+                    <FormLabel>Selecione o seu hábito:</FormLabel>
+
+                    <Field
+                      as={Select}
+                      focusBorderColor="#B6DFD8"
+                      placeholder="Selecione o hábito"
+                      id="rotina"
+                      name="rotina"
+                    >
+                      {Rotinas.map((rotina) => (
+                        <option key={rotina.id} value={rotina.id}>
+                          {rotina.nome}
+                        </option>
+                      ))}
+                    </Field>
+                  </FormControl>
 
                   <FormControl my={"15px"}>
                     <FormLabel>Descrição:</FormLabel>
