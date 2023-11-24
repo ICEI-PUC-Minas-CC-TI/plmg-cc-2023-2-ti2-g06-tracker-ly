@@ -23,6 +23,7 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon, AddIcon } from "@chakra-ui/icons";
+import Recomendacao from "./Recomendacao";
 
 
 // botões de navegação
@@ -89,6 +90,7 @@ export default function WithAction() {
           <Flex alignItems={"center"}>
             <Postar />
             <Questionario />
+            <Recomendacao />
 
             <Menu>
               <MenuButton
