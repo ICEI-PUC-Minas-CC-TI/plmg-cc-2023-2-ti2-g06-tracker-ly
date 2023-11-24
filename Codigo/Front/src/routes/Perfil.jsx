@@ -411,21 +411,24 @@ function Perfil() {
   const [Posts, setPosts] = useState([]);
 
   // renderiza posts depois das rotinas
-  const handlePost = useCallback((post) => {
-    if (!Rotinas.length) return null;
-    const habito = Rotinas.find((rotina) => rotina.id === post.habito_id);
-    return (
-      <PostsRend
-        key={`post-${post.id}`}
-        id={post.id}
-        habito={habito}
-        user_id={post.user_id}
-        descr={post.desc}
-        data={post.data}
-        foto={post.foto}
-      />
-    );
-  }, [Rotinas, Posts]);
+  const handlePost = useCallback(
+    (post) => {
+      if (!Rotinas.length) return null;
+      const habito = Rotinas.find((rotina) => rotina.id === post.habito_id);
+      return (
+        <PostsRend
+          key={`post-${post.id}`}
+          id={post.id}
+          habito={habito}
+          user_id={post.user_id}
+          descr={post.desc}
+          data={post.data}
+          foto={post.foto}
+        />
+      );
+    },
+    [Rotinas, Posts]
+  );
 
   // fetch rotinas e salva em um array
   useEffect(() => {
@@ -447,8 +450,6 @@ function Perfil() {
     fetchPosts();
   }, []);
 
-  console.log("rotinas: ", Rotinas);
-
   return (
     <>
       <Nav />
@@ -462,15 +463,14 @@ function Perfil() {
         <GridItem className="perfil-info-container" rowSpan={2}>
           <Avatar size={"2xl"} />
           <Text fontSize={"3xl"}>{userData.nome}</Text>
-          <Text fontSize={"xl"}>@{userData.nick}</Text>
-          <Text fontSize={"md"}>{userData.descr}</Text>
-          <Button variant={"btn1"} marginY={"15px"} className="btn-edit-hab">
+          <Text fontSize={"xl"}>@{userData.nome}</Text>
+          {/* <Button variant={"btn1"} marginY={"15px"} className="btn-edit-hab">
             Editar Perfil
-          </Button>
+          </Button> */}
         </GridItem>
 
         <GridItem className="perfil-rotinas-container" colSpan={3}>
-          <Box bgColor={"lightPink"} padding={"5px"}>
+          <Box bgColor={"lightPink"} padding={"5px"} rounded={"lg"}>
             <Text fontSize={"22px"} marginLeft={"20px"}>
               Minha Rotina
             </Text>
@@ -491,7 +491,7 @@ function Perfil() {
           <CriarHab id={userData.id} />
         </GridItem>
 
-        <GridItem className="perfil-posts-container" colSpan={3}>
+        <GridItem className="perfil-posts-container" colSpan={3} rounded={"lg"}>
           <Text fontSize={"xl"}>Minhas Postagens</Text>
           <SimpleGrid
             spacing={4}
@@ -499,10 +499,7 @@ function Perfil() {
             bgColor={"#EBF5F8"}
             p={"20px"}
           >
-            {Posts.map((post) => 
-              handlePost(post)              
-            )}
-
+            {Posts.map((post) => handlePost(post))}
           </SimpleGrid>
         </GridItem>
       </Grid>

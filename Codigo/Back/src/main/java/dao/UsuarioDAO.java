@@ -23,7 +23,7 @@ public class UsuarioDAO extends DAO {
         preparedStatement.setString(5, cc.getSenha());
         preparedStatement.setString(6, cc.getNick());
         preparedStatement.setString(7, cc.getBio());
-        preparedStatement.setBytes(8, cc.getFoto());
+        preparedStatement.setString(8, cc.getFoto());
         preparedStatement.executeUpdate();
 
     }
@@ -36,7 +36,7 @@ public class UsuarioDAO extends DAO {
 
         while(result.next()) {
            usuario.add(
-            new Usuario(result.getInt("id"),result.getString("nome"), result.getInt("nivel"),result.getString("email"), result.getDate("nasc"), result.getString("senha"), result.getString("nick"), result.getString("bio"), result.getBytes("foto"))
+            new Usuario(result.getInt("id"),result.getString("nome"), result.getInt("nivel"),result.getString("email"), result.getDate("nasc"), result.getString("senha"), result.getString("nick"), result.getString("bio"), result.getString("foto"))
            );
         }
         return usuario;
@@ -74,7 +74,7 @@ public class UsuarioDAO extends DAO {
 
         while(result.next()) {
            usuario.add(
-            new Usuario(result.getInt("id"),result.getString("nome"), result.getInt("nivel"),result.getString("email"), result.getDate("nasc"), result.getString("senha"), result.getString("nick"), result.getString("bio"), result.getBytes("foto")));
+            new Usuario(result.getInt("id"),result.getString("nome"), result.getInt("nivel"),result.getString("email"), result.getDate("nasc"), result.getString("senha"), result.getString("nick"), result.getString("bio"), result.getString("foto")));
         }
         return usuario;
     }
@@ -128,7 +128,7 @@ public class UsuarioDAO extends DAO {
 
       ResultSet rs = st.executeQuery(sql);
       if (rs.next()) {
-        Usuario usuario = new Usuario(rs.getInt("id"),rs.getString("nome"), rs.getInt("nivel"),rs.getString("email"), rs.getDate("nasc"), rs.getString("senha"), rs.getString("nick"), rs.getString("bio"), rs.getBytes("foto"));
+        Usuario usuario = new Usuario(rs.getInt("id"),rs.getString("nome"), rs.getInt("nivel"),rs.getString("email"), rs.getDate("nasc"), rs.getString("senha"), rs.getString("nick"), rs.getString("bio"), rs.getString("foto"));
         System.out.println("Usuario inserido com sucesso");
         return usuario;
       } else  {

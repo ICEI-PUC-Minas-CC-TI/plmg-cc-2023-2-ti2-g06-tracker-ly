@@ -49,7 +49,7 @@ public class UsuarioService {
         String nasc = request.queryParams("nasc");
         String nick = request.queryParams("nick");
         String bio = request.queryParams("bio");
-        byte[] foto = request.queryParams("foto").getBytes();
+        String foto = request.queryParams("foto");
 
         //String nasc = request.queryParams("nasc");
 
