@@ -172,6 +172,8 @@ const DeletarHab = (id, setIsEditingHabito) => {
         isClosable: true,
       });
     }
+
+    window.location.reload();
   };
 
   return (
@@ -300,6 +302,7 @@ const CriarHab = (id) => {
                     });
 
                     onClose();
+                    window.location.reload();
                   }
                 }}
               >
@@ -378,9 +381,6 @@ const CriarHab = (id) => {
 };
 
 const PostsRend = ({ id, habito, user_id, descr, data }) => {
-  console.log(habito.nome);
-  console.log("post id: ", id);
-
   return (
     <Card>
       <CardHeader>

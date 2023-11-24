@@ -89,7 +89,7 @@ export default function WithAction() {
 
           <Flex alignItems={"center"}>
             <Postar />
-            <Questionario />
+            {/* <Questionario /> */}
             <Recomendacao />
 
             <Menu>

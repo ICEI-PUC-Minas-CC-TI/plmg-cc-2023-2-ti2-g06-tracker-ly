@@ -77,7 +77,7 @@ public class PostDAO extends DAO {
 
     public void deletePost(int id) throws SQLException {
 
-        String sql = "DELETE FROM post WHERE id= ?" + id;
+        String sql = "DELETE FROM post WHERE id= ?";
         PreparedStatement ps = conexao.prepareStatement(sql);
         ps.setInt(1, id);
         ps.executeUpdate();
