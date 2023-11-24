@@ -1,4 +1,3 @@
 # Divulgação: Vídeo do Projeto
 
-Nesta pasta inclua arquivos de vídeo produzidos para divulgação do projeto e seus resutados.
-
+[Clique aqui para ver o vídeo](https://youtu.be/Grhm4yve0rA?si=Z4DhbmI_JBmHQ-QS)
