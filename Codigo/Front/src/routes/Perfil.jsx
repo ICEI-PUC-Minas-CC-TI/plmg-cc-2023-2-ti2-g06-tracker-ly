@@ -380,14 +380,14 @@ const CriarHab = (id) => {
   );
 };
 
-const PostsRend = ({ id, habito, user_id, descr, data }) => {
+const PostsRend = ({ id, habito, user_id, descr, data, foto }) => {
   return (
     <Card>
       <CardHeader>
         <Heading size="md">{habito.nome}</Heading>
       </CardHeader>
       <CardBody>
-        <Text>[INSERIR FOTO AQUI]</Text>
+        <img src={foto} alt="Foto do post" />
         <Text>{descr}</Text>
         <Text>{data}</Text>
       </CardBody>
@@ -398,6 +398,7 @@ const PostsRend = ({ id, habito, user_id, descr, data }) => {
           user_id={user_id}
           descr={descr}
           data={data}
+          foto={foto}
         />
       </CardFooter>
     </Card>
@@ -421,6 +422,7 @@ function Perfil() {
         user_id={post.user_id}
         descr={post.desc}
         data={post.data}
+        foto={post.foto}
       />
     );
   }, [Rotinas, Posts]);

@@ -57,7 +57,11 @@ function Postar() {
         <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(10px)" />
         <ModalContent>
           <Formik
-            initialValues={{ descricao: "", rotina: "" }}
+            initialValues={{
+              descricao: "",
+              rotina: "",
+              foto: "public/img.jpg",
+            }}
             onSubmit={async (values) => {
               const now = new Date();
               const data = now.toISOString();
@@ -65,8 +69,8 @@ function Postar() {
               const response = await postar(
                 userData.id,
                 values.descricao,
-                1,
-                values.rotina,
+                values.foto,
+                values.rotina
               );
 
               onClose();
@@ -82,16 +86,14 @@ function Postar() {
 
                 <Box>
                   <Text>ADICIONAR FOTO AQUI</Text>
-                  {/* <FormControl my={"15px"} backgroundColor={"green"}>
-                    <Field
-                      as={Input}
-                      type="file"
-                      focusBorderColor="#B6DFD8"
-                      placeholder="Compartilhe seu progresso!"
-                      id="foto"
-                      name="foto"
-                    />
-                  </FormControl> */}
+
+                  <Field
+                    as={Input}
+                    type="file"
+                    focusBorderColor="#B6DFD8"
+                    placeholder="Compartilhe seu progresso!"
+                    value={null}
+                  />
 
                   <FormControl my={"15px"}>
                     <FormLabel>Selecione o seu hábito:</FormLabel>

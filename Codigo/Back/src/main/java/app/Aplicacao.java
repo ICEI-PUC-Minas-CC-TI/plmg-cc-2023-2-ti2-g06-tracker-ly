@@ -72,7 +72,7 @@ public class Aplicacao {
         // [OK] http://localhost:4567/postcadastro?descricao=teste&foto=123&habito_id=1&user_id=7
         post("/postcadastro", (request, response) -> PostService.cadastro(request, response));
 
-        // http://localhost:4567/postdelete?id=1
+        // [OK] http://localhost:4567/postdelete?id=1
         delete("/postdelete", (request, response) -> PostService.delete(request, response));
 
         // http://localhost:4567/posteditar?id=1&descricao=teste&foto=teste&habito_id=1&user_id=7

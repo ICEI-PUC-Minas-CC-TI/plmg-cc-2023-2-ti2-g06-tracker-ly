@@ -27,7 +27,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-function Post({ id, habito, user_id, descr, data }) {
+function Post({ id, habito, user_id, descr, data, foto }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { userData } = useLogin();
   const toast = useToast();
@@ -80,7 +80,8 @@ function Post({ id, habito, user_id, descr, data }) {
             <Box>
               <Stack spacing={4}>
                 <Text>{habito.nome}</Text>
-                <Text backgroundColor={"pink"}>[INSERIR IMAGEM AQUI]</Text>
+                <img src={foto} alt="Foto do post" />
+                {/* <Text backgroundColor={"pink"}>[INSERIR IMAGEM AQUI]</Text> */}
                 <Text>{descr}</Text>
                 <Text fontSize={"xs"}>{data}</Text>
               </Stack>
