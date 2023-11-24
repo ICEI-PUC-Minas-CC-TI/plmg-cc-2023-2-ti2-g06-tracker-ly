@@ -41,15 +41,11 @@ function Presentation() {
 
   return (
     <>
-
       <Center marginTop={"40px"}>
         <Logo />
       </Center>
 
-      <Container
-        maxW="container.lg"
-        centerContent
-      >
+      <Container maxW="container.lg" centerContent>
         <Grid
           templateRows="repeat(2, 1fr)"
           templateColumns="repeat(2, 1fr)"
@@ -60,28 +56,39 @@ function Presentation() {
               Não basta somente fazer, <br /> tem que provar!
             </Heading>
             <Text className="home-desc" marginTop={"10px"}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum,
-              fuga aliquam nam dicta officiis doloremque suscipit voluptatem
-              unde, ipsum inventore enim quis totam ea tempore sunt odit
-              obcaecati animi saepe explicabo atque aspernatur officia
-              temporibus, consequuntur eaque? Impedit distinctio assumenda
-              ratione, soluta nihil cumque quo adipisci sunt itaque explicabo
-              maiores nam. Ullam exercitationem repellat veniam impedit placeat
-              nulla quisquam optio laboriosam expedita eius debitis,
-              dignissimos, laudantium qui deleniti, ex vel voluptate! Vitae
-              itaque corrupti nostrum, soluta consequatur rem blanditiis totam
-              magnam dolorem in voluptate pariatur eos vero quibusdam molestias,
-              perspiciatis voluptas, fuga alias tempora mollitia culpa dolorum
-              id cupiditate.
+              O Trackerly é a sua comunidade de progresso, criada para todos que
+              buscam uma plataforma dedicada a registrar suas conquistas e
+              receber apoio para alcançar seus objetivos. Seja você um
+              profissional ambicioso, um estudante comprometido ou alguém em
+              busca de mudanças positivas, nosso ambiente é projetado para
+              inspirar e motivar. De maneiras simples te ajudamos a traçar metas
+              mais realistas, eliminando a frustração e a sensação de
+              insuficiência tão comuns ao começar algo novo. No Trackerly,
+              celebramos cada passo em direção ao sucesso, transformando
+              objetivos individuais em conquistas compartilhadas. 
+              <br />
+              Em nosso compromisso de promover uma jornada mais leve até a constância
+              acreditamos que a chave para o sucesso reside no seu senso de
+              progresso. Ao unir a força da comunidade à personalização de
+              metas, o Trackerly é mais do que uma plataforma; é um apoio
+              constante em sua busca por uma vida mais produtiva e realizada.
+              Descubra o poder do progresso compartilhado e junte-se a nós no
+              caminho para o sucesso pessoal.
             </Text>
           </GridItem>
           <GridItem>
             <SimpleGrid justifyContent={"center"} m={"0"} pos={"absolute"}>
               <Text className="home-p-invite">Junte-se a nós:</Text>
               <Box className="home-btn-containter">
-                <Cadastro isOpen={isCadastroModalOpen} openLoginModal={openCadastroModal} />
+                <Cadastro
+                  isOpen={isCadastroModalOpen}
+                  openLoginModal={openCadastroModal}
+                />
                 <Text className="home-p-invite">OU</Text>
-                <Login isOpen={isLoginModalOpen} openCadastroModal={openLoginModal} />
+                <Login
+                  isOpen={isLoginModalOpen}
+                  openCadastroModal={openLoginModal}
+                />
               </Box>
             </SimpleGrid>
           </GridItem>
