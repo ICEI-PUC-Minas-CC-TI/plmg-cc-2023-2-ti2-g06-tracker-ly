@@ -92,8 +92,6 @@ public class Aplicacao {
         // http://localhost:4567/seguirdelete?segue_id=7&seguido_id=8
         delete("/seguirdelete", (request, response) -> SegueService.deixarDeSeguir(request, response));
     }
-
-    // mudar o banco de dados --> problema novo
 }
 // http://localhost:4567/Presentation/login?email=${data.email}&senha=${data.password}
 // http://localhost:4567/Presentation/cadastro?user=bibs&senha=bibss&nome=Bibs&email=bibs@gmail.com&nasc=2000-0101

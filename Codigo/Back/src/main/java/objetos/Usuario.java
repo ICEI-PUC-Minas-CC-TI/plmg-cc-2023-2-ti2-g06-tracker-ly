@@ -18,7 +18,7 @@ public class Usuario {
     String senha;
     String nick;
     String bio;
-    byte[] foto;
+    String foto;
 
     public Usuario() {
         this.id = -1;
@@ -30,7 +30,7 @@ public class Usuario {
     }
 
     public Usuario(int id, String nome, int nivel, String email, Date nasc, String senha, String nick, String bio,
-            byte[] foto) {
+            String foto) {
         this.id = id;
         this.nome = nome;
         this.nivel = nivel;
@@ -40,7 +40,7 @@ public class Usuario {
     }
 
     public Usuario(int id, String nome, int nivel, String email, String senha, String nasc , String nick, String bio,
-            byte[] foto) {
+            String foto) {
         this.id = id;
         this.nome = nome;
         this.nivel = nivel;
@@ -134,11 +134,11 @@ public class Usuario {
         }
     }
 
-    public byte[] getFoto() {
+    public String getFoto() {
         return this.foto;
     }
 
-    public void setFoto(byte[] foto) {
+    public void setFoto(String foto) {
         this.foto = foto;
     }
 

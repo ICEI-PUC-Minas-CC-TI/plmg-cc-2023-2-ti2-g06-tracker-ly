@@ -3,12 +3,11 @@ import { useEffect, useState } from "react";
 // services
 import { getRotina } from "../services/rotinaService";
 import { useLogin } from "../hooks/auth";
-//import { getPost } from "../services/postService";
+import { getPost } from "../services/postService";
 import { parseFreq } from "../helpers";
 // components
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
-import Questionario from "../components/Questionario";
 // chakra
 import {
   Card,
@@ -31,6 +30,7 @@ import {
 function Feed() {
   const { userData } = useLogin();
   const [Rotinas, setRotinas] = useState([]);
+  const [Posts, setPosts] = useState([]);
 
   // fetch rotinas e salva em um array
   useEffect(() => {
@@ -40,6 +40,16 @@ function Feed() {
     };
 
     fetchRotinas();
+  }, []);
+
+  // fetch posts e salva em um array
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const dataPosts = await getPost(userData.id);
+      setPosts(dataPosts.data);
+    };
+
+    fetchPosts();
   }, []);
 
   // renderiza rotinas do user
@@ -59,7 +69,7 @@ function Feed() {
   };
 
   // renderiza posts do usuário
-  const PostsRend = (props) => {
+  const PostsRend = (nome, descr, data, foto) => {
     return (
       <>
         <Card marginBottom={"15px"} maxW="md">
@@ -67,12 +77,11 @@ function Feed() {
             <Flex spacing="4">
               <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
                 <Avatar />
-
                 <Box>
                   <Heading size="sm">
-                    Marcela Aguiar - Aprendender Francês
+                    @{nome} está firme em seus objetivos!
                   </Heading>
-                  <Text>Creator, Chakra UI</Text>
+                  <Text>Que maravilha!</Text>
                 </Box>
               </Flex>
               <IconButton
@@ -83,15 +92,9 @@ function Feed() {
             </Flex>
           </CardHeader>
           <CardBody>
-            <Text>
-              30 dias de estudo autônomo de inglês! A gringa me espera!!
-            </Text>
+            <Text>{descr}</Text>
           </CardBody>
-          <Image
-            objectFit="cover"
-            src="https://source.unsplash.com/E9NcsvbRVqo"
-            alt="Chakra UI"
-          />
+          <Image objectFit="cover" src={foto} alt="Chakra UI" />
 
           <CardFooter
             justify="space-between"
@@ -101,69 +104,7 @@ function Feed() {
                 minW: "136px",
               },
             }}
-          >
-            {/* <Button flex="1" variant="ghost">
-            Like
-          </Button>
-          <Button flex="1" variant="ghost">
-            Comment
-          </Button>
-          <Button flex="1" variant="ghost">
-            Share
-          </Button> */}
-          </CardFooter>
-        </Card>
-
-        <Card marginBottom={"15px"} maxW="md">
-          <CardHeader>
-            <Flex spacing="4">
-              <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
-                <Avatar />
-
-                <Box>
-                  <Heading size="sm">
-                    Marcela Aguiar - Aprendender Inglês
-                  </Heading>
-                  <Text>Creator, Chakra UI</Text>
-                </Box>
-              </Flex>
-              <IconButton
-                variant="ghost"
-                colorScheme="gray"
-                aria-label="See menu"
-              />
-            </Flex>
-          </CardHeader>
-          <CardBody>
-            <Text>
-              30 dias de estudo autônomo de inglês! A gringa me espera!!
-            </Text>
-          </CardBody>
-          <Image
-            objectFit="cover"
-            src="https://source.unsplash.com/E9NcsvbRVqo"
-            alt="Chakra UI"
-          />
-
-          <CardFooter
-            justify="space-between"
-            flexWrap="wrap"
-            sx={{
-              "& > button": {
-                minW: "136px",
-              },
-            }}
-          >
-            {/* <Button flex="1" variant="ghost">
-            Like
-          </Button>
-          <Button flex="1" variant="ghost">
-            Comment
-          </Button>
-          <Button flex="1" variant="ghost">
-            Share
-          </Button> */}
-          </CardFooter>
+          ></CardFooter>
         </Card>
       </>
     );
@@ -176,13 +117,18 @@ function Feed() {
       <SimpleGrid columns={2}>
         <Container
           backgroundColor={"blue"}
-          height={"30rem"}
+          height={"80vh"}
+          width={"100vw"}
           position={"sticky"}
           margin={"40px auto"}
           top={"50px"}
         >
           <Text fontSize="30px">
             O benefício futuro é maior que o desconforto de agora!
+          </Text>
+
+          <Text fontSize="20px">
+            @{userData.nome}, você está indo muito bem! Continue assim!
           </Text>
 
           <Stack>
@@ -196,11 +142,14 @@ function Feed() {
               />
             ))}
           </Stack>
-
         </Container>
-        
 
-        <Container padding={"10px"}>{PostsRend()}</Container>
+        <Container padding={"10px"}>
+          <Text>Veja o quão longe você já foi!</Text>
+          {Posts.map((post) => {
+            return PostsRend(userData.nome, post.desc, post.data, post.foto);
+          })}
+        </Container>
       </SimpleGrid>
 
       <Footer />

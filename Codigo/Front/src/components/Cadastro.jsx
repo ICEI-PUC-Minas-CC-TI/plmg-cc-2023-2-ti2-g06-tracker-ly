@@ -69,14 +69,13 @@ const Form1 = () => {
           date: "",
           name: "",
         }}
-        validationSchema={SignupSchema}
+        //validationSchema={SignupSchema}
         onSubmit={async (values) => {
-          const response = await cadastro(values).then((response) =>
+          const response = await cadastro(values.username, values.password, values.name, values.email, values.date).then((response) =>
             response.json().data
           );
 
           if (response) {
-            console.log(response);
             handleLogin(response);
           }
           toast({

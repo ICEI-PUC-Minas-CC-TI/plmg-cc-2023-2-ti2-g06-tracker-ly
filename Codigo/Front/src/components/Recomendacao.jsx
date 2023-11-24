@@ -32,7 +32,6 @@ const sendMessage = (userInput, setMessages) => {
   getChatGpt(userInput)
     .then((response) => {
       const data = response.data;
-      console.log(data);
       const botReply = data.choices[0].message.content.trim();
 
       // Filtros pós-processamento e restrições na saída
@@ -114,7 +113,7 @@ function Recomendacao() {
 
   return (
     <>
-      <Button onClick={onOpen} variant={"btn2"}>
+      <Button onClick={onOpen} variant={"btn2"} marginRight={"20px"}>
         Recomendações
       </Button>
 

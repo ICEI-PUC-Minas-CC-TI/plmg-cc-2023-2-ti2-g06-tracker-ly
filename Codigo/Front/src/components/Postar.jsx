@@ -82,11 +82,9 @@ function Postar() {
               <ModalCloseButton />
 
               <ModalBody>
-                <Text>Compartilhe o seu progresso com seus amigos!</Text>
+                <Text>Compartilhe o seu progresso!</Text>
 
                 <Box>
-                  <Text>ADICIONAR FOTO AQUI</Text>
-
                   <Field
                     as={Input}
                     type="file"
