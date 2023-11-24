@@ -60,7 +60,7 @@ function Postar() {
             initialValues={{
               descricao: "",
               rotina: "",
-              foto: "public/img.jpg",
+              foto: "public/ler1.jpg",
             }}
             onSubmit={async (values) => {
               const now = new Date();
