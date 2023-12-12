@@ -2,30 +2,42 @@ cff-version: 1.0.1
 message: Please cite this software using these metadata.
 title: 
 authors:
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names:
+  - family-names: Rodrigues Dias Mariano
+    given-names: Fernanda
+  - family-names: Lacerda Muniz
+    given-names: Gabriela
+  - family-names: Oliveira Lima Peixoto
+    given-names: Rafael
+  - family-names: França de Moura Castro
+    given-names: Catarina
   - name-suffix: Professor
     affiliation: PUC Minas
-    family-names: 
-    given-names: 
+    family-names: do Val Machado
+    given-names: Max
   - name-suffix: Professor
     affiliation: PUC Minas
-    family-names: 
-    given-names: 
+    family-names: Mara Freitas Diniz
+    given-names: Luciana
+ - name-suffix: Professor
+    affiliation: PUC Minas
+    family-names: da Costa Vieira Rezende
+    given-names: Josiane
 keywords:
-  - 
-  - 
-repository-code: 
+  - Procrastinação
+  - Produtividade
+  - Organização
+  - Rotina
+  - Lembretes
+  - Incentivo
+  - Motivação
+  - Foco
+  - Concentração
+  - Planejamento
+  - Metas
+  - Objetivos
+  - Autodisciplina
+  - Autocontrole
+repository-code: https://github.com/ICEI-PUC-Minas-CC-TI/plmg-cc-2023-2-ti2-g06-tracker-ly.git
 license: CC-BY-4.0
 version: 1.0.0
-date-released: 2022-07-14
+date-released: 2023-12-12
